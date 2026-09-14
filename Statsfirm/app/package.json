@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "docker:build": "docker build -t statsfirm-app .",
+    "docker:run": "docker run -p 3000:3000 statsfirm-app",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down"
   },
   "keywords": [
     "statsfirm",

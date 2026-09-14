@@ -115,3 +115,39 @@ Resultados verificados:
 - `GET /api/services`: Código 200 (5 líneas de servicio cargadas).
 - `POST /api/quote`: Código 200 (Cálculo paramétrico de CAPEX y semanas).
 - `POST /api/contact`: Código 201 (Ticket generado y calificado exitosamente).
+
+---
+
+## 7. Opciones y Estrategias de Despliegue
+
+La plataforma incluye soporte listo para producción en múltiples entornos:
+
+### A. Despliegue Local (Nativo)
+```bash
+npm start
+# O mediante el launcher:
+./iniciar.bat
+```
+Servicio activo en `http://localhost:3000`.
+
+### B. Despliegue con Docker
+La aplicación incluye un `Dockerfile` multi-stage optimizado sobre `node:20-alpine`, ejecutándose como usuario no-root `node` con `HEALTHCHECK` activo:
+```bash
+# Construir la imagen
+npm run docker:build
+
+# Ejecutar el contenedor
+npm run docker:run
+```
+
+### C. Despliegue con Docker Compose
+```bash
+npm run compose:up
+# Para detener:
+npm run compose:down
+```
+
+### D. Despliegue en la Nube (Render / Railway / Vercel)
+- **Render**: La aplicación incluye [`render.yaml`](render.yaml) configurado para despliegue automático desde GitHub como Web Service Node.js.
+- **Vercel**: La aplicación incluye [`vercel.json`](vercel.json) configurado para ejecución como Serverless Express Function con enrutamiento dinámico.
+
