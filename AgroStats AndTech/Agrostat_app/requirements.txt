@@ -1,0 +1,17 @@
+# Agrostat Data Science & Engineering Platform
+# Dependencies for Hexagonal Architecture Core, ML Pipeline, and Biostatistics Engine
+# Python: 3.10+ (Tested on Python 3.13)
+
+# Core Numerical & Machine Learning
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Medallion Lakehouse & Analytical Storage
+pyarrow>=12.0.0
+duckdb>=0.9.0
+
+# Code Quality & Testing (Optional for CI/CD)
+pytest>=7.4.0
+flake8>=6.1.0
+black>=23.9.0

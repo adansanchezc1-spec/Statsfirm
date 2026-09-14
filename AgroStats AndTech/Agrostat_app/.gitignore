@@ -1,0 +1,12 @@
+# Agrostat App runtime artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Lakehouse runtime data and models
+data/bronze/
+data/silver/
+data/gold/
+data/dlq/
+data/models/
+*.pkl

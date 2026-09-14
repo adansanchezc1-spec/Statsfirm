@@ -62,6 +62,10 @@
     "assets/logo_horizontal_primary.jpg",
     "assets/logo_centered_stacked.jpg",
     "assets/logo_monogram_app_icon.jpg",
-    "assets/logo_agroinnova_badge.jpg"
+    "assets/logo_agroinnova_badge.jpg",
+    "Agrostat_app/README.md",
+    "Agrostat_app/metadata.json",
+    "Agrostat_app/src/agrostat_app/container.py",
+    "Agrostat_app/tests/run_tests.py"
   ]
 }
