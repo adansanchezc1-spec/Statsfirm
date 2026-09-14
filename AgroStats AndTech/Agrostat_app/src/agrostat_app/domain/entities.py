@@ -12,7 +12,7 @@ from datetime import date, datetime
 from typing import Any, Dict, List, Optional
 
 from agrostat_app.domain.exceptions import InvariantViolationException
-from agrostat_app.domain.value_objects import NelsonViolation
+from agrostat_app.domain.value_objects import CpcProductCode, DivipolaCode, NelsonViolation
 
 
 @dataclass
@@ -82,7 +82,6 @@ class HarvestBatch:
         return round(self.grados_brix / self.calibre_promedio, 4)
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serializes entity to dictionary."""
         return {
             "batch_id": self.batch_id,
             "lote_id": self.lote_id,
@@ -105,7 +104,6 @@ class HarvestBatch:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "HarvestBatch":
-        """Constructs an entity instance from dictionary representation."""
         raw_date = data["fecha_cosecha"]
         if isinstance(raw_date, str):
             parsed_date = date.fromisoformat(raw_date)
@@ -129,6 +127,212 @@ class HarvestBatch:
             precipitacion_mm=float(data["precipitacion_mm"]) if data.get("precipitacion_mm") is not None else None,
             temperatura_celsius=float(data["temperatura_celsius"]) if data.get("temperatura_celsius") is not None else None,
         )
+
+
+@dataclass
+class CotizacionMayorista:
+    """Represents a daily wholesale market quotation (DANE SIPSA_P)."""
+    id_cotizacion: str
+    fecha: date
+    mercado_id: str
+    producto: CpcProductCode
+    precio_min_kg: float
+    precio_max_kg: float
+    precio_prom_kg: float
+    volumen_transado_kg: float = 0.0
+    municipio_origen: Optional[DivipolaCode] = None
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+    def __post_init__(self) -> None:
+        self.validate_invariants()
+
+    def validate_invariants(self) -> None:
+        if self.precio_min_kg <= 0:
+            raise InvariantViolationException(
+                f"El precio mínimo debe ser mayor a cero. Recibido: {self.precio_min_kg}"
+            )
+        if self.precio_max_kg <= 0:
+            raise InvariantViolationException(
+                f"El precio máximo debe ser mayor a cero. Recibido: {self.precio_max_kg}"
+            )
+        if self.precio_prom_kg <= 0:
+            raise InvariantViolationException(
+                f"El precio promedio debe ser mayor a cero. Recibido: {self.precio_prom_kg}"
+            )
+        if not (self.precio_min_kg <= self.precio_prom_kg <= self.precio_max_kg):
+            raise InvariantViolationException(
+                f"Inconsistencia de precios: {self.precio_min_kg} <= {self.precio_prom_kg} <= {self.precio_max_kg} es falso."
+            )
+        if self.volumen_transado_kg < 0:
+            raise InvariantViolationException(
+                f"El volumen transado no puede ser negativo: {self.volumen_transado_kg}"
+            )
+
+    @property
+    def amplitud_precios_kg(self) -> float:
+        """Spread between maximum and minimum prices per kg."""
+        return round(self.precio_max_kg - self.precio_min_kg, 2)
+
+    @property
+    def dispersión_relativa_pct(self) -> float:
+        """Percentage spread relative to average price."""
+        if self.precio_prom_kg == 0:
+            return 0.0
+        return round((self.amplitud_precios_kg / self.precio_prom_kg) * 100, 2)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id_cotizacion": self.id_cotizacion,
+            "fecha": self.fecha.isoformat(),
+            "mercado_id": self.mercado_id,
+            "producto_cpc": self.producto.to_dict(),
+            "municipio_origen": self.municipio_origen.to_dict() if self.municipio_origen else None,
+            "precio_min_kg": self.precio_min_kg,
+            "precio_max_kg": self.precio_max_kg,
+            "precio_prom_kg": self.precio_prom_kg,
+            "volumen_transado_kg": self.volumen_transado_kg,
+            "amplitud_precios_kg": self.amplitud_precios_kg,
+            "dispersion_pct": self.dispersión_relativa_pct,
+            "created_at": self.created_at.isoformat(),
+        }
+
+
+@dataclass
+class RegistroAbastecimiento:
+    """Represents wholesale market incoming food supply (DANE SIPSA_A)."""
+    id_abastecimiento: str
+    fecha: date
+    mercado_id: str
+    producto: CpcProductCode
+    municipio_origen: DivipolaCode
+    volumen_toneladas: float
+    num_vehiculos: int = 1
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+    def __post_init__(self) -> None:
+        if self.volumen_toneladas < 0:
+            raise InvariantViolationException(
+                f"El volumen de abastecimiento no puede ser negativo: {self.volumen_toneladas}"
+            )
+        if self.num_vehiculos < 0:
+            raise InvariantViolationException(
+                f"El número de vehículos no puede ser negativo: {self.num_vehiculos}"
+            )
+
+    @property
+    def volumen_kg(self) -> float:
+        return round(self.volumen_toneladas * 1000.0, 2)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id_abastecimiento": self.id_abastecimiento,
+            "fecha": self.fecha.isoformat(),
+            "mercado_id": self.mercado_id,
+            "producto_cpc": self.producto.to_dict(),
+            "municipio_origen": self.municipio_origen.to_dict(),
+            "volumen_toneladas": self.volumen_toneladas,
+            "volumen_kg": self.volumen_kg,
+            "num_vehiculos": self.num_vehiculos,
+            "created_at": self.created_at.isoformat(),
+        }
+
+
+@dataclass
+class ObservacionClimatica:
+    """Represents a daily meteorological observation (IDEAM DHIME / NASA POWER)."""
+    id_observacion: str
+    estacion_id: str
+    fecha: date
+    municipio: DivipolaCode
+    precipitacion_mm: float
+    temp_max_celsius: Optional[float] = None
+    temp_min_celsius: Optional[float] = None
+    temp_media_celsius: Optional[float] = None
+    humedad_relativa_pct: Optional[float] = None
+    radiacion_solar_mj: Optional[float] = None
+    created_at: datetime = field(default_factory=datetime.utcnow)
+
+    def __post_init__(self) -> None:
+        if self.precipitacion_mm < 0:
+            raise InvariantViolationException(
+                f"La precipitación no puede ser negativa: {self.precipitacion_mm} mm"
+            )
+        if self.humedad_relativa_pct is not None:
+            if not (0.0 <= self.humedad_relativa_pct <= 100.0):
+                raise InvariantViolationException(
+                    f"Humedad relativa fuera de rango (0-100%): {self.humedad_relativa_pct}"
+                )
+        if (
+            self.temp_min_celsius is not None
+            and self.temp_max_celsius is not None
+            and self.temp_min_celsius > self.temp_max_celsius
+        ):
+            raise InvariantViolationException(
+                f"Inconsistencia térmica: temp_min ({self.temp_min_celsius}) > temp_max ({self.temp_max_celsius})"
+            )
+
+    @property
+    def oscilacion_termica(self) -> Optional[float]:
+        """Thermal range (Tmax - Tmin)."""
+        if self.temp_max_celsius is not None and self.temp_min_celsius is not None:
+            return round(self.temp_max_celsius - self.temp_min_celsius, 2)
+        return None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id_observacion": self.id_observacion,
+            "estacion_id": self.estacion_id,
+            "fecha": self.fecha.isoformat(),
+            "municipio": self.municipio.to_dict(),
+            "precipitacion_mm": self.precipitacion_mm,
+            "temp_max_celsius": self.temp_max_celsius,
+            "temp_min_celsius": self.temp_min_celsius,
+            "temp_media_celsius": self.temp_media_celsius,
+            "oscilacion_termica": self.oscilacion_termica,
+            "humedad_relativa_pct": self.humedad_relativa_pct,
+            "radiacion_solar_mj": self.radiacion_solar_mj,
+            "created_at": self.created_at.isoformat(),
+        }
+
+
+@dataclass
+class BalanceMercado:
+    """Represents the aggregate market balance (Supply vs Estimated Demand)."""
+    fecha_inicio: date
+    fecha_fin: date
+    codigo_cpc: str
+    mercado_id: str
+    abastecimiento_total_ton: float
+    precio_promedio_periodo: float
+    estimacion_consumo_ton: float
+
+    @property
+    def ratio_cobertura_demanda(self) -> float:
+        """Ratio of supply over estimated demand (1.0 = equilibrium)."""
+        if self.estimacion_consumo_ton == 0:
+            return 1.0
+        return round(self.abastecimiento_total_ton / self.estimacion_consumo_ton, 4)
+
+    @property
+    def estado_balance(self) -> str:
+        ratio = self.ratio_cobertura_demanda
+        if ratio < 0.85:
+            return "DEFICIT_OFERTA"
+        elif ratio > 1.15:
+            return "SUPERAVIT_OFERTA"
+        return "EQUILIBRIO"
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "periodo": f"{self.fecha_inicio.isoformat()} a {self.fecha_fin.isoformat()}",
+            "codigo_cpc": self.codigo_cpc,
+            "mercado_id": self.mercado_id,
+            "abastecimiento_ton": self.abastecimiento_total_ton,
+            "precio_promedio": self.precio_promedio_periodo,
+            "estimacion_consumo_ton": self.estimacion_consumo_ton,
+            "ratio_cobertura": self.ratio_cobertura_demanda,
+            "estado_balance": self.estado_balance,
+        }
 
 
 @dataclass

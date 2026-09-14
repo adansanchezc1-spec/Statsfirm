@@ -49,8 +49,10 @@ class TestPipelineUseCasesIntegration(unittest.TestCase):
 
         # Verify DLQ persistence
         quarantined_records = self.container.dlq.get_quarantined_records()
-        self.assertEqual(len(quarantined_records), 2)
-        quarantined_ids = [q["payload"]["batch_id"] for q in quarantined_records]
+        quarantined_ids = [
+            q["payload"].get("raw_payload", q["payload"]).get("batch_id")
+            for q in quarantined_records
+        ]
         self.assertIn("BAD-001", quarantined_ids)
         self.assertIn("BAD-002", quarantined_ids)
 

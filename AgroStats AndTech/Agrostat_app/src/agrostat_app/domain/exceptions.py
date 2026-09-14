@@ -45,3 +45,13 @@ class ModelNotTrainedException(DomainException):
 class RepositoryException(DomainException):
     """Raised when an error occurs during persistence in the Medallion lakehouse."""
     pass
+
+
+class SourceExtractionException(DomainException):
+    """Raised when an error occurs while extracting data from an external governmental or satellite API."""
+    pass
+
+
+class UnsupportedSourceException(DomainException):
+    """Raised when an extraction source type is not registered or supported."""
+    pass

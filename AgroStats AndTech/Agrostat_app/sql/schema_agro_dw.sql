@@ -1,7 +1,7 @@
 -- ==============================================================================
 -- AGROSTAT DATA INTELLIGENCE PLATFORM — DATA WAREHOUSE DDL SCHEMA
 -- Arquitectura Dimensional Kimball (Star Schema) / Capa Gold
--- Compatible con: PostgreSQL 14+ y DuckDB 0.9+
+-- Compatible con: DuckDB 0.9+ / 1.x y PostgreSQL 14+
 -- Normativa: DAMA-BOK (Data Modeling & Quality) / SWEBOK Cap. 2 / ISO 7870 (SPC)
 -- ==============================================================================
 
@@ -61,8 +61,7 @@ CREATE TABLE IF NOT EXISTS dim_mercado_abasto (
     tipo_mercado VARCHAR(50) NOT NULL DEFAULT 'Central Mayorista Principal',
     capacidad_toneladas_dia NUMERIC(12, 2),
     direccion VARCHAR(200),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_mercado_geografia FOREIGN KEY (divipola_municipio) REFERENCES dim_geografia(divipola_codigo)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Dimensión 5: Red Climatológica (Estaciones IDEAM / Reanálisis Satelital)
@@ -71,12 +70,11 @@ CREATE TABLE IF NOT EXISTS dim_estacion_clima (
     nombre_estacion VARCHAR(150) NOT NULL,
     divipola_municipio VARCHAR(10) NOT NULL,
     tipo_estacion VARCHAR(60) NOT NULL,             -- Pluviométrica, Climatológica Principal, Satélite
-    latitud NUMERIC(9, 6) NOT NULL,
-    longitud NUMERIC(9, 6) NOT NULL,
+    latitud NUMERIC(9, 6),
+    longitud NUMERIC(9, 6),
     altitud_msnm NUMERIC(8, 2),
     entidad_operadora VARCHAR(50) NOT NULL DEFAULT 'IDEAM',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_estacion_geografia FOREIGN KEY (divipola_municipio) REFERENCES dim_geografia(divipola_codigo)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Dimensión 6: Actores de la Cadena de Valor Agropecuaria
@@ -87,8 +85,7 @@ CREATE TABLE IF NOT EXISTS dim_actor_cadena (
     gremio_afiliado VARCHAR(100),                   -- Fedearroz, FENALCE, Fedegan, Asocolflores, etc.
     divipola_sede VARCHAR(10),
     es_operador_bmc BOOLEAN NOT NULL DEFAULT FALSE, -- Registrado en Bolsa Mercantil de Colombia
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_actor_geografia FOREIGN KEY (divipola_sede) REFERENCES dim_geografia(divipola_codigo)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ------------------------------------------------------------------------------
@@ -97,7 +94,7 @@ CREATE TABLE IF NOT EXISTS dim_actor_cadena (
 
 -- Hecho 1: Precios Mayoristas Diarios (DANE SIPSA_P)
 CREATE TABLE IF NOT EXISTS fact_precios_sipsa (
-    precio_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    precio_id BIGINT PRIMARY KEY,
     fecha_key INT NOT NULL,
     producto_cpc_codigo VARCHAR(20) NOT NULL,
     mercado_id VARCHAR(30) NOT NULL,
@@ -106,33 +103,25 @@ CREATE TABLE IF NOT EXISTS fact_precios_sipsa (
     precio_maximo_kg NUMERIC(12, 2) NOT NULL CHECK (precio_maximo_kg >= 0),
     desviacion_estandar NUMERIC(10, 4) DEFAULT 0.0,
     fuente_boletin VARCHAR(50) NOT NULL DEFAULT 'DANE_SIPSA_P',
-    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fp_tiempo FOREIGN KEY (fecha_key) REFERENCES dim_tiempo(fecha_key),
-    CONSTRAINT fk_fp_producto FOREIGN KEY (producto_cpc_codigo) REFERENCES dim_producto(producto_cpc_codigo),
-    CONSTRAINT fk_fp_mercado FOREIGN KEY (mercado_id) REFERENCES dim_mercado_abasto(mercado_id),
-    CONSTRAINT chk_consistencia_precios CHECK (precio_minimo_kg <= precio_medio_kg AND precio_medio_kg <= precio_maximo_kg)
+    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Hecho 2: Abastecimiento y Flujo de Alimentos (DANE SIPSA_A)
 CREATE TABLE IF NOT EXISTS fact_abastecimiento_sipsa (
-    abastecimiento_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    abastecimiento_id BIGINT PRIMARY KEY,
     fecha_key INT NOT NULL,
     producto_cpc_codigo VARCHAR(20) NOT NULL,
     mercado_destino_id VARCHAR(30) NOT NULL,
     municipio_origen_divipola VARCHAR(10) NOT NULL,
     volumen_toneladas NUMERIC(12, 3) NOT NULL CHECK (volumen_toneladas >= 0),
-    volumen_kilos NUMERIC(15, 2) GENERATED ALWAYS AS (volumen_toneladas * 1000) STORED,
+    volumen_kilos NUMERIC(15, 2) DEFAULT 0.0,
     participacion_mercado_pct NUMERIC(6, 3),
-    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fa_tiempo FOREIGN KEY (fecha_key) REFERENCES dim_tiempo(fecha_key),
-    CONSTRAINT fk_fa_producto FOREIGN KEY (producto_cpc_codigo) REFERENCES dim_producto(producto_cpc_codigo),
-    CONSTRAINT fk_fa_mercado_destino FOREIGN KEY (mercado_destino_id) REFERENCES dim_mercado_abasto(mercado_id),
-    CONSTRAINT fk_fa_origen_geografia FOREIGN KEY (municipio_origen_divipola) REFERENCES dim_geografia(divipola_codigo)
+    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Hecho 3: Evaluaciones Agropecuarias Municipales (Agronet / UPRA - EVA)
 CREATE TABLE IF NOT EXISTS fact_produccion_agronet (
-    produccion_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    produccion_id BIGINT PRIMARY KEY,
     anio INT NOT NULL CHECK (anio >= 2000),
     ciclo_periodo VARCHAR(20) NOT NULL,              -- 'Semestre A', 'Semestre B', 'Anual Consolidado'
     producto_cpc_codigo VARCHAR(20) NOT NULL,
@@ -141,46 +130,38 @@ CREATE TABLE IF NOT EXISTS fact_produccion_agronet (
     area_cosechada_ha NUMERIC(12, 2) NOT NULL CHECK (area_cosechada_ha >= 0),
     produccion_toneladas NUMERIC(14, 2) NOT NULL CHECK (produccion_toneladas >= 0),
     rendimiento_t_ha NUMERIC(8, 2) NOT NULL CHECK (rendimiento_t_ha >= 0),
-    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fpa_producto FOREIGN KEY (producto_cpc_codigo) REFERENCES dim_producto(producto_cpc_codigo),
-    CONSTRAINT fk_fpa_geografia FOREIGN KEY (divipola_municipio) REFERENCES dim_geografia(divipola_codigo),
-    CONSTRAINT chk_area_cosechada_sembrada CHECK (area_cosechada_ha <= area_sembrada_ha)
+    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Hecho 4: Climatología y Meteorología Diaria (IDEAM / NASA POWER)
 CREATE TABLE IF NOT EXISTS fact_clima_diario (
-    clima_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    clima_id BIGINT PRIMARY KEY,
     fecha_key INT NOT NULL,
     estacion_codigo VARCHAR(30) NOT NULL,
+    municipio_id VARCHAR(10),
     precipitacion_mm NUMERIC(8, 2) NOT NULL CHECK (precipitacion_mm >= 0),
     temperatura_max_celsius NUMERIC(5, 2),
     temperatura_min_celsius NUMERIC(5, 2),
     temperatura_media_celsius NUMERIC(5, 2) NOT NULL,
     humedad_relativa_pct NUMERIC(5, 2) CHECK (humedad_relativa_pct >= 0 AND humedad_relativa_pct <= 100),
     radiacion_solar_mj_m2 NUMERIC(8, 2) CHECK (radiacion_solar_mj_m2 >= 0),
-    evapotranspiracion_mm NUMERIC(8, 2) CHECK (evapotranspiracion_mm >= 0),
-    indice_anomalia_enso VARCHAR(20) DEFAULT 'NEUTRO', -- 'EL_NINO', 'LA_NINA', 'NEUTRO'
-    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fc_tiempo FOREIGN KEY (fecha_key) REFERENCES dim_tiempo(fecha_key),
-    CONSTRAINT fk_fc_estacion FOREIGN KEY (estacion_codigo) REFERENCES dim_estacion_clima(estacion_codigo)
+    evapotranspiracion_mm NUMERIC(8, 2) DEFAULT 0.0,
+    indice_anomalia_enso VARCHAR(20) DEFAULT 'NEUTRO',
+    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Hecho 5: Transacciones Mercantiles y Contratos (Bolsa Mercantil de Colombia - BMC)
 CREATE TABLE IF NOT EXISTS fact_transacciones_bmc (
-    transaccion_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    transaccion_id BIGINT PRIMARY KEY,
     fecha_key INT NOT NULL,
     producto_cpc_codigo VARCHAR(20) NOT NULL,
     actor_vendedor_id VARCHAR(30) NOT NULL,
     actor_comprador_id VARCHAR(30) NOT NULL,
     volumen_negociado_kg NUMERIC(14, 2) NOT NULL CHECK (volumen_negociado_kg > 0),
     precio_cierre_kg NUMERIC(12, 2) NOT NULL CHECK (precio_cierre_kg > 0),
-    valor_total_contrato NUMERIC(16, 2) GENERATED ALWAYS AS (volumen_negociado_kg * precio_cierre_kg) STORED,
+    valor_total_contrato NUMERIC(16, 2) DEFAULT 0.0,
     modalidad_rueda VARCHAR(50) NOT NULL DEFAULT 'Registro Factura',
-    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_ft_tiempo FOREIGN KEY (fecha_key) REFERENCES dim_tiempo(fecha_key),
-    CONSTRAINT fk_ft_producto FOREIGN KEY (producto_cpc_codigo) REFERENCES dim_producto(producto_cpc_codigo),
-    CONSTRAINT fk_ft_vendedor FOREIGN KEY (actor_vendedor_id) REFERENCES dim_actor_cadena(actor_id),
-    CONSTRAINT fk_ft_comprador FOREIGN KEY (actor_comprador_id) REFERENCES dim_actor_cadena(actor_id)
+    ingest_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- ------------------------------------------------------------------------------

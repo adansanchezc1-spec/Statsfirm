@@ -8,8 +8,65 @@ Normative:
 """
 
 from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Dict, List, Optional
+from datetime import date, datetime
+from typing import Any, Dict, List, Optional
+
+
+@dataclass(frozen=True)
+class DivipolaCode:
+    """Represents an official DANE DIVIPOLA geographical classification."""
+    codigo_mpio: str
+    nombre_mpio: str
+    codigo_depto: str
+    nombre_depto: str
+
+    def __post_init__(self) -> None:
+        if not (self.codigo_mpio and len(str(self.codigo_mpio).strip()) >= 4):
+            raise ValueError(f"Código DIVIPOLA de municipio inválido: {self.codigo_mpio}")
+
+    def to_dict(self) -> Dict[str, str]:
+        return {
+            "codigo_mpio": self.codigo_mpio,
+            "nombre_mpio": self.nombre_mpio,
+            "codigo_depto": self.codigo_depto,
+            "nombre_depto": self.nombre_depto,
+        }
+
+
+@dataclass(frozen=True)
+class CpcProductCode:
+    """Represents a product under Central Product Classification (CPC Ver. 2.1 A.C.)."""
+    codigo_cpc: str
+    nombre_producto: str
+    grupo_cpc: str
+    variedad: Optional[str] = None
+
+    def __post_init__(self) -> None:
+        if not (self.codigo_cpc and len(str(self.codigo_cpc).strip()) >= 3):
+            raise ValueError(f"Código CPC inválido: {self.codigo_cpc}")
+
+    def to_dict(self) -> Dict[str, Optional[str]]:
+        return {
+            "codigo_cpc": self.codigo_cpc,
+            "nombre_producto": self.nombre_producto,
+            "grupo_cpc": self.grupo_cpc,
+            "variedad": self.variedad,
+        }
+
+
+@dataclass(frozen=True)
+class ValidationResult:
+    """Result of validating a single record against DAMA-BOK quality rules."""
+    is_valid: bool
+    errors: List[str] = field(default_factory=list)
+    rule_tag: str = "DAMA_BOK"
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "is_valid": self.is_valid,
+            "errors": self.errors,
+            "rule_tag": self.rule_tag,
+        }
 
 
 @dataclass(frozen=True)
@@ -64,6 +121,39 @@ class YieldPrediction:
             },
             "model_version": self.model_version,
             "feature_contributions": self.feature_contributions,
+            "generated_at": self.generated_at.isoformat(),
+        }
+
+
+@dataclass(frozen=True)
+class MarketForecastResult:
+    """Represents a market price or demand forecast for agricultural planning."""
+    codigo_cpc: str
+    mercado_id: str
+    horizonte_semanas: int
+    fecha_proyeccion: date
+    valor_proyectado: float
+    intervalo_inferior_95: float
+    intervalo_superior_95: float
+    modelo_utilizado: str
+    confianza_pct: float = 95.0
+    tendencia: str = "ESTABLE"
+    generated_at: datetime = field(default_factory=datetime.utcnow)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "codigo_cpc": self.codigo_cpc,
+            "mercado_id": self.mercado_id,
+            "horizonte_semanas": self.horizonte_semanas,
+            "fecha_proyeccion": self.fecha_proyeccion.isoformat(),
+            "valor_proyectado": round(self.valor_proyectado, 2),
+            "intervalo_95": {
+                "inferior": round(self.intervalo_inferior_95, 2),
+                "superior": round(self.intervalo_superior_95, 2),
+            },
+            "modelo_utilizado": self.modelo_utilizado,
+            "confianza_pct": self.confianza_pct,
+            "tendencia": self.tendencia,
             "generated_at": self.generated_at.isoformat(),
         }
 

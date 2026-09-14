@@ -20,3 +20,7 @@ class DeadLetterQueuePort(ABC):
     def get_quarantined_records(self) -> List[Dict[str, Any]]:
         """Retrieves quarantined items for remediation dashboards."""
         pass
+
+    def quarantine_record(self, raw_record: Dict[str, Any], reason: str) -> None:
+        """Helper method to quarantine a single record with reason."""
+        self.send_to_quarantine([{"raw_payload": raw_record, "error_reason": reason}])

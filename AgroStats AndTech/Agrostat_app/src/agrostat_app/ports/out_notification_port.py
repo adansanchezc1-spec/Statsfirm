@@ -21,3 +21,15 @@ class NotificationPort(ABC):
     ) -> None:
         """Dispatches structured notification (INFO, WARNING, CRITICAL)."""
         pass
+
+    def notify_info(self, message: str, title: str = "PIPELINE") -> None:
+        """Helper to dispatch INFO alert."""
+        self.send_alert("INFO", title, message)
+
+    def notify_warning(self, message: str, title: str = "PIPELINE") -> None:
+        """Helper to dispatch WARNING alert."""
+        self.send_alert("WARNING", title, message)
+
+    def notify_error(self, message: str, title: str = "PIPELINE") -> None:
+        """Helper to dispatch CRITICAL alert."""
+        self.send_alert("CRITICAL", title, message)

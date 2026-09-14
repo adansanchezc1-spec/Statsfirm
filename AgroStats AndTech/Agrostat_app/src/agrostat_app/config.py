@@ -20,8 +20,16 @@ class Config:
     DLQ_DIR = DATA_DIR / "dlq"
     MODELS_DIR = DATA_DIR / "models"
 
+    SQL_DIR = BASE_DIR / "sql"
+    SQL_SCHEMA_FILE = SQL_DIR / "schema_agro_dw.sql"
+    SQL_SEEDS_FILE = SQL_DIR / "seeds_mercados_y_productos.sql"
+    DUCKDB_FILE = GOLD_DIR / "agro_dw.duckdb"
+
     LOG_LEVEL = os.environ.get("AGROSTAT_LOG_LEVEL", "INFO")
     DEFAULT_ALGORITHM = os.environ.get("AGROSTAT_MODEL_ALGO", "random_forest")
+
+    # API Tokens
+    SOCRATA_APP_TOKEN = os.environ.get("SOCRATA_APP_TOKEN")
 
     @classmethod
     def ensure_directories(cls) -> None:

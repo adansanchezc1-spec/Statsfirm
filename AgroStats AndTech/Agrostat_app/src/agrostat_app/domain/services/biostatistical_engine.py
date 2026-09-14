@@ -175,3 +175,59 @@ class BioStatisticalEngine:
                     )
 
         return violations
+
+    def compute_shewhart_limits(
+        self,
+        metric_values: List[float],
+        metric_name: str,
+        lower_spec_limit: Optional[float] = None,
+        upper_spec_limit: Optional[float] = None,
+    ) -> SPCControlLimits:
+        """Calculates Shewhart 3-sigma control limits directly from a list of float values."""
+        if len(metric_values) < self.MIN_SAMPLES_REQUIRED:
+            raise InsufficientDataForSPCException(
+                f"Se requieren mínimo {self.MIN_SAMPLES_REQUIRED} muestras para calcular límites SPC. "
+                f"Recibidas: {len(metric_values)}"
+            )
+
+        n = len(metric_values)
+        mean_val = sum(metric_values) / n
+        variance = sum((x - mean_val) ** 2 for x in metric_values) / (n - 1)
+        sigma = math.sqrt(variance) if variance > 0 else 0.0001
+
+        ucl = mean_val + (3.0 * sigma)
+        lcl = max(0.0, mean_val - (3.0 * sigma))
+
+        one_sigma_upper = mean_val + (1.0 * sigma)
+        one_sigma_lower = max(0.0, mean_val - (1.0 * sigma))
+        two_sigma_upper = mean_val + (2.0 * sigma)
+        two_sigma_lower = max(0.0, mean_val - (2.0 * sigma))
+
+        violations = self._evaluate_nelson_rules(metric_values, mean_val, sigma, ucl, lcl)
+
+        eff_usl = upper_spec_limit if upper_spec_limit is not None else ucl
+        eff_lsl = lower_spec_limit if lower_spec_limit is not None else lcl
+
+        cp_index = (eff_usl - eff_lsl) / (6.0 * sigma) if sigma > 0 else 1.0
+        cpu = (eff_usl - mean_val) / (3.0 * sigma) if sigma > 0 else 1.0
+        cpl = (mean_val - eff_lsl) / (3.0 * sigma) if sigma > 0 else 1.0
+        cpk_index = min(cpu, cpl)
+
+        is_in_control = len(violations) == 0
+
+        return SPCControlLimits(
+            metric_name=metric_name,
+            sample_count=n,
+            mean_center_line=mean_val,
+            standard_deviation=sigma,
+            ucl=ucl,
+            lcl=lcl,
+            one_sigma_upper=one_sigma_upper,
+            one_sigma_lower=one_sigma_lower,
+            two_sigma_upper=two_sigma_upper,
+            two_sigma_lower=two_sigma_lower,
+            cp_index=cp_index,
+            cpk_index=cpk_index,
+            is_in_statistical_control=is_in_control,
+            violations=violations,
+        )
