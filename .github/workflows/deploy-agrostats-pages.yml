@@ -45,6 +45,10 @@ jobs:
           if [ -f "AgroStats AndTech/docs_landing_page/metadata.json" ]; then
             cp "AgroStats AndTech/docs_landing_page/metadata.json" _site/
           fi
+          if [ -d "Statsfirm/app/public" ]; then
+            mkdir -p _site/app
+            cp -r Statsfirm/app/public/* _site/app/
+          fi
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
@@ -81,6 +85,10 @@ jobs:
           fi
           if [ -f "AgroStats AndTech/docs_landing_page/metadata.json" ]; then
             cp "AgroStats AndTech/docs_landing_page/metadata.json" _branch_site/
+          fi
+          if [ -d "Statsfirm/app/public" ]; then
+            mkdir -p _branch_site/app
+            cp -r Statsfirm/app/public/* _branch_site/app/
           fi
 
       - name: Deploy to gh-pages Branch
