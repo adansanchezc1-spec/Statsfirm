@@ -1,0 +1,93 @@
+name: Deploy AgroStats GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'AgroStats AndTech/docs_landing_page/**'
+      - '.github/workflows/deploy-agrostats-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  deploy-pages:
+    name: Deploy to GitHub Pages (Actions)
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Prepare Clean Web Artifacts
+        run: |
+          mkdir -p _site
+          cp "AgroStats AndTech/docs_landing_page/index.html" _site/
+          cp "AgroStats AndTech/docs_landing_page/.nojekyll" _site/
+          if [ -d "AgroStats AndTech/docs_landing_page/assets" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/assets" _site/
+          fi
+          if [ -d "AgroStats AndTech/docs_landing_page/docs" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/docs" _site/
+          fi
+          if [ -d "AgroStats AndTech/docs_landing_page/bpmn" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/bpmn" _site/
+          fi
+          if [ -f "AgroStats AndTech/docs_landing_page/metadata.json" ]; then
+            cp "AgroStats AndTech/docs_landing_page/metadata.json" _site/
+          fi
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  sync-gh-pages-branch:
+    name: Sync gh-pages Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Prepare Clean Web Artifacts
+        run: |
+          mkdir -p _branch_site
+          cp "AgroStats AndTech/docs_landing_page/index.html" _branch_site/
+          cp "AgroStats AndTech/docs_landing_page/.nojekyll" _branch_site/
+          if [ -d "AgroStats AndTech/docs_landing_page/assets" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/assets" _branch_site/
+          fi
+          if [ -d "AgroStats AndTech/docs_landing_page/docs" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/docs" _branch_site/
+          fi
+          if [ -d "AgroStats AndTech/docs_landing_page/bpmn" ]; then
+            cp -r "AgroStats AndTech/docs_landing_page/bpmn" _branch_site/
+          fi
+          if [ -f "AgroStats AndTech/docs_landing_page/metadata.json" ]; then
+            cp "AgroStats AndTech/docs_landing_page/metadata.json" _branch_site/
+          fi
+
+      - name: Deploy to gh-pages Branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_branch_site
+          publish_branch: gh-pages
+          keep_files: false
+          force_orphan: true
