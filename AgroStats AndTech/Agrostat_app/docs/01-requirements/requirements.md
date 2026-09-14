@@ -92,12 +92,26 @@ Construir una arquitectura de ingeniería de datos y data warehousing con Curadu
 - **R-001**: Uso de códigos oficiales **DIVIPOLA** (DANE) para departamentos y municipios de Colombia.
 - **R-002**: Uso de la **Clasificación Central de Productos (CPC Versión 2.1 A.C.)** adaptada para Colombia.
 - **R-003**: Cero dependencia de sensores propietarios o venta de hardware (enfoque en analítica y curaduría de datos ya existentes).
-- **R-004**: Base de datos SQL compatible con **PostgreSQL 14+** y **DuckDB 0.9+**.
+- **R-004**: Base de datos SQL compatible con **DuckDB 0.9+** (motor analítico local de alto rendimiento) y exportable a **PostgreSQL 14+**.
 - **R-005**: Manejo nativo de zonas horarias en `America/Bogota` (UTC-5).
 
 ---
 
-## 6. Glosario del Dominio Agrícola y de Datos
+## 6. Decisiones de Granularidad Confirmadas
+
+1. **Granularidad Temporal Base**:
+   - **Nivel Transaccional**: Diaria para cotizaciones mayoristas (SIPSA_P) y registros climatológicos (IDEAM).
+   - **Nivel Analítico Agregado**: Rollup automático a nivel **Semanal** (para suavizar ruido y capturar ciclos de abasto) y **Mensual** (para correlación con cosechas EVA de Agronet).
+2. **Granularidad Espacial / Geográfica**:
+   - Matriz Origen-Destino: **Central Mayorista de Destino** (ej. Corabastos) cruzada con **Municipio de Origen** (código DIVIPOLA DANE de 5 dígitos).
+3. **Motor SQL Seleccionado**:
+   - **DuckDB columnar embebido** para consultas analíticas instantáneas y cálculo de series de tiempo sin dependencia de infraestructura pesada, con compatibilidad total con PostgreSQL.
+4. **Horizonte Predictivo de Demanda**:
+   - Modelos orientados a **Corto y Mediano Plazo (1 a 12 semanas)** para guiar ventanas de cosecha, despacho y mitigación de volatilidad de precios.
+
+---
+
+## 7. Glosario del Dominio Agrícola y de Datos
 
 - **DIVIPOLA**: Codificación de la División Político-Administrativa de Colombia emitida por el DANE (ej. 11001 = Bogotá, D.C.).
 - **SIPSA**: Sistema de Información de Precios y Abastecimiento del Sector Agropecuario (DANE).
