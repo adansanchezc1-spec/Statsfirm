@@ -1,0 +1,106 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_03_DiagnosticoMadurezOKRs",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-02: Diagnóstico Inicial, Process Mining & Formalización de OKRs\nResultados del análisis As-Is por el Jefe de Procesos y el Data Auditor.",
+      "type": "text",
+      "id": "text_header_3"
+    },
+    {
+      "label": "Nivel de Madurez Analítica (DAMA-BOK / Statsfirm STF)",
+      "type": "select",
+      "id": "f_madurez_datos",
+      "key": "madurez_datos",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Nivel 1: Inicial / Reactivo (Silos de hojas de cálculo)",
+          "value": "1_reactivo"
+        },
+        {
+          "label": "Nivel 2: Gestionado (Bases de datos aisladas, reportes manuales)",
+          "value": "2_gestionado"
+        },
+        {
+          "label": "Nivel 3: Estandarizado (Data Lakehouse centralizado y gobernanza básica)",
+          "value": "3_estandarizado"
+        },
+        {
+          "label": "Nivel 4: Cuantitativo / Predictivo (MLOps, CI/CD activo, telemetría)",
+          "value": "4_predictivo"
+        },
+        {
+          "label": "Nivel 5: Cognitivo / Continuo (Toma de decisión automatizada)",
+          "value": "5_cognitivo"
+        }
+      ]
+    },
+    {
+      "label": "Índice de Deuda Técnica (0 a 100)",
+      "type": "number",
+      "id": "f_deuda_tecnica_score",
+      "key": "deuda_tecnica_score",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Hallazgos Clave de Minería de Procesos (Process Mining)",
+      "type": "textarea",
+      "id": "f_hallazgos_process_mining",
+      "key": "hallazgos_process_mining",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Objetivo Estratégico 1 (OKR 1)",
+      "type": "textfield",
+      "id": "f_okr_obj_1",
+      "key": "okr_obj_1",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Key Result 1 (KR 1 - Métrica Cuantificable)",
+      "type": "textfield",
+      "id": "f_okr_kr_1",
+      "key": "okr_kr_1",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Objetivo Estratégico 2 (OKR 2)",
+      "type": "textfield",
+      "id": "f_okr_obj_2",
+      "key": "okr_obj_2"
+    },
+    {
+      "label": "Key Result 2 (KR 2 - Métrica Cuantificable)",
+      "type": "textfield",
+      "id": "f_okr_kr_2",
+      "key": "okr_kr_2"
+    },
+    {
+      "label": "Aceptación y Firma de Diagnóstico por el Cliente",
+      "type": "checkbox",
+      "id": "f_diagnostico_firmado",
+      "key": "diagnostico_firmado",
+      "validate": {
+        "required": true
+      }
+    }
+  ]
+}

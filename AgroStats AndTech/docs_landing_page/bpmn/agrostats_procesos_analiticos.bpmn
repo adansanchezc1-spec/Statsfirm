@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_AgroStats_E2E"
+                  targetNamespace="http://agrostat.tech/bpmn"
+                  exporter="Camunda Modeler"
+                  exporterVersion="5.46.1">
+
+  <!-- ========================================== -->
+  <!-- COLLABORATION (POOLS & MESSAGE FLOWS)      -->
+  <!-- ========================================== -->
+  <bpmn:collaboration id="Collaboration_AgroStats">
+    <bpmn:participant id="Participant_Productor"
+                      name="Productor / Agroexportador (Portal Web &amp; App Móvil AgroStats)"
+                      processRef="Process_Productor" />
+    <bpmn:participant id="Participant_AgroStats"
+                      name="Agro Stat &amp; Tech Co. – Ecosistema Analítico &amp; Squads de Agentes de IA"
+                      processRef="Process_AgroStats" />
+
+    <!-- Message Flows -->
+    <bpmn:messageFlow id="Msg_01_Solicitud" name="Solicitud de Diagnóstico Agropecuario"
+                      sourceRef="Task_Prod_Solicitar" targetRef="StartEvent_AgroLead" />
+    <bpmn:messageFlow id="Msg_02_Acuerdo" name="Envío Acuerdo Share-of-Gain y Soberanía del Dato"
+                      sourceRef="Task_EmitirAcuerdoDigital" targetRef="Task_Prod_FirmaAcuerdo" />
+    <bpmn:messageFlow id="Msg_03_FirmaAcuerdo" name="Acuerdo y NDA Firmado Digitalmente"
+                      sourceRef="Task_Prod_FirmaAcuerdo" targetRef="Task_ActivarCuentaLakehouse" />
+    <bpmn:messageFlow id="Msg_04_CargaDatos" name="Envío de Datasets de Lotes (Excel / CSV / ERP)"
+                      sourceRef="Task_Prod_CargaDatos" targetRef="Task_IngestaMulticanal" />
+    <bpmn:messageFlow id="Msg_05_AlertaDLQ" name="Alerta de Cuarentena e Inconsistencias (DLQ)"
+                      sourceRef="Task_EnrutarDLQ" targetRef="Task_Prod_ResolverCuarentena" />
+    <bpmn:messageFlow id="Msg_06_EntregaPlan" name="Entrega de Tablero SPC, Cartas Shewhart y Plan BPMN"
+                      sourceRef="Task_GenerarPlanMejoraBPMN" targetRef="Task_Prod_AprobarPlanBPMN" />
+    <bpmn:messageFlow id="Msg_07_AprobacionPlan" name="Aprobación del Plan de Mejora en App"
+                      sourceRef="Task_Prod_AprobarPlanBPMN" targetRef="Task_RetrospectivaAgroInnova" />
+    <bpmn:messageFlow id="Msg_08_Factura" name="Certificación de Valor y Facturación Share-of-Gain"
+                      sourceRef="Task_FacturacionShareOfGain" targetRef="Task_Prod_FirmaConformidad" />
+    <bpmn:messageFlow id="Msg_09_Conformidad" name="Conformidad de Temporada Firmada"
+                      sourceRef="Task_Prod_FirmaConformidad" targetRef="EndEvent_ExitoCosecha" />
+  </bpmn:collaboration>
+
+  <!-- ========================================== -->
+  <!-- PROCESO: PRODUCTOR / AGROEXPORTADOR        -->
+  <!-- ========================================== -->
+  <bpmn:process id="Process_Productor" name="Productor / Agroexportador" isExecutable="false">
+    <bpmn:startEvent id="Start_Productor" name="Inicio: Necesidad de Optimización / Mermas" />
+    <bpmn:userTask id="Task_Prod_Solicitar" name="Solicitar Diagnóstico en Portal Web"
+                   camunda:candidateGroups="Cliente / Productor" />
+    <bpmn:userTask id="Task_Prod_FirmaAcuerdo" name="Revisar y Firmar Acuerdo Share-of-Gain"
+                   camunda:candidateGroups="Cliente / Representante Legal" />
+    <bpmn:userTask id="Task_Prod_CargaDatos" name="Cargar Datasets de Finca (Excel / CSV / ERP)"
+                   camunda:candidateGroups="Cliente / Administrador de Finca" />
+    <bpmn:userTask id="Task_Prod_ResolverCuarentena" name="Revisar y Corregir Registros en Cuarentena (DLQ)"
+                   camunda:candidateGroups="Cliente / Administrador de Finca" />
+    <bpmn:userTask id="Task_Prod_AprobarPlanBPMN" name="Validar y Aprobar Plan de Optimización BPMN"
+                   camunda:candidateGroups="Cliente / Gerente Agrícola" />
+    <bpmn:userTask id="Task_Prod_FirmaConformidad" name="Firmar Conformidad de Campaña y Liquidación"
+                   camunda:candidateGroups="Cliente / Gerente General" />
+    <bpmn:endEvent id="End_Productor" name="Procesos Optimizados y Mermas Reducidas" />
+
+    <bpmn:sequenceFlow id="Flow_p1" sourceRef="Start_Productor" targetRef="Task_Prod_Solicitar" />
+    <bpmn:sequenceFlow id="Flow_p2" sourceRef="Task_Prod_Solicitar" targetRef="Task_Prod_FirmaAcuerdo" />
+    <bpmn:sequenceFlow id="Flow_p3" sourceRef="Task_Prod_FirmaAcuerdo" targetRef="Task_Prod_CargaDatos" />
+    <bpmn:sequenceFlow id="Flow_p4" sourceRef="Task_Prod_CargaDatos" targetRef="Task_Prod_ResolverCuarentena" />
+    <bpmn:sequenceFlow id="Flow_p5" sourceRef="Task_Prod_ResolverCuarentena" targetRef="Task_Prod_AprobarPlanBPMN" />
+    <bpmn:sequenceFlow id="Flow_p6" sourceRef="Task_Prod_AprobarPlanBPMN" targetRef="Task_Prod_FirmaConformidad" />
+    <bpmn:sequenceFlow id="Flow_p7" sourceRef="Task_Prod_FirmaConformidad" targetRef="End_Productor" />
+  </bpmn:process>
+
+  <!-- ========================================== -->
+  <!-- PROCESO: AGRO STAT & TECH CO. (AGENTES)    -->
+  <!-- ========================================== -->
+  <bpmn:process id="Process_AgroStats" name="Agro Stat &amp; Tech Co. - Procesos Integrados de Ingeniería Bioestadística" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_AgroStats">
+      
+      <!-- Lane 1: Dirección, Finanzas & RRHH (Humanos) -->
+      <bpmn:lane id="Lane_AgroHumanos" name="Dirección Agroempresarial, Finanzas &amp; RRHH (Roles Humanos: Gerencia, Finanzas, Legal &amp; RRHH)">
+        <bpmn:flowNodeRef>StartEvent_AgroLead</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EvaluarLeadAgro</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_LeadCalificado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_NotificarNoCalificado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_RechazoLead</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ModeladoShareOfGain</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EmitirAcuerdoDigital</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CertificarIncrementoValor</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_FacturacionShareOfGain</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_ExitoCosecha</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 2: Agente de Ingesta & Data Contracts -->
+      <bpmn:lane id="Lane_AgenteIngesta" name="Agentes de Ingesta &amp; Data Contracts (AI Agent: Ingestion, Schema Validation &amp; DLQ)">
+        <bpmn:flowNodeRef>Task_ActivarCuentaLakehouse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IngestaMulticanal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ValidarDataContracts</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_CalidadDato</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EnrutarDLQ</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 3: Agente de Curaduría & Lakehouse -->
+      <bpmn:lane id="Lane_AgenteLakehouse" name="Agentes de Curaduría &amp; Lakehouse (AI Agent: Delta Lake, Apache Sedona &amp; Kriging)">
+        <bpmn:flowNodeRef>Task_CuraduriaDelta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_InterpolacionKriging</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 4: Agente Bioestadístico & SPC -->
+      <bpmn:lane id="Lane_AgenteBioestadistica" name="Agentes Bioestadísticos &amp; SPC (AI Agent: Shewhart Charts, Western Electric Rules, Cp/Cpk &amp; ANOVA)">
+        <bpmn:flowNodeRef>Task_CalculoLimitesSPC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EvaluarWesternElectric</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_EstabilidadProceso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EmitirAlertaSPC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AnalisisCausaRaiz</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 5: Agente Yield AI -->
+      <bpmn:lane id="Lane_AgenteYieldAI" name="Agentes de Pronóstico Yield AI (AI Agent: Machine Learning Crop Prediction &amp; GDD Models)">
+        <bpmn:flowNodeRef>Task_EntrenamientoYieldAI</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 6: Agente de Optimización BPMN -->
+      <bpmn:lane id="Lane_AgenteBPMN" name="Agentes de Optimización BPMN (AI Agent: Process Engineering &amp; Bottleneck Mitigation)">
+        <bpmn:flowNodeRef>Task_AuditoriaCuellosBotella</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_GenerarPlanMejoraBPMN</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+      <!-- Lane 7: Agente AgroInnova Lab -->
+      <bpmn:lane id="Lane_AgenteInnova" name="Agentes de AgroInnova Lab (AI Agent: Bio-Statistical R&amp;D &amp; Model Benchmarking)">
+        <bpmn:flowNodeRef>Task_RetrospectivaAgroInnova</bpmn:flowNodeRef>
+      </bpmn:lane>
+
+    </bpmn:laneSet>
+
+    <!-- Flujo de Actividades y Eventos -->
+    <bpmn:startEvent id="StartEvent_AgroLead" name="Solicitud de Diagnóstico Recibida" />
+    
+    <bpmn:userTask id="Task_EvaluarLeadAgro" name="Evaluación Inicial de Viabilidad Agrícola y Datos"
+                   camunda:candidateGroups="Humano: Gerencia / Ejecutivo Agronómico" />
+
+    <bpmn:exclusiveGateway id="Gateway_LeadCalificado" name="¿Datos y Operación Viables?" />
+
+    <bpmn:serviceTask id="Task_NotificarNoCalificado" name="Notificar Productor No Calificado"
+                      camunda:type="external" camunda:topic="notification-lead-rejected" />
+    <bpmn:endEvent id="EndEvent_RechazoLead" name="Fin: Solicitud No Viable" />
+
+    <bpmn:userTask id="Task_ModeladoShareOfGain" name="Modelado Financiero Share-of-Gain y Proyección de Ahorro"
+                   camunda:candidateGroups="Humano: Finanzas / Especialista FinOps" />
+
+    <bpmn:userTask id="Task_EmitirAcuerdoDigital" name="Formalización de Contrato y Política de Soberanía del Dato"
+                   camunda:candidateGroups="Humano: Legal &amp; Finanzas / Legal Counsel" />
+
+    <bpmn:serviceTask id="Task_ActivarCuentaLakehouse" name="Aprovisionamiento de Tenant Seguro en Lakehouse"
+                      camunda:type="external" camunda:topic="lakehouse-tenant-provisioning" />
+
+    <bpmn:serviceTask id="Task_IngestaMulticanal" name="Ingesta Multi-Protocolo a Raw Bronze (Excel/CSV/API)"
+                      camunda:type="external" camunda:topic="data-ingestion-bronze" />
+
+    <bpmn:userTask id="Task_ValidarDataContracts" name="Validación Sintáctica y Biofísica bajo Data Contracts"
+                   camunda:candidateGroups="Agente: Ingesta &amp; Data Contracts AI" />
+
+    <bpmn:exclusiveGateway id="Gateway_CalidadDato" name="¿Cumple Criterios DAMA-BOK?" />
+
+    <bpmn:serviceTask id="Task_EnrutarDLQ" name="Enrutamiento a Dead Letter Queue (DLQ) y Alerta"
+                      camunda:type="external" camunda:topic="dlq-routing" />
+
+    <bpmn:serviceTask id="Task_CuraduriaDelta" name="Transformación a Silver Lake (Delta Lake / Parquet)"
+                      camunda:type="external" camunda:topic="delta-lake-curation" />
+
+    <bpmn:serviceTask id="Task_InterpolacionKriging" name="Interpolación Geoestadística Kriging con Apache Sedona"
+                      camunda:type="external" camunda:topic="geo-kriging-interpolation" />
+
+    <bpmn:userTask id="Task_CalculoLimitesSPC" name="Cálculo de Cartas Shewhart (Media, Desviación, UCL/LCL)"
+                   camunda:candidateGroups="Agente: Bioestadístico &amp; SPC AI" />
+
+    <bpmn:serviceTask id="Task_EvaluarWesternElectric" name="Evaluación Automatizada de Reglas de Western Electric"
+                      camunda:type="external" camunda:topic="spc-rules-evaluation" />
+
+    <bpmn:exclusiveGateway id="Gateway_EstabilidadProceso" name="¿Proceso Bajo Control (Cp, Cpk &gt; 1.33)?" />
+
+    <bpmn:serviceTask id="Task_EmitirAlertaSPC" name="Emisión de Alerta Temprana de Fuera de Control"
+                      camunda:type="external" camunda:topic="spc-alert-emission" />
+
+    <bpmn:userTask id="Task_AnalisisCausaRaiz" name="Diagnóstico de Causas Especiales de Variación y Mermas"
+                   camunda:candidateGroups="Agente: Bioestadístico &amp; SPC AI" />
+
+    <bpmn:userTask id="Task_EntrenamientoYieldAI" name="Modelado Predictivo de Cosecha (Yield AI) y Curvas GDD"
+                   camunda:candidateGroups="Agente: Yield AI &amp; Fenología AI" />
+
+    <bpmn:userTask id="Task_AuditoriaCuellosBotella" name="Auditoría de Procesos de Cosecha y Gestión de Campo"
+                   camunda:candidateGroups="Agente: Optimización de Procesos BPMN AI" />
+
+    <bpmn:userTask id="Task_GenerarPlanMejoraBPMN" name="Diseño de Proceso To-Be y Matriz de Acciones Correctivas"
+                   camunda:candidateGroups="Agente: Optimización de Procesos BPMN AI" />
+
+    <bpmn:userTask id="Task_RetrospectivaAgroInnova" name="Retroalimentación Algorítmica y Calibración de Modelos"
+                   camunda:candidateGroups="Agente: AgroInnova Lab AI" />
+
+    <bpmn:userTask id="Task_CertificarIncrementoValor" name="Certificación de Incremento de Margen y Ahorro Hídrico"
+                   camunda:candidateGroups="Humano: Gerencia / Director Agroempresarial" />
+
+    <bpmn:serviceTask id="Task_FacturacionShareOfGain" name="Emisión de Liquidación y Facturación Share-of-Gain"
+                      camunda:type="external" camunda:topic="billing-share-of-gain" />
+
+    <bpmn:endEvent id="EndEvent_ExitoCosecha" name="Cosecha Optimizada, Menor Merma y Mayor Rentabilidad" />
+
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow_ag_01" sourceRef="StartEvent_AgroLead" targetRef="Task_EvaluarLeadAgro" />
+    <bpmn:sequenceFlow id="Flow_ag_02" sourceRef="Task_EvaluarLeadAgro" targetRef="Gateway_LeadCalificado" />
+    <bpmn:sequenceFlow id="Flow_ag_03_no" name="No" sourceRef="Gateway_LeadCalificado" targetRef="Task_NotificarNoCalificado" />
+    <bpmn:sequenceFlow id="Flow_ag_04" sourceRef="Task_NotificarNoCalificado" targetRef="EndEvent_RechazoLead" />
+    <bpmn:sequenceFlow id="Flow_ag_03_si" name="Sí" sourceRef="Gateway_LeadCalificado" targetRef="Task_ModeladoShareOfGain" />
+    <bpmn:sequenceFlow id="Flow_ag_05" sourceRef="Task_ModeladoShareOfGain" targetRef="Task_EmitirAcuerdoDigital" />
+    <bpmn:sequenceFlow id="Flow_ag_06" sourceRef="Task_EmitirAcuerdoDigital" targetRef="Task_ActivarCuentaLakehouse" />
+    <bpmn:sequenceFlow id="Flow_ag_07" sourceRef="Task_ActivarCuentaLakehouse" targetRef="Task_IngestaMulticanal" />
+    <bpmn:sequenceFlow id="Flow_ag_08" sourceRef="Task_IngestaMulticanal" targetRef="Task_ValidarDataContracts" />
+    <bpmn:sequenceFlow id="Flow_ag_09" sourceRef="Task_ValidarDataContracts" targetRef="Gateway_CalidadDato" />
+    <bpmn:sequenceFlow id="Flow_ag_10_no" name="Anómalo" sourceRef="Gateway_CalidadDato" targetRef="Task_EnrutarDLQ" />
+    <bpmn:sequenceFlow id="Flow_ag_11_reintento" sourceRef="Task_EnrutarDLQ" targetRef="Task_IngestaMulticanal" />
+    <bpmn:sequenceFlow id="Flow_ag_10_si" name="Válido" sourceRef="Gateway_CalidadDato" targetRef="Task_CuraduriaDelta" />
+    <bpmn:sequenceFlow id="Flow_ag_12" sourceRef="Task_CuraduriaDelta" targetRef="Task_InterpolacionKriging" />
+    <bpmn:sequenceFlow id="Flow_ag_13" sourceRef="Task_InterpolacionKriging" targetRef="Task_CalculoLimitesSPC" />
+    <bpmn:sequenceFlow id="Flow_ag_14" sourceRef="Task_CalculoLimitesSPC" targetRef="Task_EvaluarWesternElectric" />
+    <bpmn:sequenceFlow id="Flow_ag_15" sourceRef="Task_EvaluarWesternElectric" targetRef="Gateway_EstabilidadProceso" />
+    <bpmn:sequenceFlow id="Flow_ag_16_fuera" name="Fuera de Control" sourceRef="Gateway_EstabilidadProceso" targetRef="Task_EmitirAlertaSPC" />
+    <bpmn:sequenceFlow id="Flow_ag_17" sourceRef="Task_EmitirAlertaSPC" targetRef="Task_AnalisisCausaRaiz" />
+    <bpmn:sequenceFlow id="Flow_ag_18" sourceRef="Task_AnalisisCausaRaiz" targetRef="Task_AuditoriaCuellosBotella" />
+    <bpmn:sequenceFlow id="Flow_ag_16_control" name="Bajo Control" sourceRef="Gateway_EstabilidadProceso" targetRef="Task_EntrenamientoYieldAI" />
+    <bpmn:sequenceFlow id="Flow_ag_19" sourceRef="Task_EntrenamientoYieldAI" targetRef="Task_AuditoriaCuellosBotella" />
+    <bpmn:sequenceFlow id="Flow_ag_20" sourceRef="Task_AuditoriaCuellosBotella" targetRef="Task_GenerarPlanMejoraBPMN" />
+    <bpmn:sequenceFlow id="Flow_ag_21" sourceRef="Task_GenerarPlanMejoraBPMN" targetRef="Task_RetrospectivaAgroInnova" />
+    <bpmn:sequenceFlow id="Flow_ag_22" sourceRef="Task_RetrospectivaAgroInnova" targetRef="Task_CertificarIncrementoValor" />
+    <bpmn:sequenceFlow id="Flow_ag_23" sourceRef="Task_CertificarIncrementoValor" targetRef="Task_FacturacionShareOfGain" />
+    <bpmn:sequenceFlow id="Flow_ag_24" sourceRef="Task_FacturacionShareOfGain" targetRef="EndEvent_ExitoCosecha" />
+  </bpmn:process>
+
+  <!-- ========================================== -->
+  <!-- DIAGRAM INTERCHANGE (COORDINATES & SHAPES) -->
+  <!-- ========================================== -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_AgroStats">
+    <bpmndi:BPMNPlane id="BPMNPlane_AgroStats" bpmnElement="Collaboration_AgroStats">
+      
+      <!-- Pool Productor -->
+      <bpmndi:BPMNShape id="Shape_Participant_Productor" bpmnElement="Participant_Productor" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="3100" height="200" />
+      </bpmndi:BPMNShape>
+
+      <!-- Elementos en Productor -->
+      <bpmndi:BPMNShape id="Shape_Start_Productor" bpmnElement="Start_Productor">
+        <dc:Bounds x="212" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_Solicitar" bpmnElement="Task_Prod_Solicitar">
+        <dc:Bounds x="290" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_FirmaAcuerdo" bpmnElement="Task_Prod_FirmaAcuerdo">
+        <dc:Bounds x="780" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_CargaDatos" bpmnElement="Task_Prod_CargaDatos">
+        <dc:Bounds x="1080" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_ResolverCuarentena" bpmnElement="Task_Prod_ResolverCuarentena">
+        <dc:Bounds x="1440" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_AprobarPlanBPMN" bpmnElement="Task_Prod_AprobarPlanBPMN">
+        <dc:Bounds x="2480" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Prod_FirmaConformidad" bpmnElement="Task_Prod_FirmaConformidad">
+        <dc:Bounds x="2940" y="130" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Productor" bpmnElement="End_Productor">
+        <dc:Bounds x="3132" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <!-- Conexiones Productor -->
+      <bpmndi:BPMNEdge id="Edge_Flow_p1" bpmnElement="Flow_p1">
+        <di:waypoint x="248" y="170" /><di:waypoint x="290" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p2" bpmnElement="Flow_p2">
+        <di:waypoint x="420" y="170" /><di:waypoint x="780" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p3" bpmnElement="Flow_p3">
+        <di:waypoint x="910" y="170" /><di:waypoint x="1080" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p4" bpmnElement="Flow_p4">
+        <di:waypoint x="1210" y="170" /><di:waypoint x="1440" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p5" bpmnElement="Flow_p5">
+        <di:waypoint x="1570" y="170" /><di:waypoint x="2480" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p6" bpmnElement="Flow_p6">
+        <di:waypoint x="2610" y="170" /><di:waypoint x="2940" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_p7" bpmnElement="Flow_p7">
+        <di:waypoint x="3070" y="170" /><di:waypoint x="3132" y="170" />
+      </bpmndi:BPMNEdge>
+
+      <!-- Pool AgroStats -->
+      <bpmndi:BPMNShape id="Shape_Participant_AgroStats" bpmnElement="Participant_AgroStats" isHorizontal="true">
+        <dc:Bounds x="160" y="340" width="3100" height="1360" />
+      </bpmndi:BPMNShape>
+
+      <!-- Lanes en AgroStats -->
+      <bpmndi:BPMNShape id="Shape_Lane_AgroHumanos" bpmnElement="Lane_AgroHumanos" isHorizontal="true">
+        <dc:Bounds x="190" y="340" width="3070" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteIngesta" bpmnElement="Lane_AgenteIngesta" isHorizontal="true">
+        <dc:Bounds x="190" y="540" width="3070" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteLakehouse" bpmnElement="Lane_AgenteLakehouse" isHorizontal="true">
+        <dc:Bounds x="190" y="720" width="3070" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteBioestadistica" bpmnElement="Lane_AgenteBioestadistica" isHorizontal="true">
+        <dc:Bounds x="190" y="900" width="3070" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteYieldAI" bpmnElement="Lane_AgenteYieldAI" isHorizontal="true">
+        <dc:Bounds x="190" y="1120" width="3070" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteBPMN" bpmnElement="Lane_AgenteBPMN" isHorizontal="true">
+        <dc:Bounds x="190" y="1300" width="3070" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_AgenteInnova" bpmnElement="Lane_AgenteInnova" isHorizontal="true">
+        <dc:Bounds x="190" y="1480" width="3070" height="220" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 1: Humanos -->
+      <bpmndi:BPMNShape id="Shape_StartEvent_AgroLead" bpmnElement="StartEvent_AgroLead">
+        <dc:Bounds x="242" y="422" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_EvaluarLeadAgro" bpmnElement="Task_EvaluarLeadAgro">
+        <dc:Bounds x="320" y="400" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_LeadCalificado" bpmnElement="Gateway_LeadCalificado" isMarkerVisible="true">
+        <dc:Bounds x="495" y="415" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_NotificarNoCalificado" bpmnElement="Task_NotificarNoCalificado">
+        <dc:Bounds x="455" y="350" width="130" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndEvent_RechazoLead" bpmnElement="EndEvent_RechazoLead">
+        <dc:Bounds x="622" y="362" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_ModeladoShareOfGain" bpmnElement="Task_ModeladoShareOfGain">
+        <dc:Bounds x="610" y="400" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_EmitirAcuerdoDigital" bpmnElement="Task_EmitirAcuerdoDigital">
+        <dc:Bounds x="780" y="400" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_CertificarIncrementoValor" bpmnElement="Task_CertificarIncrementoValor">
+        <dc:Bounds x="2760" y="400" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_FacturacionShareOfGain" bpmnElement="Task_FacturacionShareOfGain">
+        <dc:Bounds x="2940" y="400" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_EndEvent_ExitoCosecha" bpmnElement="EndEvent_ExitoCosecha">
+        <dc:Bounds x="3122" y="422" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 2: Ingesta -->
+      <bpmndi:BPMNShape id="Shape_Task_ActivarCuentaLakehouse" bpmnElement="Task_ActivarCuentaLakehouse">
+        <dc:Bounds x="940" y="590" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_IngestaMulticanal" bpmnElement="Task_IngestaMulticanal">
+        <dc:Bounds x="1110" y="590" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_ValidarDataContracts" bpmnElement="Task_ValidarDataContracts">
+        <dc:Bounds x="1280" y="590" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_CalidadDato" bpmnElement="Gateway_CalidadDato" isMarkerVisible="true">
+        <dc:Bounds x="1455" y="605" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_EnrutarDLQ" bpmnElement="Task_EnrutarDLQ">
+        <dc:Bounds x="1415" y="545" width="130" height="55" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 3: Lakehouse -->
+      <bpmndi:BPMNShape id="Shape_Task_CuraduriaDelta" bpmnElement="Task_CuraduriaDelta">
+        <dc:Bounds x="1560" y="770" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_InterpolacionKriging" bpmnElement="Task_InterpolacionKriging">
+        <dc:Bounds x="1730" y="770" width="130" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 4: Bioestadística & SPC -->
+      <bpmndi:BPMNShape id="Shape_Task_CalculoLimitesSPC" bpmnElement="Task_CalculoLimitesSPC">
+        <dc:Bounds x="1900" y="960" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_EvaluarWesternElectric" bpmnElement="Task_EvaluarWesternElectric">
+        <dc:Bounds x="2070" y="960" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_EstabilidadProceso" bpmnElement="Gateway_EstabilidadProceso" isMarkerVisible="true">
+        <dc:Bounds x="2245" y="975" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_EmitirAlertaSPC" bpmnElement="Task_EmitirAlertaSPC">
+        <dc:Bounds x="2205" y="910" width="130" height="55" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_AnalisisCausaRaiz" bpmnElement="Task_AnalisisCausaRaiz">
+        <dc:Bounds x="2205" y="1040" width="130" height="70" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 5: Yield AI -->
+      <bpmndi:BPMNShape id="Shape_Task_EntrenamientoYieldAI" bpmnElement="Task_EntrenamientoYieldAI">
+        <dc:Bounds x="2340" y="1170" width="130" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 6: Optimización BPMN -->
+      <bpmndi:BPMNShape id="Shape_Task_AuditoriaCuellosBotella" bpmnElement="Task_AuditoriaCuellosBotella">
+        <dc:Bounds x="2340" y="1350" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_GenerarPlanMejoraBPMN" bpmnElement="Task_GenerarPlanMejoraBPMN">
+        <dc:Bounds x="2510" y="1350" width="130" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Nodos en Lane 7: AgroInnova Lab -->
+      <bpmndi:BPMNShape id="Shape_Task_RetrospectivaAgroInnova" bpmnElement="Task_RetrospectivaAgroInnova">
+        <dc:Bounds x="2650" y="1540" width="130" height="80" />
+      </bpmndi:BPMNShape>
+
+      <!-- Sequence Flows en AgroStats -->
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_01" bpmnElement="Flow_ag_01">
+        <di:waypoint x="278" y="440" /><di:waypoint x="320" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_02" bpmnElement="Flow_ag_02">
+        <di:waypoint x="450" y="440" /><di:waypoint x="495" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_03_no" bpmnElement="Flow_ag_03_no">
+        <di:waypoint x="520" y="415" /><di:waypoint x="520" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_04" bpmnElement="Flow_ag_04">
+        <di:waypoint x="585" y="380" /><di:waypoint x="622" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_03_si" bpmnElement="Flow_ag_03_si">
+        <di:waypoint x="545" y="440" /><di:waypoint x="610" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_05" bpmnElement="Flow_ag_05">
+        <di:waypoint x="740" y="440" /><di:waypoint x="780" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_06" bpmnElement="Flow_ag_06">
+        <di:waypoint x="845" y="480" /><di:waypoint x="845" y="630" /><di:waypoint x="940" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_07" bpmnElement="Flow_ag_07">
+        <di:waypoint x="1070" y="630" /><di:waypoint x="1110" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_08" bpmnElement="Flow_ag_08">
+        <di:waypoint x="1240" y="630" /><di:waypoint x="1280" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_09" bpmnElement="Flow_ag_09">
+        <di:waypoint x="1410" y="630" /><di:waypoint x="1455" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_10_no" bpmnElement="Flow_ag_10_no">
+        <di:waypoint x="1480" y="605" /><di:waypoint x="1480" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_11_reintento" bpmnElement="Flow_ag_11_reintento">
+        <di:waypoint x="1415" y="572" /><di:waypoint x="1175" y="572" /><di:waypoint x="1175" y="590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_10_si" bpmnElement="Flow_ag_10_si">
+        <di:waypoint x="1480" y="655" /><di:waypoint x="1480" y="810" /><di:waypoint x="1560" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_12" bpmnElement="Flow_ag_12">
+        <di:waypoint x="1690" y="810" /><di:waypoint x="1730" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_13" bpmnElement="Flow_ag_13">
+        <di:waypoint x="1860" y="810" /><di:waypoint x="1880" y="810" /><di:waypoint x="1880" y="1000" /><di:waypoint x="1900" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_14" bpmnElement="Flow_ag_14">
+        <di:waypoint x="2030" y="1000" /><di:waypoint x="2070" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_15" bpmnElement="Flow_ag_15">
+        <di:waypoint x="2200" y="1000" /><di:waypoint x="2245" y="1000" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_16_fuera" bpmnElement="Flow_ag_16_fuera">
+        <di:waypoint x="2270" y="975" /><di:waypoint x="2270" y="965" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_17" bpmnElement="Flow_ag_17">
+        <di:waypoint x="2270" y="965" /><di:waypoint x="2270" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_18" bpmnElement="Flow_ag_18">
+        <di:waypoint x="2270" y="1110" /><di:waypoint x="2270" y="1390" /><di:waypoint x="2340" y="1390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_16_control" bpmnElement="Flow_ag_16_control">
+        <di:waypoint x="2295" y="1000" /><di:waypoint x="2318" y="1000" /><di:waypoint x="2318" y="1210" /><di:waypoint x="2340" y="1210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_19" bpmnElement="Flow_ag_19">
+        <di:waypoint x="2405" y="1250" /><di:waypoint x="2405" y="1350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_20" bpmnElement="Flow_ag_20">
+        <di:waypoint x="2470" y="1390" /><di:waypoint x="2510" y="1390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_21" bpmnElement="Flow_ag_21">
+        <di:waypoint x="2575" y="1430" /><di:waypoint x="2575" y="1580" /><di:waypoint x="2650" y="1580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_22" bpmnElement="Flow_ag_22">
+        <di:waypoint x="2780" y="1580" /><di:waypoint x="2825" y="1580" /><di:waypoint x="2825" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_23" bpmnElement="Flow_ag_23">
+        <di:waypoint x="2890" y="440" /><di:waypoint x="2940" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ag_24" bpmnElement="Flow_ag_24">
+        <di:waypoint x="3070" y="440" /><di:waypoint x="3122" y="440" />
+      </bpmndi:BPMNEdge>
+
+      <!-- Message Flow Edges -->
+      <bpmndi:BPMNEdge id="Edge_Msg_01" bpmnElement="Msg_01_Solicitud">
+        <di:waypoint x="355" y="210" /><di:waypoint x="355" y="316" /><di:waypoint x="260" y="316" /><di:waypoint x="260" y="422" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_02" bpmnElement="Msg_02_Acuerdo">
+        <di:waypoint x="845" y="400" /><di:waypoint x="845" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_03" bpmnElement="Msg_03_FirmaAcuerdo">
+        <di:waypoint x="880" y="210" /><di:waypoint x="880" y="630" /><di:waypoint x="940" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_04" bpmnElement="Msg_04_CargaDatos">
+        <di:waypoint x="1145" y="210" /><di:waypoint x="1145" y="590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_05" bpmnElement="Msg_05_AlertaDLQ">
+        <di:waypoint x="1480" y="545" /><di:waypoint x="1480" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_06" bpmnElement="Msg_06_EntregaPlan">
+        <di:waypoint x="2575" y="1350" /><di:waypoint x="2575" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_07" bpmnElement="Msg_07_AprobacionPlan">
+        <di:waypoint x="2600" y="210" /><di:waypoint x="2600" y="1580" /><di:waypoint x="2650" y="1580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_08" bpmnElement="Msg_08_Factura">
+        <di:waypoint x="3005" y="400" /><di:waypoint x="3005" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Msg_09" bpmnElement="Msg_09_Conformidad">
+        <di:waypoint x="3050" y="210" /><di:waypoint x="3050" y="316" /><di:waypoint x="3140" y="316" /><di:waypoint x="3140" y="422" />
+      </bpmndi:BPMNEdge>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>

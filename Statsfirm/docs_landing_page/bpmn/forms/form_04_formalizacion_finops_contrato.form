@@ -1,0 +1,122 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_04_FormalizacionFinOpsContrato",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-03: Modelado FinOps, DPA y Formalización Contractual\nEstructuración económica y cumplimiento normativo liderado por FinOps y Legal.",
+      "type": "text",
+      "id": "text_header_4"
+    },
+    {
+      "label": "Inversión de Implementación / CAPEX (USD)",
+      "type": "number",
+      "id": "f_capex_usd",
+      "key": "capex_usd",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Costo Estimado de Infraestructura Cloud Mensual / OPEX (USD)",
+      "type": "number",
+      "id": "f_opex_cloud_usd",
+      "key": "opex_cloud_usd",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Proveedor Cloud Principal",
+      "type": "select",
+      "id": "f_cloud_provider",
+      "key": "cloud_provider",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Amazon Web Services (AWS)",
+          "value": "aws"
+        },
+        {
+          "label": "Microsoft Azure",
+          "value": "azure"
+        },
+        {
+          "label": "Google Cloud Platform (GCP)",
+          "value": "gcp"
+        },
+        {
+          "label": "Estrategia Híbrida / Multi-Cloud",
+          "value": "multicloud"
+        }
+      ]
+    },
+    {
+      "label": "Modelo Contractual de Squad",
+      "type": "select",
+      "id": "f_modelo_contrato",
+      "key": "modelo_contrato",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Squad Dedicado Multidisciplinario (Sprints Quincenales)",
+          "value": "squad_dedicado"
+        },
+        {
+          "label": "Co-creación Híbrida (Statsfirm + Personal del Cliente)",
+          "value": "co_creacion"
+        },
+        {
+          "label": "Entregables Modulares por Hitos Cerrados",
+          "value": "hitos_modulares"
+        }
+      ]
+    },
+    {
+      "label": "Aprobación del Data Processing Agreement (DPA)",
+      "type": "checkbox",
+      "id": "f_dpa_aprobado",
+      "key": "dpa_aprobado",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Certificación de Soberanía y Residencia Geográfica del Dato",
+      "type": "checkbox",
+      "id": "f_soberania_dato",
+      "key": "soberania_dato",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Hash Criptográfico del Contrato (SHA-256)",
+      "type": "textfield",
+      "id": "f_hash_contrato",
+      "key": "hash_contrato",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Confirmación de Firma Digital en App Cliente",
+      "type": "checkbox",
+      "id": "f_contrato_firmado_cliente",
+      "key": "contrato_firmado_cliente",
+      "validate": {
+        "required": true
+      }
+    }
+  ]
+}

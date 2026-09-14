@@ -1,0 +1,109 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_05_SprintPlanningDoR",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-04/06: Sprint Planning & Verificación de Definition of Ready (DoR)\nCeremonia técnica facilitada por el Revisor Agile y el Product Owner.",
+      "type": "text",
+      "id": "text_header_5"
+    },
+    {
+      "label": "Número de Sprint",
+      "type": "number",
+      "id": "f_sprint_num",
+      "key": "sprint_num",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Identificador del Squad Asignado",
+      "type": "textfield",
+      "id": "f_squad_id",
+      "key": "squad_id",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Objetivo del Sprint (Sprint Goal)",
+      "type": "textarea",
+      "id": "f_sprint_goal",
+      "key": "sprint_goal",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Story Points Totales Comprometidos",
+      "type": "number",
+      "id": "f_story_points",
+      "key": "story_points",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "DoR: Criterios de Aceptación Gherkin definidos",
+      "type": "checkbox",
+      "id": "f_dor_gherkin",
+      "key": "dor_gherkin",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "DoR: Esquemas de Datos validados en Data Catalog",
+      "type": "checkbox",
+      "id": "f_dor_esquemas",
+      "key": "dor_esquemas",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "DoR: Contratos OpenAPI / AsyncAPI especificados",
+      "type": "checkbox",
+      "id": "f_dor_apis",
+      "key": "dor_apis",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "DoR: Dependencias de infraestructura o accesos resueltos",
+      "type": "checkbox",
+      "id": "f_dor_dependencias",
+      "key": "dor_dependencias",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Dictamen de Preparación (DoR Aprobado)",
+      "type": "select",
+      "id": "f_dor_aprobado",
+      "key": "dor_aprobado",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aprobado: El Sprint inicia formalmente",
+          "value": "aprobado"
+        },
+        {
+          "label": "Rechazado: Regresar historias a Refinement",
+          "value": "rechazado"
+        }
+      ]
+    }
+  ]
+}

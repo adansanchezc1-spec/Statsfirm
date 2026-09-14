@@ -1,0 +1,135 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_10_AceleradorInnovaLab",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-09: Incubación de Aceleradores Técnicos y Mejora Continua STF\nLiderado por Innova Lab y el Head of Process Architecture.",
+      "type": "text",
+      "id": "text_header_10"
+    },
+    {
+      "label": "Nombre del Acelerador o Herramienta Propuesta",
+      "type": "textfield",
+      "id": "f_acelerador_nombre",
+      "key": "acelerador_nombre",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Categoría Técnica del Acelerador",
+      "type": "select",
+      "id": "f_acelerador_categoria",
+      "key": "acelerador_categoria",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Conector de Ingesta Pre-construido (Capa 1)",
+          "value": "conector_c1"
+        },
+        {
+          "label": "Modelo Semántico / Plantilla dbt Reutilizable (Capa 2/3)",
+          "value": "template_dbt"
+        },
+        {
+          "label": "Pipeline CI/CD y Módulos IaC Terraform",
+          "value": "iac_pipeline"
+        },
+        {
+          "label": "Modelo ML / Pipeline MLOps Reutilizable",
+          "value": "mlops_modelo"
+        },
+        {
+          "label": "Componente UI / SDK Cliente Móvil y Web",
+          "value": "ui_sdk"
+        }
+      ]
+    },
+    {
+      "label": "Patrón de Fricción Identificado en Sprints",
+      "type": "textarea",
+      "id": "f_friccion_detectada",
+      "key": "friccion_detectada",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Ahorro Estimado de Tiempo por Sprint (Horas)",
+      "type": "number",
+      "id": "f_ahorro_horas",
+      "key": "ahorro_horas",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Métrica DORA Impactada Favorablemente",
+      "type": "select",
+      "id": "f_metrica_dora",
+      "key": "metrica_dora",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Deployment Frequency (Mayor frecuencia)",
+          "value": "df"
+        },
+        {
+          "label": "Lead Time for Changes (Menor tiempo de ciclo)",
+          "value": "ltc"
+        },
+        {
+          "label": "Change Failure Rate (Menor tasa de fallos)",
+          "value": "cfr"
+        },
+        {
+          "label": "Mean Time to Restore (Menor tiempo de recuperación)",
+          "value": "mttr"
+        }
+      ]
+    },
+    {
+      "label": "Versión del Framework STF a Actualizar",
+      "type": "textfield",
+      "id": "f_version_stf",
+      "key": "version_stf",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Dictamen del Comité de Innovación",
+      "type": "select",
+      "id": "f_dictamen_innova",
+      "key": "dictamen_innova",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aprobado para Incubación en Innova Lab",
+          "value": "incubacion"
+        },
+        {
+          "label": "Publicado en Ecosistema de Aceleradores Corporativos",
+          "value": "publicado"
+        },
+        {
+          "label": "Archivado para Futura Revisión",
+          "value": "archivado"
+        }
+      ]
+    }
+  ]
+}

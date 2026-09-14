@@ -1,0 +1,99 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_07_QASignoffDoD",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-06: Certificación QA y Validación de Definition of Done (DoD)\nVerificación de calidad técnica por el QA Engineer y el Ingeniero DevOps.",
+      "type": "text",
+      "id": "text_header_7"
+    },
+    {
+      "label": "Versión de Release / Tag de Git",
+      "type": "textfield",
+      "id": "f_release_tag",
+      "key": "release_tag",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "URL de Pull Request / Registro de Pipeline",
+      "type": "textfield",
+      "id": "f_pr_url",
+      "key": "pr_url",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Cobertura de Pruebas Unitarias (%)",
+      "type": "number",
+      "id": "f_cobertura_tests",
+      "key": "cobertura_tests",
+      "validate": {
+        "required": true,
+        "min": 80,
+        "max": 100
+      }
+    },
+    {
+      "label": "SonarQube Quality Gate Status",
+      "type": "select",
+      "id": "f_sonarqube_status",
+      "key": "sonarqube_status",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "PASSED (0 vulnerabilidades críticas, deuda técnica < 5%)",
+          "value": "passed"
+        },
+        {
+          "label": "FAILED (Vulnerabilidades o cobertura insuficiente)",
+          "value": "failed"
+        }
+      ]
+    },
+    {
+      "label": "Validación en Ambiente Staging Exitosa",
+      "type": "checkbox",
+      "id": "f_staging_ok",
+      "key": "staging_ok",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Pruebas E2E Automatizadas sin Regresiones",
+      "type": "checkbox",
+      "id": "f_e2e_ok",
+      "key": "e2e_ok",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Certificación Final DoD: Listo para Producción / Demo",
+      "type": "checkbox",
+      "id": "f_dod_aprobado",
+      "key": "dod_aprobado",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Notas de Release y Observaciones de Calidad",
+      "type": "textarea",
+      "id": "f_notas_release",
+      "key": "notas_release"
+    }
+  ]
+}

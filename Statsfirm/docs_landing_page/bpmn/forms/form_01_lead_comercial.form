@@ -1,0 +1,166 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_01_LeadComercial",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-01: Captura de Requerimientos Iniciales y Lead Comercial\nRegistre los datos iniciales del cliente, necesidad estratégica y estimaciones operativas.",
+      "type": "text",
+      "id": "text_header_1"
+    },
+    {
+      "label": "Nombre de la Empresa / Cliente",
+      "type": "textfield",
+      "id": "f_cliente_empresa",
+      "key": "cliente_empresa",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Nombre y Cargo del Contacto Principal",
+      "type": "textfield",
+      "id": "f_cliente_contacto",
+      "key": "cliente_contacto",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Correo Electrónico Corporativo",
+      "type": "textfield",
+      "id": "f_cliente_email",
+      "key": "cliente_email",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Sector Industrial",
+      "type": "select",
+      "id": "f_sector_industrial",
+      "key": "sector_industrial",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Finanzas & Banca",
+          "value": "finanzas"
+        },
+        {
+          "label": "Salud & Pharma",
+          "value": "salud"
+        },
+        {
+          "label": "Retail & E-commerce",
+          "value": "retail"
+        },
+        {
+          "label": "Telecomunicaciones",
+          "value": "telecom"
+        },
+        {
+          "label": "Logística & Supply Chain",
+          "value": "logistica"
+        },
+        {
+          "label": "Energía & Utilities",
+          "value": "energia"
+        },
+        {
+          "label": "Sector Público & Gob",
+          "value": "gobierno"
+        }
+      ]
+    },
+    {
+      "label": "Tipo de Intervención Requerida",
+      "type": "checklist",
+      "id": "f_tipo_intervencion",
+      "key": "tipo_intervencion",
+      "values": [
+        {
+          "label": "Modernización de Datos y Lakehouse (3 Capas)",
+          "value": "lakehouse"
+        },
+        {
+          "label": "Arquitectura de Software Cloud-Native & Microservicios",
+          "value": "software"
+        },
+        {
+          "label": "Ingeniería de IA, Agentes y Analítica Avanzada",
+          "value": "ia"
+        },
+        {
+          "label": "Ingeniería de Procesos BPMN y Automatización",
+          "value": "bpmn"
+        },
+        {
+          "label": "Gobierno del Dato & Calidad DAMA-BOK",
+          "value": "gobierno"
+        }
+      ]
+    },
+    {
+      "label": "Volumen Estimado de Datos (Terabytes)",
+      "type": "number",
+      "id": "f_volumen_datos_tb",
+      "key": "volumen_datos_tb",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Presupuesto Estimado (USD)",
+      "type": "number",
+      "id": "f_presupuesto_usd",
+      "key": "presupuesto_usd",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Nivel de Urgencia del Proyecto",
+      "type": "select",
+      "id": "f_urgencia_proyecto",
+      "key": "urgencia_proyecto",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Baja (Planificación > 6 meses)",
+          "value": "baja"
+        },
+        {
+          "label": "Media (Inicio en 2-3 meses)",
+          "value": "media"
+        },
+        {
+          "label": "Alta (Inicio < 30 días)",
+          "value": "alta"
+        },
+        {
+          "label": "Crítica (Inmediato / Rescate operativo)",
+          "value": "critica"
+        }
+      ]
+    },
+    {
+      "label": "Descripción del Desafío Estratégico y Pain Points",
+      "type": "textarea",
+      "id": "f_descripcion_desafio",
+      "key": "descripcion_desafio",
+      "validate": {
+        "required": true
+      }
+    }
+  ]
+}

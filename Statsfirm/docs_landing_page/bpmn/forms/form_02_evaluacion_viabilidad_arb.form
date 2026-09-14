@@ -1,0 +1,139 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_02_EvaluacionViabilidadARB",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-01: Evaluación de Viabilidad Técnica & Dictamen ARB\nEvaluación realizada por el Jefe de Procesos y el Architecture Review Board (ARB).",
+      "type": "text",
+      "id": "text_header_2"
+    },
+    {
+      "label": "Cliente / Empresa Evaluada",
+      "type": "textfield",
+      "id": "f_arb_cliente",
+      "key": "cliente_empresa",
+      "disabled": true
+    },
+    {
+      "label": "Score de Viabilidad Técnica (1-100)",
+      "type": "number",
+      "id": "f_score_viabilidad",
+      "key": "score_viabilidad",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 100
+      }
+    },
+    {
+      "label": "Score de Fit Estratégico Metodología STF (1-100)",
+      "type": "number",
+      "id": "f_score_fit",
+      "key": "score_fit",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 100
+      }
+    },
+    {
+      "label": "Topología de Arquitectura Sugerida",
+      "type": "select",
+      "id": "f_topologia_arquitectura",
+      "key": "topologia_arquitectura",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Data Lakehouse Medallion (Bronze/Silver/Gold)",
+          "value": "lakehouse_medallion"
+        },
+        {
+          "label": "Microservicios Cloud-Native & EDA (Event-Driven)",
+          "value": "microservicios_eda"
+        },
+        {
+          "label": "Data Mesh Distribuido con Gobernanza Federada",
+          "value": "data_mesh"
+        },
+        {
+          "label": "Ecosistema Híbrido Datos + Microservicios",
+          "value": "hibrido"
+        }
+      ]
+    },
+    {
+      "label": "Complejidad Estimada de Integración",
+      "type": "select",
+      "id": "f_complejidad_estimada",
+      "key": "complejidad_estimada",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Baja (Fuentes estructuradas estándar)",
+          "value": "baja"
+        },
+        {
+          "label": "Media (Múltiples APIs y BD relacionales)",
+          "value": "media"
+        },
+        {
+          "label": "Alta (Sistemas legados, streaming IoT, PII masivo)",
+          "value": "alta"
+        },
+        {
+          "label": "Muy Alta (Regulaciones críticas multinacionales)",
+          "value": "muy_alta"
+        }
+      ]
+    },
+    {
+      "label": "Riesgos de Integración y Mitigaciones Previas",
+      "type": "textarea",
+      "id": "f_riesgos_integracion",
+      "key": "riesgos_integracion"
+    },
+    {
+      "label": "Dictamen Final del ARB",
+      "type": "select",
+      "id": "f_dictamen_arb",
+      "key": "dictamen_arb",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aprobado para Diagnóstico Inicial (STF Fase 2)",
+          "value": "aprobado"
+        },
+        {
+          "label": "Condicionado a Aclaración Técnica Comercial",
+          "value": "condicionado"
+        },
+        {
+          "label": "Rechazado por Inviabilidad / Riesgo Desmedido",
+          "value": "rechazado"
+        }
+      ]
+    },
+    {
+      "label": "Justificación del Dictamen y Recomendación de Squad",
+      "type": "textarea",
+      "id": "f_justificacion_arb",
+      "key": "justificacion_arb",
+      "validate": {
+        "required": true
+      }
+    }
+  ]
+}

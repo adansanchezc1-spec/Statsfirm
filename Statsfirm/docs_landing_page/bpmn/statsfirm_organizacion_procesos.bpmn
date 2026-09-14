@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:definitions xmlns:ns0="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:ns1="http://camunda.org/schema/1.0/bpmn" xmlns:ns2="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ns3="http://www.omg.org/spec/DD/20100524/DC" xmlns:ns4="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Statsfirm_E2E" targetNamespace="http://statsfirm.co/bpmn" exporter="Camunda Modeler" exporterVersion="5.46.1">
+  <ns0:collaboration id="Collaboration_Statsfirm">
+    <ns0:participant id="Participant_Cliente" name="Cliente / Usuario Final (Portal Web &#38; App Móvil Statsfirm)" processRef="Process_Cliente" />
+    <ns0:participant id="Participant_Statsfirm" name="Statsfirm Co. — Organización Empresarial &#38; Squads Multidisciplinarios" processRef="Process_Statsfirm" />
+    <ns0:messageFlow id="Flow_msg_01" name="Envío Solicitud / Lead Comercial" sourceRef="Task_Cli_Solicitud" targetRef="StartEvent_Lead" />
+    <ns0:messageFlow id="Flow_msg_02" name="Insumos de Negocio y Logs" sourceRef="Task_Cli_Discover" targetRef="Task_SesionesDiscover" />
+    <ns0:messageFlow id="Flow_msg_03" name="Envío DPA y Contrato para Firma Digital" sourceRef="Task_FormalizarContrato" targetRef="Task_Cli_FirmaContrato" />
+    <ns0:messageFlow id="Flow_msg_04" name="Contrato Firmado Digitalmente" sourceRef="Task_Cli_FirmaContrato" targetRef="Task_ActivarERP" />
+    <ns0:messageFlow id="Flow_msg_05" name="Demostración de Incremento en Sprint Review" sourceRef="Task_SprintReviewDemo" targetRef="Task_Cli_ReviewSprint" />
+    <ns0:messageFlow id="Flow_msg_06" name="Conformidad y Firma Electrónica Avanzada" sourceRef="Task_Cli_FirmaEntrega" targetRef="Task_DispararFactura" />
+    <ns0:messageFlow id="Flow_msg_07" name="Reporte de Ticket o Incidencia Técnica" sourceRef="Task_Cli_ReportarIncidente" targetRef="Event_AlertaIncidente" />
+  </ns0:collaboration>
+  <ns0:process id="Process_Cliente" name="Cliente / Usuario" isExecutable="false">
+    <ns0:startEvent id="Start_Cliente" name="Inicio Necesidad Negocio" />
+    <ns0:userTask id="Task_Cli_Solicitud" name="Ingresar Necesidad en Portal / App" ns1:formRef="form_01_lead_comercial.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Usuario" />
+    <ns0:userTask id="Task_Cli_Discover" name="Participar en Descubrimiento &#38; Entrevistas" ns1:formRef="form_03_diagnostico_madurez_okrs.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Usuario" />
+    <ns0:userTask id="Task_Cli_FirmaContrato" name="Revisar y Firmar Contrato Digital en App" ns1:formRef="form_04_formalizacion_finops_contrato.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Representante Legal" />
+    <ns0:userTask id="Task_Cli_ReviewSprint" name="Asistir a Sprint Review y Validar DoR/DoD" ns1:formRef="form_08_aprobacion_entrega_firma.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Product Owner" />
+    <ns0:userTask id="Task_Cli_FirmaEntrega" name="Firmar Conformidad de Hito en App" ns1:formRef="form_08_aprobacion_entrega_firma.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Firmante Autorizado" />
+    <ns0:endEvent id="End_Cliente" name="Valor Computable Obtenido" />
+    <ns0:userTask id="Task_Cli_ReportarIncidente" name="Reportar Incidente Operativo en Consola" ns1:formRef="form_09_gestion_incidentes_sev.form" ns1:formRefBinding="latest" ns1:candidateGroups="Cliente / Operador de Sistema" />
+    <ns0:sequenceFlow id="Flow_cli_1" sourceRef="Start_Cliente" targetRef="Task_Cli_Solicitud" />
+    <ns0:sequenceFlow id="Flow_cli_2" sourceRef="Task_Cli_Solicitud" targetRef="Task_Cli_Discover" />
+    <ns0:sequenceFlow id="Flow_cli_3" sourceRef="Task_Cli_Discover" targetRef="Task_Cli_FirmaContrato" />
+    <ns0:sequenceFlow id="Flow_cli_4" sourceRef="Task_Cli_FirmaContrato" targetRef="Task_Cli_ReviewSprint" />
+    <ns0:sequenceFlow id="Flow_cli_5" sourceRef="Task_Cli_ReviewSprint" targetRef="Task_Cli_FirmaEntrega" />
+    <ns0:sequenceFlow id="Flow_cli_7" sourceRef="Task_Cli_ReviewSprint" targetRef="Task_Cli_ReportarIncidente" />
+    <ns0:sequenceFlow id="Flow_cli_6" sourceRef="Task_Cli_FirmaEntrega" targetRef="End_Cliente" />
+  </ns0:process>
+  <ns0:process id="Process_Statsfirm" name="Statsfirm Co. - Procesos Integrados" isExecutable="true">
+    <ns0:laneSet id="LaneSet_Statsfirm">
+      <ns0:lane id="Lane_InnovaLab" name="Agentes de Innova Lab &#38; R&#38;D (AI Agent: Innovation &#38; R&#38;D Accelerator)">
+        <ns0:flowNodeRef>Task_RecopilarDORA</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_RetrospectivaSquad</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PropuestaAcelerador</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ActualizarMetodologiaSTF</ns0:flowNodeRef>
+        <ns0:flowNodeRef>EndEvent_MejoraDesplegada</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_OperacionesSRE" name="Agentes SRE &#38; Operaciones 24/7 (AI Agent: SRE On-Call, SecOps &#38; Monitoring)">
+        <ns0:flowNodeRef>Task_ClasificarSeveridad</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_NotificarBoardCISO</ns0:flowNodeRef>
+        <ns0:flowNodeRef>EndEvent_IncidenteResuelto</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_TelemetriaPrometheus</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Event_AlertaIncidente</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_MitigacionIncidente</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_EscaladoBoard</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_CierreIncidente</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_SoftwareDevOps" name="Agentes de Software, DevOps &#38; QA (AI Agent: Fullstack Dev, Code Review &#38; QA Testing)">
+        <ns0:flowNodeRef>Task_DesarrolloGitFlow</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PullRequestReview</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PipelineCI</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_FixCodeQuality</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_SonarPass</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ContinuousDeployProd</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_DoDCertificado</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PruebasQA</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_DespliegueStaging</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_DataEngineering" name="Agentes de Datos &#38; Gobernanza (AI Agent: Data Engineer &#38; Data Steward)">
+        <ns0:flowNodeRef>Task_IngestaBronze</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ValidarEsquema</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_EsquemaBronze</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PersistenciaBronze</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_CuraduriaSilver</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_CalidadSilver</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PublicarSemanticBI</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ModeladoGold</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_DesvioDLQ</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ValidarGobernanza</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_GestionAgil" name="Agentes de Gestión Ágil &#38; Producto (AI Agent: Product Owner &#38; Agile Coach)">
+        <ns0:flowNodeRef>Task_RefinarBacklog</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_ClienteConforme</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_SetupSquad</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_SprintPlanningDoR</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_JoinSprints</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_SprintReviewDemo</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_DoRValido</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_ForkSprints</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_PlanificarAjusteSprint</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_ProcesosARB" name="Agentes de Procesos &#38; Arquitectura ARB (AI Agent: Process Engineer &#38; ARB)">
+        <ns0:flowNodeRef>Task_PreEvaluacionViabilidad</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ValidacionARB</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_AprobacionARB</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_SesionesDiscover</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ExtraccionLogs</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ProcessMining</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_InformeMadurezOKRs</ns0:flowNodeRef>
+      </ns0:lane>
+      <ns0:lane id="Lane_ComercialFinOps" name="Dirección Ejecutiva, FinOps, Legal &#38; RRHH (Roles Humanos: Gerencia, Finanzas, Legal &#38; RRHH)">
+        <ns0:flowNodeRef>StartEvent_Lead</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_CapturaLead</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_VerificarCRM</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_DispararFactura</ns0:flowNodeRef>
+        <ns0:flowNodeRef>EndEvent_ProyectoCompletado</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Gateway_CalificaLead</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_NotificarRechazoLead</ns0:flowNodeRef>
+        <ns0:flowNodeRef>EndEvent_LeadRechazado</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ActivarERP</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_FormalizarContrato</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_GenerarDPA</ns0:flowNodeRef>
+        <ns0:flowNodeRef>Task_ModeladoFinOps</ns0:flowNodeRef>
+      </ns0:lane>
+    </ns0:laneSet>
+    <ns0:scriptTask id="Task_ClasificarSeveridad" name="Clasificación Automatizada (Sev 1 / 2 / 3)">
+      <ns0:script>// Execution script</ns0:script>
+    </ns0:scriptTask>
+    <ns0:sequenceFlow id="sf_56" sourceRef="Event_AlertaIncidente" targetRef="Task_ClasificarSeveridad" />
+    <ns0:sequenceFlow id="sf_57" sourceRef="Task_ClasificarSeveridad" targetRef="Task_MitigacionIncidente" />
+    <ns0:startEvent id="StartEvent_Lead" name="Recepción de Lead / Contacto Comercial" />
+    <ns0:userTask id="Task_CapturaLead" name="Captura de Requerimientos Iniciales (BPMN-01)" ns1:formRef="form_01_lead_comercial.form" ns1:formRefBinding="latest" ns1:candidateGroups="Humano: Gerencia / Ejecutivo Comercial" />
+    <ns0:serviceTask id="Task_VerificarCRM" name="Verificación Automatizada de Perfil en CRM" />
+    <ns0:serviceTask id="Task_DispararFactura" name="Emisión Automática de Factura Electrónica (ERP)" />
+    <ns0:endEvent id="EndEvent_ProyectoCompletado" name="Ciclo Comercial y Financiero Cerrado" />
+    <ns0:userTask id="Task_PreEvaluacionViabilidad" name="Pre-evaluación Técnica de Factibilidad" ns1:formRef="form_02_evaluacion_viabilidad_arb.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Process Engineer AI" />
+    <ns0:userTask id="Task_ValidacionARB" name="Revisión Técnica de Arquitectura Base (ARB)" ns1:formRef="form_02_evaluacion_viabilidad_arb.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Architecture Review Board AI" />
+    <ns0:exclusiveGateway id="Gateway_AprobacionARB" name="¿Dictamen ARB Aprobado?" />
+    <ns0:userTask id="Task_SesionesDiscover" name="Sesiones de Descubrimiento y Entrevistas (STF Fase 1)" ns1:formRef="form_03_diagnostico_madurez_okrs.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Process Engineer AI" />
+    <ns0:serviceTask id="Task_ExtraccionLogs" name="Extracción Automatizada de Muestras y Logs" />
+    <ns0:scriptTask id="Task_ProcessMining" name="Ejecución de Algoritmo de Process Mining">
+      <ns0:script>// Execution script</ns0:script>
+    </ns0:scriptTask>
+    <ns0:userTask id="Task_InformeMadurezOKRs" name="Diagnóstico de Madurez Digital y OKRs" ns1:formRef="form_03_diagnostico_madurez_okrs.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Process Engineer AI" />
+    <ns0:userTask id="Task_RefinarBacklog" name="Refinamiento de Historias y Criterios Gherkin" ns1:formRef="form_05_sprint_planning_dor.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Product Owner AI" />
+    <ns0:exclusiveGateway id="Gateway_ClienteConforme" name="¿Cliente Aprueba Entregable?" />
+    <ns0:serviceTask id="Task_IngestaBronze" name="Capa 1: Ingesta Multi-Protocolo a Raw Bronze" />
+    <ns0:serviceTask id="Task_ValidarEsquema" name="Validación de Esquema y Data Contracts" />
+    <ns0:exclusiveGateway id="Gateway_EsquemaBronze" name="¿Esquema Válido?" />
+    <ns0:serviceTask id="Task_PersistenciaBronze" name="Persistencia en Lakehouse Bronze (Delta/Iceberg)" />
+    <ns0:serviceTask id="Task_CuraduriaSilver" name="Capa 2: Transformación dbt/Spark &#38; Curaduría" />
+    <ns0:exclusiveGateway id="Gateway_CalidadSilver" name="¿Reglas de Calidad &#62;99.5% y Linaje OK?" />
+    <ns0:serviceTask id="Task_NotificarBoardCISO" name="Notificación Crítica a Board y CISO" />
+    <ns0:serviceTask id="Task_RecopilarDORA" name="Recopilación de Métricas DORA y Velocidad" />
+    <ns0:userTask id="Task_RetrospectivaSquad" name="Retrospectiva de Ingeniería e Identificación de Fricción" ns1:candidateGroups="Agente: Process Engineer AI" />
+    <ns0:userTask id="Task_PropuestaAcelerador" name="Incubación de Aceleradores Técnicos" ns1:formRef="form_10_acelerador_innova_lab.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Innova Lab &amp; R&amp;D Accelerator AI" />
+    <ns0:serviceTask id="Task_ActualizarMetodologiaSTF" name="Actualización de Metodología Corporativa STF" />
+    <ns0:endEvent id="EndEvent_MejoraDesplegada" name="Acelerador Corporativo Desplegado" />
+    <ns0:exclusiveGateway id="Gateway_CalificaLead" name="¿Cumple Criterios Prospección?" />
+    <ns0:serviceTask id="Task_NotificarRechazoLead" name="Notificación Lead No Calificado" />
+    <ns0:endEvent id="EndEvent_LeadRechazado" name="Lead Descartado" />
+    <ns0:serviceTask id="Task_ActivarERP" name="Activación de Proyecto en ERP Corporativo" />
+    <ns0:userTask id="Task_FormalizarContrato" name="Negociación y Envío de Contrato Digital" ns1:formRef="form_04_formalizacion_finops_contrato.form" ns1:formRefBinding="latest" ns1:candidateGroups="Humano: Legal &amp; Finanzas / Legal Counsel" />
+    <ns0:serviceTask id="Task_GenerarDPA" name="Generación Automática de DPA &#38; Cláusulas PII" />
+    <ns0:userTask id="Task_ModeladoFinOps" name="Modelado FinOps y Estimación Cloud" ns1:formRef="form_04_formalizacion_finops_contrato.form" ns1:formRefBinding="latest" ns1:candidateGroups="Humano: Finanzas / Especialista FinOps" />
+    <ns0:serviceTask id="Task_SetupSquad" name="Aprovisionamiento de Squad y Tableros Agile" />
+    <ns0:userTask id="Task_SprintPlanningDoR" name="Sprint Planning y Verificación DoR" ns1:formRef="form_05_sprint_planning_dor.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Product Owner &amp; Agile Coach AI" />
+    <ns0:sequenceFlow id="sf_01" sourceRef="StartEvent_Lead" targetRef="Task_CapturaLead" />
+    <ns0:sequenceFlow id="sf_02" sourceRef="Task_CapturaLead" targetRef="Task_VerificarCRM" />
+    <ns0:sequenceFlow id="sf_03" sourceRef="Task_VerificarCRM" targetRef="Gateway_CalificaLead" />
+    <ns0:sequenceFlow id="sf_51" name="Conforme / Firmado" sourceRef="Gateway_ClienteConforme" targetRef="Task_DispararFactura" />
+    <ns0:sequenceFlow id="sf_54" sourceRef="Task_DispararFactura" targetRef="EndEvent_ProyectoCompletado" />
+    <ns0:sequenceFlow id="sf_04" name="Sí (Score &#62; 60)" sourceRef="Gateway_CalificaLead" targetRef="Task_PreEvaluacionViabilidad" />
+    <ns0:sequenceFlow id="sf_07" sourceRef="Task_PreEvaluacionViabilidad" targetRef="Task_ValidacionARB" />
+    <ns0:sequenceFlow id="sf_08" sourceRef="Task_ValidacionARB" targetRef="Gateway_AprobacionARB" />
+    <ns0:sequenceFlow id="sf_09" name="Aprobado" sourceRef="Gateway_AprobacionARB" targetRef="Task_SesionesDiscover" />
+    <ns0:sequenceFlow id="sf_10" name="Rechazado" sourceRef="Gateway_AprobacionARB" targetRef="Task_NotificarRechazoLead" />
+    <ns0:sequenceFlow id="sf_11" sourceRef="Task_SesionesDiscover" targetRef="Task_ExtraccionLogs" />
+    <ns0:sequenceFlow id="sf_12" sourceRef="Task_ExtraccionLogs" targetRef="Task_ProcessMining" />
+    <ns0:sequenceFlow id="sf_13" sourceRef="Task_ProcessMining" targetRef="Task_InformeMadurezOKRs" />
+    <ns0:sequenceFlow id="sf_14" sourceRef="Task_InformeMadurezOKRs" targetRef="Task_ModeladoFinOps" />
+    <ns0:sequenceFlow id="sf_20" sourceRef="Task_SprintPlanningDoR" targetRef="Gateway_DoRValido" />
+    <ns0:sequenceFlow id="sf_21" name="DoR Conforme" sourceRef="Gateway_DoRValido" targetRef="Gateway_ForkSprints" />
+    <ns0:sequenceFlow id="sf_22" name="DoR Incompleto" sourceRef="Gateway_DoRValido" targetRef="Task_RefinarBacklog" />
+    <ns0:sequenceFlow id="sf_23" sourceRef="Task_RefinarBacklog" targetRef="Task_SprintPlanningDoR" />
+    <ns0:sequenceFlow id="sf_24" sourceRef="Gateway_ForkSprints" targetRef="Task_IngestaBronze" />
+    <ns0:sequenceFlow id="sf_37" sourceRef="Gateway_ForkSprints" targetRef="Task_DesarrolloGitFlow" />
+    <ns0:sequenceFlow id="sf_36" sourceRef="Task_PublicarSemanticBI" targetRef="Gateway_JoinSprints" />
+    <ns0:sequenceFlow id="sf_48" sourceRef="Task_ContinuousDeployProd" targetRef="Gateway_JoinSprints" />
+    <ns0:sequenceFlow id="sf_49" sourceRef="Gateway_JoinSprints" targetRef="Task_SprintReviewDemo" />
+    <ns0:sequenceFlow id="sf_50" sourceRef="Task_SprintReviewDemo" targetRef="Gateway_ClienteConforme" />
+    <ns0:sequenceFlow id="sf_63" sourceRef="Task_SprintReviewDemo" targetRef="Task_RecopilarDORA" />
+    <ns0:sequenceFlow id="sf_52" name="Ajustes menores" sourceRef="Gateway_ClienteConforme" targetRef="Task_PlanificarAjusteSprint" />
+    <ns0:sequenceFlow id="sf_53" sourceRef="Task_PlanificarAjusteSprint" targetRef="Task_SprintPlanningDoR" />
+    <ns0:sequenceFlow id="sf_25" sourceRef="Task_IngestaBronze" targetRef="Task_ValidarEsquema" />
+    <ns0:sequenceFlow id="sf_26" sourceRef="Task_ValidarEsquema" targetRef="Gateway_EsquemaBronze" />
+    <ns0:sequenceFlow id="sf_27" name="Válido" sourceRef="Gateway_EsquemaBronze" targetRef="Task_PersistenciaBronze" />
+    <ns0:sequenceFlow id="sf_28" name="Error en Esquema" sourceRef="Gateway_EsquemaBronze" targetRef="Task_DesvioDLQ" />
+    <ns0:sequenceFlow id="sf_29" sourceRef="Task_DesvioDLQ" targetRef="Task_PersistenciaBronze" />
+    <ns0:sequenceFlow id="sf_30" sourceRef="Task_PersistenciaBronze" targetRef="Task_CuraduriaSilver" />
+    <ns0:sequenceFlow id="sf_34" name="Re-procesar" sourceRef="Gateway_CalidadSilver" targetRef="Task_CuraduriaSilver" />
+    <ns0:sequenceFlow id="sf_31" sourceRef="Task_CuraduriaSilver" targetRef="Task_ValidarGobernanza" />
+    <ns0:sequenceFlow id="sf_32" sourceRef="Task_ValidarGobernanza" targetRef="Gateway_CalidadSilver" />
+    <ns0:sequenceFlow id="sf_33" name="Aprobado" sourceRef="Gateway_CalidadSilver" targetRef="Task_ModeladoGold" />
+    <ns0:sequenceFlow id="sf_35" sourceRef="Task_ModeladoGold" targetRef="Task_PublicarSemanticBI" />
+    <ns0:sequenceFlow id="sf_38" sourceRef="Task_DesarrolloGitFlow" targetRef="Task_PullRequestReview" />
+    <ns0:sequenceFlow id="sf_43" sourceRef="Task_FixCodeQuality" targetRef="Task_PullRequestReview" />
+    <ns0:sequenceFlow id="sf_39" sourceRef="Task_PullRequestReview" targetRef="Task_PipelineCI" />
+    <ns0:sequenceFlow id="sf_40" sourceRef="Task_PipelineCI" targetRef="Gateway_SonarPass" />
+    <ns0:sequenceFlow id="sf_41" name="Passed" sourceRef="Gateway_SonarPass" targetRef="Task_DespliegueStaging" />
+    <ns0:sequenceFlow id="sf_42" name="Failed" sourceRef="Gateway_SonarPass" targetRef="Task_FixCodeQuality" />
+    <ns0:sequenceFlow id="sf_47" name="Observaciones QA" sourceRef="Gateway_DoDCertificado" targetRef="Task_FixCodeQuality" />
+    <ns0:sequenceFlow id="sf_44" sourceRef="Task_DespliegueStaging" targetRef="Task_PruebasQA" />
+    <ns0:sequenceFlow id="sf_45" sourceRef="Task_PruebasQA" targetRef="Gateway_DoDCertificado" />
+    <ns0:sequenceFlow id="sf_46" name="DoD Cumplido" sourceRef="Gateway_DoDCertificado" targetRef="Task_ContinuousDeployProd" />
+    <ns0:sequenceFlow id="sf_55" sourceRef="Task_TelemetriaPrometheus" targetRef="Event_AlertaIncidente" />
+    <ns0:sequenceFlow id="sf_58" sourceRef="Task_MitigacionIncidente" targetRef="Gateway_EscaladoBoard" />
+    <ns0:sequenceFlow id="sf_59" name="SLA Cumplido" sourceRef="Gateway_EscaladoBoard" targetRef="Task_CierreIncidente" />
+    <ns0:sequenceFlow id="sf_60" name="Brecha SLA Sev 1" sourceRef="Gateway_EscaladoBoard" targetRef="Task_NotificarBoardCISO" />
+    <ns0:sequenceFlow id="sf_61" sourceRef="Task_NotificarBoardCISO" targetRef="Task_CierreIncidente" />
+    <ns0:sequenceFlow id="sf_62" sourceRef="Task_CierreIncidente" targetRef="EndEvent_IncidenteResuelto" />
+    <ns0:sequenceFlow id="sf_64" sourceRef="Task_RecopilarDORA" targetRef="Task_RetrospectivaSquad" />
+    <ns0:sequenceFlow id="sf_65" sourceRef="Task_RetrospectivaSquad" targetRef="Task_PropuestaAcelerador" />
+    <ns0:sequenceFlow id="sf_66" sourceRef="Task_PropuestaAcelerador" targetRef="Task_ActualizarMetodologiaSTF" />
+    <ns0:sequenceFlow id="sf_67" sourceRef="Task_ActualizarMetodologiaSTF" targetRef="EndEvent_MejoraDesplegada" />
+    <ns0:sequenceFlow id="sf_05" name="No calificado" sourceRef="Gateway_CalificaLead" targetRef="Task_NotificarRechazoLead" />
+    <ns0:sequenceFlow id="sf_06" sourceRef="Task_NotificarRechazoLead" targetRef="EndEvent_LeadRechazado" />
+    <ns0:sequenceFlow id="sf_17" sourceRef="Task_FormalizarContrato" targetRef="Task_ActivarERP" />
+    <ns0:sequenceFlow id="sf_18" sourceRef="Task_ActivarERP" targetRef="Task_SetupSquad" />
+    <ns0:sequenceFlow id="sf_16" sourceRef="Task_GenerarDPA" targetRef="Task_FormalizarContrato" />
+    <ns0:sequenceFlow id="sf_15" sourceRef="Task_ModeladoFinOps" targetRef="Task_GenerarDPA" />
+    <ns0:sequenceFlow id="sf_19" sourceRef="Task_SetupSquad" targetRef="Task_SprintPlanningDoR" />
+    <ns0:parallelGateway id="Gateway_JoinSprints" name="Consolidación de Incremento" />
+    <ns0:userTask id="Task_SprintReviewDemo" name="Demostración en Sprint Review con Cliente" ns1:formRef="form_08_aprobacion_entrega_firma.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Sprint Review &amp; Demo AI" />
+    <ns0:exclusiveGateway id="Gateway_DoRValido" name="¿DoR Aprobado?" />
+    <ns0:parallelGateway id="Gateway_ForkSprints" name="Sincronización de Ejecución (Datos + Software)" />
+    <ns0:userTask id="Task_DesarrolloGitFlow" name="Desarrollo en Feature Branch (GitFlow)" ns1:candidateGroups="Agente: Software Developer AI" />
+    <ns0:userTask id="Task_PullRequestReview" name="Apertura de PR y Peer Code Review" ns1:candidateGroups="Agente: Lead Developer Code Review AI" />
+    <ns0:serviceTask id="Task_PipelineCI" name="Pipeline CI: Tests Unitarios y SonarQube" />
+    <ns0:userTask id="Task_FixCodeQuality" name="Corrección de Código / Deuda Técnica" ns1:candidateGroups="Agente: Software Developer AI" />
+    <ns0:exclusiveGateway id="Gateway_SonarPass" name="¿Sonar Quality Gate Passed (&#62;80% test)?" />
+    <ns0:serviceTask id="Task_ContinuousDeployProd" name="Continuous Deployment a Producción" />
+    <ns0:exclusiveGateway id="Gateway_DoDCertificado" name="¿DoD Certificado?" />
+    <ns0:userTask id="Task_PruebasQA" name="Pruebas Funcionales QA y Certificación DoD" ns1:formRef="form_07_qa_signoff_dod.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: QA &amp; Test Automation AI" />
+    <ns0:serviceTask id="Task_DespliegueStaging" name="Despliegue Automatizado en K8s Staging" />
+    <ns0:endEvent id="EndEvent_IncidenteResuelto" name="Incidente Resuelto y Mitigado" />
+    <ns0:serviceTask id="Task_TelemetriaPrometheus" name="Monitoreo Continuo con Prometheus &#38; Grafana" />
+    <ns0:intermediateCatchEvent id="Event_AlertaIncidente" name="Alerta de Anomalía o Ticket Cliente">
+      <ns0:messageEventDefinition id="MsgDef_Event_AlertaIncidente" />
+    </ns0:intermediateCatchEvent>
+    <ns0:userTask id="Task_MitigacionIncidente" name="Gestión Técnica, SLA 15min y Post-Mortem" ns1:formRef="form_09_gestion_incidentes_sev.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: SRE On-Call Mitigation AI" />
+    <ns0:exclusiveGateway id="Gateway_EscaladoBoard" name="¿Sev 1 supera 30 min SLA?" />
+    <ns0:serviceTask id="Task_CierreIncidente" name="Cierre de Incidente y Registro en BBDD Lecciones" />
+    <ns0:serviceTask id="Task_PublicarSemanticBI" name="Publicación en Capa Semántica y Dashboards BI" />
+    <ns0:serviceTask id="Task_ModeladoGold" name="Capa 3: Modelado Dimensional y Feature Store ML" />
+    <ns0:userTask id="Task_PlanificarAjusteSprint" name="Re-priorización de Ajustes para Próximo Sprint" ns1:formRef="form_05_sprint_planning_dor.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Product Owner AI" />
+    <ns0:serviceTask id="Task_DesvioDLQ" name="Desvío a Dead Letter Queue y Alerta" />
+    <ns0:userTask id="Task_ValidarGobernanza" name="Control de Calidad, PII y Linaje Criptográfico" ns1:formRef="form_06_gobierno_calidad_dato.form" ns1:formRefBinding="latest" ns1:candidateGroups="Agente: Data Steward &amp; Governance AI" />
+  </ns0:process>
+  <ns2:BPMNDiagram id="BPMNDiagram_Statsfirm">
+    <ns2:BPMNPlane id="BPMNPlane_Statsfirm" bpmnElement="Collaboration_Statsfirm">
+      <ns2:BPMNShape id="Participant_Statsfirm_di" bpmnElement="Participant_Statsfirm" isHorizontal="true">
+        <ns3:Bounds x="160" y="315" width="4105" height="1750" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_InnovaLab_di" bpmnElement="Lane_InnovaLab" isHorizontal="true">
+        <ns3:Bounds x="190" y="1815" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_OperacionesSRE_di" bpmnElement="Lane_OperacionesSRE" isHorizontal="true">
+        <ns3:Bounds x="190" y="1565" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_SoftwareDevOps_di" bpmnElement="Lane_SoftwareDevOps" isHorizontal="true">
+        <ns3:Bounds x="190" y="1315" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_DataEngineering_di" bpmnElement="Lane_DataEngineering" isHorizontal="true">
+        <ns3:Bounds x="190" y="1065" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_GestionAgil_di" bpmnElement="Lane_GestionAgil" isHorizontal="true">
+        <ns3:Bounds x="190" y="815" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_ProcesosARB_di" bpmnElement="Lane_ProcesosARB" isHorizontal="true">
+        <ns3:Bounds x="190" y="565" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Lane_ComercialFinOps_di" bpmnElement="Lane_ComercialFinOps" isHorizontal="true">
+        <ns3:Bounds x="190" y="315" width="4075" height="250" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="StartEvent_Lead_di" bpmnElement="StartEvent_Lead" isHorizontal="false">
+        <ns3:Bounds x="245" y="417" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="223" y="367" width="79" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_CapturaLead_di" bpmnElement="Task_CapturaLead" isHorizontal="false">
+        <ns3:Bounds x="315" y="395" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_VerificarCRM_di" bpmnElement="Task_VerificarCRM" isHorizontal="false">
+        <ns3:Bounds x="475" y="395" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_DispararFactura_di" bpmnElement="Task_DispararFactura" isHorizontal="false">
+        <ns3:Bounds x="3525" y="395" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="EndEvent_ProyectoCompletado_di" bpmnElement="EndEvent_ProyectoCompletado" isHorizontal="false">
+        <ns3:Bounds x="3725" y="417" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3700" y="453" width="87" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PreEvaluacionViabilidad_di" bpmnElement="Task_PreEvaluacionViabilidad" isHorizontal="false">
+        <ns3:Bounds x="695" y="635" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ValidacionARB_di" bpmnElement="Task_ValidacionARB" isHorizontal="false">
+        <ns3:Bounds x="855" y="635" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_AprobacionARB_di" bpmnElement="Gateway_AprobacionARB" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="1015" y="650" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1001" y="700" width="79" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_SesionesDiscover_di" bpmnElement="Task_SesionesDiscover" isHorizontal="false">
+        <ns3:Bounds x="1095" y="635" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ExtraccionLogs_di" bpmnElement="Task_ExtraccionLogs" isHorizontal="false">
+        <ns3:Bounds x="1255" y="635" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ProcessMining_di" bpmnElement="Task_ProcessMining" isHorizontal="false">
+        <ns3:Bounds x="1395" y="635" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_InformeMadurezOKRs_di" bpmnElement="Task_InformeMadurezOKRs" isHorizontal="false">
+        <ns3:Bounds x="1535" y="635" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_RefinarBacklog_di" bpmnElement="Task_RefinarBacklog" isHorizontal="false">
+        <ns3:Bounds x="2285" y="975" width="130" height="65" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_ClienteConforme_di" bpmnElement="Gateway_ClienteConforme" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="3465" y="900" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3525" y="911.5" width="86" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_IngestaBronze_di" bpmnElement="Task_IngestaBronze" isHorizontal="false">
+        <ns3:Bounds x="2495" y="1125" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ValidarEsquema_di" bpmnElement="Task_ValidarEsquema" isHorizontal="false">
+        <ns3:Bounds x="2635" y="1125" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_EsquemaBronze_di" bpmnElement="Gateway_EsquemaBronze" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="2775" y="1140" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2773" y="1102.5" width="54" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PersistenciaBronze_di" bpmnElement="Task_PersistenciaBronze" isHorizontal="false">
+        <ns3:Bounds x="2845" y="1125" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_CuraduriaSilver_di" bpmnElement="Task_CuraduriaSilver" isHorizontal="false">
+        <ns3:Bounds x="2985" y="1125" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_CalidadSilver_di" bpmnElement="Gateway_CalidadSilver" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="3275" y="1140" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3256" y="1090" width="88" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_NotificarBoardCISO_di" bpmnElement="Task_NotificarBoardCISO" isHorizontal="false">
+        <ns3:Bounds x="2995" y="1720" width="130" height="65" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_RecopilarDORA_di" bpmnElement="Task_RecopilarDORA" isHorizontal="false">
+        <ns3:Bounds x="3455" y="1885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_RetrospectivaSquad_di" bpmnElement="Task_RetrospectivaSquad" isHorizontal="false">
+        <ns3:Bounds x="3605" y="1885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PropuestaAcelerador_di" bpmnElement="Task_PropuestaAcelerador" isHorizontal="false">
+        <ns3:Bounds x="3755" y="1885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ActualizarMetodologiaSTF_di" bpmnElement="Task_ActualizarMetodologiaSTF" isHorizontal="false">
+        <ns3:Bounds x="3905" y="1885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="EndEvent_MejoraDesplegada_di" bpmnElement="EndEvent_MejoraDesplegada" isHorizontal="false">
+        <ns3:Bounds x="4055" y="1907" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="4043" y="1943" width="60" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_CalificaLead_di" bpmnElement="Gateway_CalificaLead" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="685" y="365" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="665" y="327.5" width="90" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_NotificarRechazoLead_di" bpmnElement="Task_NotificarRechazoLead" isHorizontal="false">
+        <ns3:Bounds x="840" y="365" width="120" height="70" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="EndEvent_LeadRechazado_di" bpmnElement="EndEvent_LeadRechazado" isHorizontal="false">
+        <ns3:Bounds x="882" y="492" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="867" y="531" width="85" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ActivarERP_di" bpmnElement="Task_ActivarERP" isHorizontal="false">
+        <ns3:Bounds x="2170" y="395" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_FormalizarContrato_di" bpmnElement="Task_FormalizarContrato" isHorizontal="false">
+        <ns3:Bounds x="1965" y="395" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_GenerarDPA_di" bpmnElement="Task_GenerarDPA" isHorizontal="false">
+        <ns3:Bounds x="1820" y="395" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ModeladoFinOps_di" bpmnElement="Task_ModeladoFinOps" isHorizontal="false">
+        <ns3:Bounds x="1645" y="395" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_SetupSquad_di" bpmnElement="Task_SetupSquad" isHorizontal="false">
+        <ns3:Bounds x="1780" y="885" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_SprintPlanningDoR_di" bpmnElement="Task_SprintPlanningDoR" isHorizontal="false">
+        <ns3:Bounds x="2035" y="885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_JoinSprints_di" bpmnElement="Gateway_JoinSprints" isHorizontal="false">
+        <ns3:Bounds x="3655" y="900" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3637" y="862.5" width="85" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_SprintReviewDemo_di" bpmnElement="Task_SprintReviewDemo" isHorizontal="false">
+        <ns3:Bounds x="3085" y="885" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_DoRValido_di" bpmnElement="Gateway_DoRValido" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="2325" y="885" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2307" y="861" width="85" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_ForkSprints_di" bpmnElement="Gateway_ForkSprints" isHorizontal="false">
+        <ns3:Bounds x="2495" y="885" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2476" y="835" width="88" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_DesarrolloGitFlow_di" bpmnElement="Task_DesarrolloGitFlow" isHorizontal="false">
+        <ns3:Bounds x="2170" y="1400" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PullRequestReview_di" bpmnElement="Task_PullRequestReview" isHorizontal="false">
+        <ns3:Bounds x="2390" y="1400" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PipelineCI_di" bpmnElement="Task_PipelineCI" isHorizontal="false">
+        <ns3:Bounds x="2635" y="1350" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_FixCodeQuality_di" bpmnElement="Task_FixCodeQuality" isHorizontal="false">
+        <ns3:Bounds x="2635" y="1480" width="120" height="65" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_SonarPass_di" bpmnElement="Gateway_SonarPass" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="2855" y="1365" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2843" y="1315" width="74" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ContinuousDeployProd_di" bpmnElement="Task_ContinuousDeployProd" isHorizontal="false">
+        <ns3:Bounds x="3510" y="1370" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_DoDCertificado_di" bpmnElement="Gateway_DoDCertificado" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="3355" y="1375" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3350" y="1337.5" width="59" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PruebasQA_di" bpmnElement="Task_PruebasQA" isHorizontal="false">
+        <ns3:Bounds x="3170" y="1370" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_DespliegueStaging_di" bpmnElement="Task_DespliegueStaging" isHorizontal="false">
+        <ns3:Bounds x="2985" y="1370" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="EndEvent_IncidenteResuelto_di" bpmnElement="EndEvent_IncidenteResuelto" isHorizontal="false">
+        <ns3:Bounds x="3672" y="1652" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3664" y="1688" width="53" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_TelemetriaPrometheus_di" bpmnElement="Task_TelemetriaPrometheus" isHorizontal="false">
+        <ns3:Bounds x="1275" y="1640" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Event_AlertaIncidente_di" bpmnElement="Event_AlertaIncidente" isHorizontal="false">
+        <ns3:Bounds x="1732" y="1657" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1706" y="1703" width="88" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_MitigacionIncidente_di" bpmnElement="Task_MitigacionIncidente" isHorizontal="false">
+        <ns3:Bounds x="2135" y="1650" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Gateway_EscaladoBoard_di" bpmnElement="Gateway_EscaladoBoard" isHorizontal="false" isMarkerVisible="true">
+        <ns3:Bounds x="2475" y="1655" width="50" height="50" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2457" y="1705" width="87" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_CierreIncidente_di" bpmnElement="Task_CierreIncidente" isHorizontal="false">
+        <ns3:Bounds x="2985" y="1580" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PublicarSemanticBI_di" bpmnElement="Task_PublicarSemanticBI" isHorizontal="false">
+        <ns3:Bounds x="3690" y="1140" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ModeladoGold_di" bpmnElement="Task_ModeladoGold" isHorizontal="false">
+        <ns3:Bounds x="3480" y="1140" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_PlanificarAjusteSprint_di" bpmnElement="Task_PlanificarAjusteSprint" isHorizontal="false">
+        <ns3:Bounds x="2855" y="892" width="130" height="65" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_DesvioDLQ_di" bpmnElement="Task_DesvioDLQ" isHorizontal="false">
+        <ns3:Bounds x="2860" y="1237" width="120" height="65" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_ValidarGobernanza_di" bpmnElement="Task_ValidarGobernanza" isHorizontal="false">
+        <ns3:Bounds x="3125" y="1220" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNEdge id="sf_01_di" bpmnElement="sf_01">
+        <ns4:waypoint x="281" y="435" />
+        <ns4:waypoint x="315" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_02_di" bpmnElement="sf_02">
+        <ns4:waypoint x="445" y="435" />
+        <ns4:waypoint x="475" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_03_di" bpmnElement="sf_03">
+        <ns4:waypoint x="595" y="435" />
+        <ns4:waypoint x="640" y="435" />
+        <ns4:waypoint x="640" y="390" />
+        <ns4:waypoint x="685" y="390" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_51_di" bpmnElement="sf_51">
+        <ns4:waypoint x="3490" y="900" />
+        <ns4:waypoint x="3490" y="435" />
+        <ns4:waypoint x="3525" y="435" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3478" y="657" width="55" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_54_di" bpmnElement="sf_54">
+        <ns4:waypoint x="3655" y="435" />
+        <ns4:waypoint x="3725" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_04_di" bpmnElement="sf_04">
+        <ns4:waypoint x="710" y="415" />
+        <ns4:waypoint x="710" y="525" />
+        <ns4:waypoint x="760" y="525" />
+        <ns4:waypoint x="760" y="635" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="696" y="502" width="75" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_07_di" bpmnElement="sf_07">
+        <ns4:waypoint x="825" y="675" />
+        <ns4:waypoint x="855" y="675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_08_di" bpmnElement="sf_08">
+        <ns4:waypoint x="985" y="675" />
+        <ns4:waypoint x="1015" y="675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_09_di" bpmnElement="sf_09">
+        <ns4:waypoint x="1065" y="675" />
+        <ns4:waypoint x="1095" y="675" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1056" y="650" width="48" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_10_di" bpmnElement="sf_10">
+        <ns4:waypoint x="1040" y="650" />
+        <ns4:waypoint x="1040" y="400" />
+        <ns4:waypoint x="960" y="400" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1027" y="514" width="57" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_11_di" bpmnElement="sf_11">
+        <ns4:waypoint x="1225" y="675" />
+        <ns4:waypoint x="1255" y="675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_12_di" bpmnElement="sf_12">
+        <ns4:waypoint x="1375" y="675" />
+        <ns4:waypoint x="1395" y="675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_13_di" bpmnElement="sf_13">
+        <ns4:waypoint x="1515" y="675" />
+        <ns4:waypoint x="1535" y="675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_14_di" bpmnElement="sf_14">
+        <ns4:waypoint x="1600" y="635" />
+        <ns4:waypoint x="1600" y="435" />
+        <ns4:waypoint x="1645" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_20_di" bpmnElement="sf_20">
+        <ns4:waypoint x="2165" y="925" />
+        <ns4:waypoint x="2245" y="925" />
+        <ns4:waypoint x="2245" y="910" />
+        <ns4:waypoint x="2325" y="910" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_21_di" bpmnElement="sf_21">
+        <ns4:waypoint x="2375" y="910" />
+        <ns4:waypoint x="2495" y="910" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2400" y="885" width="74" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_22_di" bpmnElement="sf_22">
+        <ns4:waypoint x="2350" y="935" />
+        <ns4:waypoint x="2350" y="975" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2325" y="945" width="80" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_23_di" bpmnElement="sf_23">
+        <ns4:waypoint x="2285" y="1008" />
+        <ns4:waypoint x="2090" y="1008" />
+        <ns4:waypoint x="2090" y="965" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_24_di" bpmnElement="sf_24">
+        <ns4:waypoint x="2545" y="910" />
+        <ns4:waypoint x="2555" y="910" />
+        <ns4:waypoint x="2555" y="1125" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_37_di" bpmnElement="sf_37">
+        <ns4:waypoint x="2520" y="935" />
+        <ns4:waypoint x="2520" y="1100" />
+        <ns4:waypoint x="2230" y="1100" />
+        <ns4:waypoint x="2230" y="1400" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_36_di" bpmnElement="sf_36">
+        <ns4:waypoint x="3750" y="1140" />
+        <ns4:waypoint x="3750" y="980" />
+        <ns4:waypoint x="3690" y="980" />
+        <ns4:waypoint x="3690" y="940" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_48_di" bpmnElement="sf_48">
+        <ns4:waypoint x="3630" y="1410" />
+        <ns4:waypoint x="3840" y="1410" />
+        <ns4:waypoint x="3840" y="925" />
+        <ns4:waypoint x="3705" y="925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_49_di" bpmnElement="sf_49">
+        <ns4:waypoint x="3680" y="950" />
+        <ns4:waypoint x="3680" y="1000" />
+        <ns4:waypoint x="3150" y="1000" />
+        <ns4:waypoint x="3150" y="965" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_50_di" bpmnElement="sf_50">
+        <ns4:waypoint x="3215" y="925" />
+        <ns4:waypoint x="3465" y="925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_63_di" bpmnElement="sf_63">
+        <ns4:waypoint x="3150" y="885" />
+        <ns4:waypoint x="3150" y="860" />
+        <ns4:waypoint x="3890" y="860" />
+        <ns4:waypoint x="3890" y="1850" />
+        <ns4:waypoint x="3520" y="1850" />
+        <ns4:waypoint x="3520" y="1885" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_52_di" bpmnElement="sf_52">
+        <ns4:waypoint x="3490" y="950" />
+        <ns4:waypoint x="3490" y="1040" />
+        <ns4:waypoint x="2920" y="1040" />
+        <ns4:waypoint x="2920" y="957" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3413" y="1034" width="82" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_53_di" bpmnElement="sf_53">
+        <ns4:waypoint x="2855" y="925" />
+        <ns4:waypoint x="2745" y="925" />
+        <ns4:waypoint x="2745" y="830" />
+        <ns4:waypoint x="2100" y="830" />
+        <ns4:waypoint x="2100" y="885" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_25_di" bpmnElement="sf_25">
+        <ns4:waypoint x="2615" y="1165" />
+        <ns4:waypoint x="2635" y="1165" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_26_di" bpmnElement="sf_26">
+        <ns4:waypoint x="2755" y="1165" />
+        <ns4:waypoint x="2775" y="1165" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_27_di" bpmnElement="sf_27">
+        <ns4:waypoint x="2825" y="1165" />
+        <ns4:waypoint x="2845" y="1165" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2820" y="1140" width="31" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_28_di" bpmnElement="sf_28">
+        <ns4:waypoint x="2800" y="1190" />
+        <ns4:waypoint x="2800" y="1269" />
+        <ns4:waypoint x="2860" y="1269" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2770" y="1219" width="90" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_29_di" bpmnElement="sf_29">
+        <ns4:waypoint x="2920" y="1237" />
+        <ns4:waypoint x="2920" y="1221" />
+        <ns4:waypoint x="2905" y="1221" />
+        <ns4:waypoint x="2905" y="1205" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_30_di" bpmnElement="sf_30">
+        <ns4:waypoint x="2965" y="1165" />
+        <ns4:waypoint x="2985" y="1165" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_34_di" bpmnElement="sf_34">
+        <ns4:waypoint x="3275" y="1165" />
+        <ns4:waypoint x="3105" y="1165" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3142" y="1173" width="62" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_31_di" bpmnElement="sf_31">
+        <ns4:waypoint x="3045" y="1205" />
+        <ns4:waypoint x="3045" y="1260" />
+        <ns4:waypoint x="3125" y="1260" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_32_di" bpmnElement="sf_32">
+        <ns4:waypoint x="3255" y="1260" />
+        <ns4:waypoint x="3300" y="1260" />
+        <ns4:waypoint x="3300" y="1190" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_33_di" bpmnElement="sf_33">
+        <ns4:waypoint x="3325" y="1165" />
+        <ns4:waypoint x="3403" y="1165" />
+        <ns4:waypoint x="3403" y="1180" />
+        <ns4:waypoint x="3480" y="1180" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3418" y="1155" width="48" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_35_di" bpmnElement="sf_35">
+        <ns4:waypoint x="3600" y="1180" />
+        <ns4:waypoint x="3690" y="1180" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_38_di" bpmnElement="sf_38">
+        <ns4:waypoint x="2290" y="1440" />
+        <ns4:waypoint x="2340" y="1440" />
+        <ns4:waypoint x="2340" y="1455" />
+        <ns4:waypoint x="2390" y="1455" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_43_di" bpmnElement="sf_43">
+        <ns4:waypoint x="2635" y="1513" />
+        <ns4:waypoint x="2450" y="1513" />
+        <ns4:waypoint x="2450" y="1480" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_39_di" bpmnElement="sf_39">
+        <ns4:waypoint x="2510" y="1440" />
+        <ns4:waypoint x="2573" y="1440" />
+        <ns4:waypoint x="2573" y="1390" />
+        <ns4:waypoint x="2635" y="1390" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_40_di" bpmnElement="sf_40">
+        <ns4:waypoint x="2755" y="1390" />
+        <ns4:waypoint x="2855" y="1390" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_41_di" bpmnElement="sf_41">
+        <ns4:waypoint x="2905" y="1390" />
+        <ns4:waypoint x="2928" y="1390" />
+        <ns4:waypoint x="2928" y="1410" />
+        <ns4:waypoint x="2985" y="1410" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2921" y="1405" width="37" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_42_di" bpmnElement="sf_42">
+        <ns4:waypoint x="2880" y="1415" />
+        <ns4:waypoint x="2880" y="1450" />
+        <ns4:waypoint x="2730" y="1450" />
+        <ns4:waypoint x="2730" y="1480" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2730" y="1457" width="30" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_47_di" bpmnElement="sf_47">
+        <ns4:waypoint x="3380" y="1425" />
+        <ns4:waypoint x="3380" y="1512" />
+        <ns4:waypoint x="2755" y="1512" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3358" y="1460" width="74" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_44_di" bpmnElement="sf_44">
+        <ns4:waypoint x="3105" y="1410" />
+        <ns4:waypoint x="3170" y="1410" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_45_di" bpmnElement="sf_45">
+        <ns4:waypoint x="3290" y="1410" />
+        <ns4:waypoint x="3323" y="1410" />
+        <ns4:waypoint x="3323" y="1400" />
+        <ns4:waypoint x="3355" y="1400" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_46_di" bpmnElement="sf_46">
+        <ns4:waypoint x="3405" y="1400" />
+        <ns4:waypoint x="3458" y="1400" />
+        <ns4:waypoint x="3458" y="1410" />
+        <ns4:waypoint x="3510" y="1410" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3449" y="1385" width="73" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_55_di" bpmnElement="sf_55">
+        <ns4:waypoint x="1405" y="1675" />
+        <ns4:waypoint x="1732" y="1675" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_58_di" bpmnElement="sf_58">
+        <ns4:waypoint x="2265" y="1680" />
+        <ns4:waypoint x="2475" y="1680" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_59_di" bpmnElement="sf_59">
+        <ns4:waypoint x="2500" y="1655" />
+        <ns4:waypoint x="2500" y="1620" />
+        <ns4:waypoint x="2985" y="1620" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2709" y="1595" width="71" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_60_di" bpmnElement="sf_60">
+        <ns4:waypoint x="2525" y="1680" />
+        <ns4:waypoint x="2525" y="1753" />
+        <ns4:waypoint x="2995" y="1753" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2482" y="1693" width="90" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_61_di" bpmnElement="sf_61">
+        <ns4:waypoint x="3045" y="1720" />
+        <ns4:waypoint x="3045" y="1660" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_62_di" bpmnElement="sf_62">
+        <ns4:waypoint x="3105" y="1620" />
+        <ns4:waypoint x="3616" y="1620" />
+        <ns4:waypoint x="3616" y="1670" />
+        <ns4:waypoint x="3672" y="1670" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_64_di" bpmnElement="sf_64">
+        <ns4:waypoint x="3585" y="1925" />
+        <ns4:waypoint x="3605" y="1925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_65_di" bpmnElement="sf_65">
+        <ns4:waypoint x="3735" y="1925" />
+        <ns4:waypoint x="3755" y="1925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_66_di" bpmnElement="sf_66">
+        <ns4:waypoint x="3885" y="1925" />
+        <ns4:waypoint x="3905" y="1925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_67_di" bpmnElement="sf_67">
+        <ns4:waypoint x="4035" y="1925" />
+        <ns4:waypoint x="4055" y="1925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_05_di" bpmnElement="sf_05">
+        <ns4:waypoint x="735" y="390" />
+        <ns4:waypoint x="788" y="390" />
+        <ns4:waypoint x="788" y="400" />
+        <ns4:waypoint x="840" y="400" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="718" y="378" width="64" height="14" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_06_di" bpmnElement="sf_06">
+        <ns4:waypoint x="900" y="435" />
+        <ns4:waypoint x="900" y="492" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_17_di" bpmnElement="sf_17">
+        <ns4:waypoint x="2095" y="435" />
+        <ns4:waypoint x="2170" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_18_di" bpmnElement="sf_18">
+        <ns4:waypoint x="2230" y="475" />
+        <ns4:waypoint x="2230" y="770" />
+        <ns4:waypoint x="1840" y="770" />
+        <ns4:waypoint x="1840" y="885" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_16_di" bpmnElement="sf_16">
+        <ns4:waypoint x="1940" y="435" />
+        <ns4:waypoint x="1965" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_15_di" bpmnElement="sf_15">
+        <ns4:waypoint x="1775" y="435" />
+        <ns4:waypoint x="1820" y="435" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="sf_19_di" bpmnElement="sf_19">
+        <ns4:waypoint x="1900" y="925" />
+        <ns4:waypoint x="2035" y="925" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNShape id="Participant_Cliente_di" bpmnElement="Participant_Cliente" isHorizontal="true">
+        <ns3:Bounds x="190" y="80" width="4100" height="180" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Start_Cliente_di" bpmnElement="Start_Cliente" isHorizontal="false">
+        <ns3:Bounds x="260" y="142" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="238" y="178" width="81" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_Solicitud_di" bpmnElement="Task_Cli_Solicitud" isHorizontal="false">
+        <ns3:Bounds x="350" y="120" width="120" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_Discover_di" bpmnElement="Task_Cli_Discover" isHorizontal="false">
+        <ns3:Bounds x="1080" y="120" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_FirmaContrato_di" bpmnElement="Task_Cli_FirmaContrato" isHorizontal="false">
+        <ns3:Bounds x="1880" y="120" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_ReviewSprint_di" bpmnElement="Task_Cli_ReviewSprint" isHorizontal="false">
+        <ns3:Bounds x="3350" y="120" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_FirmaEntrega_di" bpmnElement="Task_Cli_FirmaEntrega" isHorizontal="false">
+        <ns3:Bounds x="3550" y="120" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="End_Cliente_di" bpmnElement="End_Cliente" isHorizontal="false">
+        <ns3:Bounds x="3780" y="142" width="36" height="36" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3754" y="178" width="88" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNShape>
+      <ns2:BPMNShape id="Task_Cli_ReportarIncidente_di" bpmnElement="Task_Cli_ReportarIncidente" isHorizontal="false">
+        <ns3:Bounds x="2715" y="170" width="130" height="80" />
+      </ns2:BPMNShape>
+      <ns2:BPMNEdge id="Flow_cli_1_di" bpmnElement="Flow_cli_1">
+        <ns4:waypoint x="296" y="160" />
+        <ns4:waypoint x="350" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_2_di" bpmnElement="Flow_cli_2">
+        <ns4:waypoint x="470" y="160" />
+        <ns4:waypoint x="1080" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_3_di" bpmnElement="Flow_cli_3">
+        <ns4:waypoint x="1210" y="160" />
+        <ns4:waypoint x="1880" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_4_di" bpmnElement="Flow_cli_4">
+        <ns4:waypoint x="2010" y="160" />
+        <ns4:waypoint x="3350" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_5_di" bpmnElement="Flow_cli_5">
+        <ns4:waypoint x="3480" y="160" />
+        <ns4:waypoint x="3550" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_7_di" bpmnElement="Flow_cli_7">
+        <ns4:waypoint x="3363" y="200" />
+        <ns4:waypoint x="3350" y="210" />
+        <ns4:waypoint x="2845" y="210" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_cli_6_di" bpmnElement="Flow_cli_6">
+        <ns4:waypoint x="3680" y="160" />
+        <ns4:waypoint x="3780" y="160" />
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_01_di" bpmnElement="Flow_msg_01">
+        <ns4:waypoint x="433" y="200" />
+        <ns4:waypoint x="433" y="314" />
+        <ns4:waypoint x="253" y="314" />
+        <ns4:waypoint x="253" y="420" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="218" y="349" width="80" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_06_di" bpmnElement="Flow_msg_06">
+        <ns4:waypoint x="3615" y="200" />
+        <ns4:waypoint x="3615" y="395" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3636" y="343" width="87" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_02_di" bpmnElement="Flow_msg_02">
+        <ns4:waypoint x="1141" y="200" />
+        <ns4:waypoint x="1141" y="635" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1104" y="393" width="77" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_05_di" bpmnElement="Flow_msg_05">
+        <ns4:waypoint x="3149" y="885" />
+        <ns4:waypoint x="3149" y="543" />
+        <ns4:waypoint x="3369" y="543" />
+        <ns4:waypoint x="3369" y="200" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="3107" y="692" width="84" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_07_di" bpmnElement="Flow_msg_07">
+        <ns4:waypoint x="2788" y="250" />
+        <ns4:waypoint x="2788" y="680" />
+        <ns4:waypoint x="1750" y="680" />
+        <ns4:waypoint x="1750" y="1657" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2745" y="443" width="87" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_04_di" bpmnElement="Flow_msg_04">
+        <ns4:waypoint x="1910" y="200" />
+        <ns4:waypoint x="1910" y="303" />
+        <ns4:waypoint x="2265" y="303" />
+        <ns4:waypoint x="2265" y="395" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="2229" y="332" width="87" height="27" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+      <ns2:BPMNEdge id="Flow_msg_03_di" bpmnElement="Flow_msg_03">
+        <ns4:waypoint x="2032" y="395" />
+        <ns4:waypoint x="2032" y="298" />
+        <ns4:waypoint x="1932" y="298" />
+        <ns4:waypoint x="1932" y="200" />
+        <ns2:BPMNLabel>
+          <ns3:Bounds x="1998" y="324" width="68" height="40" />
+        </ns2:BPMNLabel>
+      </ns2:BPMNEdge>
+    </ns2:BPMNPlane>
+  </ns2:BPMNDiagram>
+</ns0:definitions>

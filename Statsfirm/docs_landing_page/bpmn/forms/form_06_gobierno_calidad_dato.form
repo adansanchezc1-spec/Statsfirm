@@ -1,0 +1,133 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_06_GobiernoCalidadDato",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-05: Validación de Gobierno del Dato y Pase a Capa Silver/Gold\nSupervisión estricta por el Data Steward según políticas DAMA-BOK.",
+      "type": "text",
+      "id": "text_header_6"
+    },
+    {
+      "label": "Identificador de Dataset / Pipeline",
+      "type": "textfield",
+      "id": "f_dataset_id",
+      "key": "dataset_id",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Capa de Datos Evaluada",
+      "type": "select",
+      "id": "f_capa_datos",
+      "key": "capa_datos",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Capa 1: Ingesta & Raw Bronze",
+          "value": "capa_1_bronze"
+        },
+        {
+          "label": "Capa 2: Curated & Enriched Silver",
+          "value": "capa_2_silver"
+        },
+        {
+          "label": "Capa 3: Analytical & Semantic Gold",
+          "value": "capa_3_gold"
+        }
+      ]
+    },
+    {
+      "label": "Clasificación de Confidencialidad / Privacidad",
+      "type": "select",
+      "id": "f_clasificacion_seguridad",
+      "key": "clasificacion_seguridad",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Uso Público",
+          "value": "publico"
+        },
+        {
+          "label": "Uso Interno Corporativo",
+          "value": "interno"
+        },
+        {
+          "label": "Confidencial / Comercial",
+          "value": "confidencial"
+        },
+        {
+          "label": "Restringido / Contiene Datos PII Regulados",
+          "value": "pii_restringido"
+        }
+      ]
+    },
+    {
+      "label": "Reglas de Calidad Aprobadas (>99.5% cumplimiento)",
+      "type": "checkbox",
+      "id": "f_calidad_ok",
+      "key": "calidad_ok",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Linaje Criptográfico Registrado e Inmutable",
+      "type": "checkbox",
+      "id": "f_linaje_ok",
+      "key": "linaje_ok",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Políticas de Enmascaramiento y Cifrado AES-256 Verificadas",
+      "type": "checkbox",
+      "id": "f_cifrado_ok",
+      "key": "cifrado_ok",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Dictamen de Gobernanza",
+      "type": "select",
+      "id": "f_dictamen_steward",
+      "key": "dictamen_steward",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aprobado: Certificado para consumo de capas superiores",
+          "value": "aprobado"
+        },
+        {
+          "label": "No Conforme: Desviar anomalías a Dead Letter Queue (DLQ)",
+          "value": "dlq_desvio"
+        },
+        {
+          "label": "Bloqueado: Incumplimiento crítico de privacidad PII",
+          "value": "bloqueado"
+        }
+      ]
+    },
+    {
+      "label": "Observaciones del Data Steward",
+      "type": "textarea",
+      "id": "f_obs_steward",
+      "key": "obs_steward"
+    }
+  ]
+}

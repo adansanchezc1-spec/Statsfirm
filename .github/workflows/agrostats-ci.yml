@@ -1,0 +1,54 @@
+name: AgroStats Mobile & Data Engineering Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'AgroStats AndTech/**'
+      - '!AgroStats AndTech/docs_landing_page/AgroStats/**' # Excluye binarios Word de CI
+      - '!AgroStats AndTech/docs_landing_page/AgroStats_backup/**'
+      - '.github/workflows/agrostats-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'AgroStats AndTech/**'
+      - '!AgroStats AndTech/docs_landing_page/AgroStats/**'
+      - '!AgroStats AndTech/docs_landing_page/AgroStats_backup/**'
+      - '.github/workflows/agrostats-ci.yml'
+
+jobs:
+  validate-agro-agents:
+    name: Agro Agents & Biostatistical Logic
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Setup Python (3.11)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run AgroStats Test Runner
+        run: |
+          cd "AgroStats AndTech/docs_landing_page/agents"
+          python test_runner.py
+
+  validate-docs-and-metadata:
+    name: Metadata & Services Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Validate Services Documentation Structure
+        run: |
+          cd "AgroStats AndTech/docs_landing_page/docs/05-services"
+          test -f README.md
+          test -f 01-app-movil-offline/README.md
+          test -f 02-bi-control-gerencial/README.md
+          test -f 03-lakehouse-curaduria-datos/README.md
+          test -f 04-bpmn-farm-finops/README.md
+          echo "✓ Las 4 carpetas de servicio agroindustrial están completas."

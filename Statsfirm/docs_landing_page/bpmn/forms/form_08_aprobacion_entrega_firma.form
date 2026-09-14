@@ -1,0 +1,108 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_08_AprobacionEntregaFirma",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-07: Validación de Sprint, Conformidad y Firma Electrónica Avanzada\nFormalización de la entrega técnica y habilitación de facturación en la App del Cliente.",
+      "type": "text",
+      "id": "text_header_8"
+    },
+    {
+      "label": "Nombre del Representante del Cliente",
+      "type": "textfield",
+      "id": "f_cliente_firmante",
+      "key": "cliente_firmante",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Sprint o Hito Sometido a Aprobación",
+      "type": "textfield",
+      "id": "f_hito_aprobado",
+      "key": "hito_aprobado",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Conformidad con Criterios de Aceptación",
+      "type": "select",
+      "id": "f_conformidad_criterios",
+      "key": "conformidad_criterios",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Aceptado Totalmente sin Reservas",
+          "value": "aceptado_total"
+        },
+        {
+          "label": "Aceptado con Mejoras Menores para Próximo Sprint",
+          "value": "aceptado_menor"
+        },
+        {
+          "label": "Rechazado: Requiere Ajuste Inmediato en Sprint",
+          "value": "rechazado"
+        }
+      ]
+    },
+    {
+      "label": "Puntaje de Satisfacción del Incremento (NPS 1-10)",
+      "type": "number",
+      "id": "f_nps_score",
+      "key": "nps_score",
+      "validate": {
+        "required": true,
+        "min": 1,
+        "max": 10
+      }
+    },
+    {
+      "label": "Mecanismo de Firma Electrónica Aplicado",
+      "type": "select",
+      "id": "f_mecanismo_firma",
+      "key": "mecanismo_firma",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Firma Electrónica Avanzada FIDO2 / Biometría App",
+          "value": "fido2_biometria"
+        },
+        {
+          "label": "Certificado Digital PKI X.509",
+          "value": "certificado_pki"
+        },
+        {
+          "label": "OTP Corporativo Verificado vía OIDC",
+          "value": "otp_oidc"
+        }
+      ]
+    },
+    {
+      "label": "Autorización para Emisión Automática de Factura Electrónica",
+      "type": "checkbox",
+      "id": "f_autoriza_factura",
+      "key": "autoriza_factura",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Comentarios y Feedback para el Squad",
+      "type": "textarea",
+      "id": "f_feedback_cliente",
+      "key": "feedback_cliente"
+    }
+  ]
+}

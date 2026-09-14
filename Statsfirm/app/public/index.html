@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statsfirm Co. — Transformación de Negocios con Datos, IA y Procesos</title>
+  <meta name="description" content="Statsfirm Co. convierte datos dispersos en rentabilidad y certeza operativa: Data Lakehouse, Tableros en Tiempo Real e Inteligencia Artificial Aplicada.">
+  <meta name="keywords" content="Ingeniería de Datos, Tableros Ejecutivos, Business Intelligence, Inteligencia Artificial para Empresas, Automatización de Procesos, Lakehouse">
+
+  <!-- Google Fonts: Plus Jakarta Sans (High-End Modern Geometric Sans) & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/jpeg" href="/assets/logo_icon.jpg">
+</head>
+<body>
+  <!-- Enlace Accesible de Salto al Contenido (IHC & WCAG 2.1 AA) -->
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Barra de progreso de lectura superior -->
+  <div id="reading-progress" aria-hidden="true"></div>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-link">
+        <img src="/assets/logo_primary.jpg" alt="Statsfirm Co. Logo" class="brand-logo" onerror="this.src='/assets/logo_icon.jpg'">
+        <div class="brand-title-wrap">
+          <span class="brand-name">STATSFIRM<span class="text-cobalt"> CO.</span></span>
+          <span class="brand-sub">Datos • IA • Procesos</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="#soluciones-dolores" class="nav-link">¿Qué Resolvemos?</a></li>
+          <li><a href="#servicios" class="nav-link">Soluciones</a></li>
+          <li><a href="#identidad" class="nav-link">Identidad</a></li>
+          <li><a href="#comparativa" class="nav-link">Impacto</a></li>
+          <li><a href="#modelos" class="nav-link">Metodología</a></li>
+          <li><a href="#cotizador" class="nav-link">Cotizador</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contacto" class="btn btn-primary btn-sm">Agendar Diagnóstico</a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menú">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-center-wrap">
+          <div class="hero-hook-badge">
+            <span class="pulse-dot"></span>
+            <span>Ingeniería de Datos e Inteligencia Artificial • Colombia</span>
+          </div>
+
+          <h1 class="hero-title">
+            Tus datos dispersos, convertidos en <span class="gradient-title">rentabilidad y certeza</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Ayudamos a empresas y startups en Colombia a erradicar el desorden de hojas de cálculo, tomar decisiones ejecutivas en tiempo real y automatizar su operación con IA.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#cotizador" class="btn btn-primary">
+              <span>Calcular Inversión en COP</span>
+              <span>→</span>
+            </a>
+            <a href="#contacto" class="btn btn-outline">
+              <span>Agendar Diagnóstico (30 min)</span>
+            </a>
+          </div>
+
+          <div class="hero-trust-row">
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <span>SLA &lt; 2h garantizado</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <span>Acuerdo de Confidencialidad NDA</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <span>Precios claros en Pesos Colombianos (COP)</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <span>Entregables cada 15 días</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== IHC DIAGNÓSTICO: DE DOLOR A SOLUCIÓN ==================== -->
+    <section class="section-spacing" id="soluciones-dolores">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Diagnóstico Interactivo Rápido</span>
+          <h2 class="section-title">¿Cuál es el dolor principal de tu empresa hoy?</h2>
+          <p class="section-subtitle">
+            Selecciona tu síntoma operativo. Te mostramos la solución exacta y el impacto económico en tu negocio:
+          </p>
+        </div>
+
+        <!-- Selector de Dolores (IHC Tabs) -->
+        <div class="pain-selector-tabs" id="pain-tabs-container">
+          <button class="pain-tab-btn active" data-pain-id="pain-excel-chaos">
+            <span class="pain-tab-icon">📊</span>
+            <span>Caos en Excel y Cifras que no Cuadran</span>
+          </button>
+          <button class="pain-tab-btn" data-pain-id="pain-blind-decisions">
+            <span class="pain-tab-icon">👁️</span>
+            <span>Decisiones a Ciegas o Reportes Lentos</span>
+          </button>
+          <button class="pain-tab-btn" data-pain-id="pain-inventory-churn">
+            <span class="pain-tab-icon">📉</span>
+            <span>Stock Parado y Fuga de Clientes</span>
+          </button>
+          <button class="pain-tab-btn" data-pain-id="pain-bottlenecks">
+            <span class="pain-tab-icon">⏳</span>
+            <span>Procesos Manuales y Trabas Internas</span>
+          </button>
+          <button class="pain-tab-btn" data-pain-id="pain-flaky-software">
+            <span class="pain-tab-icon">💻</span>
+            <span>Sistemas Lentos o Caídas en Nube</span>
+          </button>
+        </div>
+
+        <!-- Tarjeta Dinámica de Solución -->
+        <div class="solution-display-card" id="solution-display-card">
+          <!-- Lado Izquierdo: El Dolor -->
+          <div class="pain-col-problem">
+            <span class="pain-tag-danger">El Problema Operativo</span>
+            <h3 class="pain-question-h3" id="display-pain-question">
+              ¿Nuestros reportes en Excel nunca coinciden entre departamentos?
+            </h3>
+            <p class="pain-symptom-desc" id="display-pain-symptom">
+              Ventas tiene una cifra, Finanzas otra y Operaciones una tercera. Horas perdidas en juntas discutiendo quién tiene la información correcta.
+            </p>
+          </div>
+
+          <!-- Lado Derecho: La Solución Statsfirm -->
+          <div class="pain-col-solution">
+            <span class="solution-tag-success">Solución Statsfirm Co.</span>
+            <h3 class="solution-title-h3" id="display-solution-title">
+              Data Lakehouse & Única Fuente de Verdad
+            </h3>
+            <p class="solution-desc" id="display-solution-how">
+              Conectamos tus sistemas (facturación, CRM, inventarios) a un repositorio centralizado. Los datos se estandarizan solos, sin archivos sueltos.
+            </p>
+            <div class="benefit-box">
+              <span class="benefit-icon">💰</span>
+              <span class="benefit-text" id="display-solution-benefit">
+                Cero tiempo perdido en conciliar reportes. Una sola verdad indiscutible para toda la junta directiva.
+              </span>
+            </div>
+            <div>
+              <button class="btn btn-emerald" id="display-cta-btn">
+                <span id="display-cta-text">Unificar los datos de mi empresa</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5 LÍNEAS DE SOLUCIÓN (BENTO GRID MODERNO) ==================== -->
+    <section class="section-spacing" id="servicios">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Portafolio de Especialidades</span>
+          <h2 class="section-title">Nuestras 5 Soluciones Empresariales</h2>
+          <p class="section-subtitle">
+            Ingeniería de alta fidelidad orientada a resultados financieros, sin tecnicismos innecesarios.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <!-- CARD 1 -->
+          <div class="service-card" id="srv-data-engineering">
+            <div class="service-card-top">
+              <span class="service-line-chip">01 / INFRAESTRUCTURA</span>
+              <span class="service-icon-bubble">🔌</span>
+            </div>
+            <h3 class="service-card-title">Centralización y Tuberías de Datos</h3>
+            <p class="service-card-desc">
+              Conectamos tu facturación, CRM, inventarios y hojas de cálculo en un repositorio central inmutable, limpio y sin duplicados.
+            </p>
+            <ul class="service-feature-list">
+              <li><span>✓</span> Única fuente oficial de la verdad</li>
+              <li><span>✓</span> Sincronización continua automatizada 24/7</li>
+              <li><span>✓</span> Gobernanza y auditoría estándar DAMA-BOK</li>
+            </ul>
+
+            <button class="tech-toggle-btn" onclick="toggleTech('tech-01')">
+              <span>Especificaciones técnicas (CTO)</span>
+              <span>▾</span>
+            </button>
+            <div class="tech-accordion-box" id="tech-01">
+              <p>Lakehouse 3 Capas (Bronze, Silver, Gold), Apache Kafka, dbt Core, Apache Spark, Delta Lake, Snowflake / Databricks.</p>
+            </div>
+
+            <div class="service-card-footer">
+              <button class="btn btn-outline btn-sm prefill-quote-btn" data-service="data-engineering" style="width: 100%;">
+                Cotizar Solución →
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="service-card" id="srv-bi-analytics">
+            <div class="service-card-top">
+              <span class="service-line-chip">02 / VISUALIZACIÓN</span>
+              <span class="service-icon-bubble">📊</span>
+            </div>
+            <h3 class="service-card-title">Tableros Ejecutivos en Tiempo Real</h3>
+            <p class="service-card-desc">
+              Pantallas de control limpias y accesibles desde laptop o celular para ver ventas, márgenes y rentabilidad al minuto.
+            </p>
+            <ul class="service-feature-list">
+              <li><span>✓</span> Métricas comerciales y financieras en vivo</li>
+              <li><span>✓</span> Alertas automáticas ante desviaciones o riesgos</li>
+              <li><span>✓</span> Cero esperas a cierres contables mensuales</li>
+            </ul>
+
+            <button class="tech-toggle-btn" onclick="toggleTech('tech-02')">
+              <span>Especificaciones técnicas (CTO)</span>
+              <span>▾</span>
+            </button>
+            <div class="tech-accordion-box" id="tech-02">
+              <p>Power BI Embedded, Looker, Apache Superset, Semantic Layering, Data Marts Star/Snowflake Schema.</p>
+            </div>
+
+            <div class="service-card-footer">
+              <button class="btn btn-outline btn-sm prefill-quote-btn" data-service="bi-analytics" style="width: 100%;">
+                Cotizar Solución →
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 3 -->
+          <div class="service-card" id="srv-ai-data-science">
+            <div class="service-card-top">
+              <span class="service-line-chip">03 / INTELIGENCIA ARTIFICIAL</span>
+              <span class="service-icon-bubble">🤖</span>
+            </div>
+            <h3 class="service-card-title">Modelos Predictivos y Machine Learning</h3>
+            <p class="service-card-desc">
+              Algoritmos matemáticos que anticipan la demanda, evitan sobre-stock en bodega y alertan fuga de clientes antes de que ocurra.
+            </p>
+            <ul class="service-feature-list">
+              <li><span>✓</span> Pronóstico de demanda de alta precisión</li>
+              <li><span>✓</span> Detección temprana de clientes en riesgo de abandono</li>
+              <li><span>✓</span> Modelos desplegados en producción real (MLOps)</li>
+            </ul>
+
+            <button class="tech-toggle-btn" onclick="toggleTech('tech-03')">
+              <span>Especificaciones técnicas (CTO)</span>
+              <span>▾</span>
+            </button>
+            <div class="tech-accordion-box" id="tech-03">
+              <p>Scikit-learn, XGBoost, PyTorch, MLflow, Feature Store, Pipelines CI/CD MLOps con monitoreo de Drift.</p>
+            </div>
+
+            <div class="service-card-footer">
+              <button class="btn btn-outline btn-sm prefill-quote-btn" data-service="ai-data-science" style="width: 100%;">
+                Cotizar Solución →
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 4 -->
+          <div class="service-card" id="srv-software-cloud">
+            <div class="service-card-top">
+              <span class="service-line-chip">04 / SOFTWARE & NUBE</span>
+              <span class="service-icon-bubble">☁️</span>
+            </div>
+            <h3 class="service-card-title">Portales y Nube de Alta Disponibilidad</h3>
+            <p class="service-card-desc">
+              Aplicaciones empresariales rápidas y seguras, con arquitectura bancaria resiliente y costos de servidor optimizados.
+            </p>
+            <ul class="service-feature-list">
+              <li><span>✓</span> Portales de clientes e interfaces web ágiles</li>
+              <li><span>✓</span> Cero caídas en fechas clave con auto-escalado</li>
+              <li><span>✓</span> Reducción y control de costos en AWS, Azure o GCP</li>
+            </ul>
+
+            <button class="tech-toggle-btn" onclick="toggleTech('tech-04')">
+              <span>Especificaciones técnicas (CTO)</span>
+              <span>▾</span>
+            </button>
+            <div class="tech-accordion-box" id="tech-04">
+              <p>Microservicios Go/Node/Python, Kubernetes, Terraform IaC, OAuth 2.0 / mTLS, Arquitectura Hexagonal.</p>
+            </div>
+
+            <div class="service-card-footer">
+              <button class="btn btn-outline btn-sm prefill-quote-btn" data-service="software-cloud" style="width: 100%;">
+                Cotizar Solución →
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD 5 -->
+          <div class="service-card" id="srv-process-engineering">
+            <div class="service-card-top">
+              <span class="service-line-chip">05 / PROCESOS</span>
+              <span class="service-icon-bubble">⚡</span>
+            </div>
+            <h3 class="service-card-title">Automatización y Eliminación de Trabas</h3>
+            <p class="service-card-desc">
+              Radiografiamos tus operaciones, quitamos pasos redundantes y automatizamos tareas mecánicas con flujos digitales.
+            </p>
+            <ul class="service-feature-list">
+              <li><span>✓</span> Reducción del tiempo de ciclo hasta un 60%</li>
+              <li><span>✓</span> Cero formatos en papel o aprobaciones perdidas</li>
+              <li><span>✓</span> Colaboradores enfocados en valor y rentabilidad</li>
+            </ul>
+
+            <button class="tech-toggle-btn" onclick="toggleTech('tech-05')">
+              <span>Especificaciones técnicas (CTO)</span>
+              <span>▾</span>
+            </button>
+            <div class="tech-accordion-box" id="tech-05">
+              <p>Modelado BPMN 2.0 ejecutable, motores Camunda 7/8 Zeebe, Minería de Procesos (Process Mining), TOGAF ADM.</p>
+            </div>
+
+            <div class="service-card-footer">
+              <button class="btn btn-outline btn-sm prefill-quote-btn" data-service="process-engineering" style="width: 100%;">
+                Cotizar Solución →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== IDENTIDAD CORPORATIVA (COMPACTA & INSPIRADORA) ==================== -->
+    <section class="section-spacing" id="identidad">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Fundamentos de la Firma</span>
+          <h2 class="section-title">Nuestra Identidad y Compromiso</h2>
+          <p class="section-subtitle">
+            No vendemos horas de consultoría genérica. Construimos capacidades permanentes para tu negocio.
+          </p>
+        </div>
+
+        <div class="identity-grid">
+          <div class="identity-card">
+            <div class="identity-top">
+              <span class="identity-icon">🧭</span>
+              <span class="identity-label">Razón de Ser</span>
+            </div>
+            <h3 class="identity-title">Propósito</h3>
+            <p class="identity-text">
+              Liberar el potencial de las organizaciones resolviendo sus desafíos más complejos con ingeniería de datos y software escalable, transformando incertidumbre en ventaja competitiva cuantificable.
+            </p>
+          </div>
+
+          <div class="identity-card">
+            <div class="identity-top">
+              <span class="identity-icon">🚀</span>
+              <span class="identity-label">Lo que Hacemos</span>
+            </div>
+            <h3 class="identity-title">Misión</h3>
+            <p class="identity-text">
+              Diseñar e implementar capacidades soberanas de Datos, IA y Procesos para medianas y grandes empresas, acelerando su transición hacia operaciones guiadas por el valor y la certeza matemática.
+            </p>
+          </div>
+
+          <div class="identity-card">
+            <div class="identity-top">
+              <span class="identity-icon">🔭</span>
+              <span class="identity-label">Hacia Dónde Vamos</span>
+            </div>
+            <h3 class="identity-title">Visión</h3>
+            <p class="identity-text">
+              Consolidarnos como la firma referente de ingeniería de datos y transformación digital en Iberoamérica, reconocida por crear valor medible y desarrollar tecnología de vanguardia en nuestro laboratorio Innova Lab.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TABLA COMPARATIVA (EL SALTO CUÁNTICO) ==================== -->
+    <section class="section-spacing" id="comparativa">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">El Salto Cuántico</span>
+          <h2 class="section-title">¿Qué cambia con Statsfirm Co.?</h2>
+          <p class="section-subtitle">
+            Comparativa directa entre la operación tradicional con fricción y una empresa respaldada por ingeniería de precisión:
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <div class="comp-table">
+            <div class="comp-row header">
+              <div class="col-aspect">Área Operativa</div>
+              <div class="col-before">Operación Tradicional</div>
+              <div class="col-after">Con Statsfirm Co.</div>
+            </div>
+
+            <div class="comp-row">
+              <div class="col-aspect"><strong>Cifras y Reportes</strong></div>
+              <div class="col-before"><span class="cross">✕</span> Archivos de Excel que no cuadran y discusiones de junta</div>
+              <div class="col-after"><span class="check">✓</span> Única fuente de verdad oficial y datos unificados</div>
+            </div>
+
+            <div class="comp-row">
+              <div class="col-aspect"><strong>Toma de Decisiones</strong></div>
+              <div class="col-before"><span class="cross">✕</span> Por intuición o esperando 15 días al cierre contable</div>
+              <div class="col-after"><span class="check">✓</span> Tableros ejecutivos en vivo desde móvil o computadora</div>
+            </div>
+
+            <div class="comp-row">
+              <div class="col-aspect"><strong>Inteligencia Artificial</strong></div>
+              <div class="col-before"><span class="cross">✕</span> Herramientas aisladas de moda sin impacto económico</div>
+              <div class="col-after"><span class="check">✓</span> Modelos de demanda que reducen sobre-stock y aumentan margen</div>
+            </div>
+
+            <div class="comp-row">
+              <div class="col-aspect"><strong>Trámites y Procesos</strong></div>
+              <div class="col-before"><span class="cross">✕</span> Cadenas de correos interminables y retrasos a clientes</div>
+              <div class="col-after"><span class="check">✓</span> Flujos digitales automatizados que reducen ciclos en 60%</div>
+            </div>
+
+            <div class="comp-row">
+              <div class="col-aspect"><strong>Equipo de Trabajo</strong></div>
+              <div class="col-before"><span class="cross">✕</span> Meses buscando perfiles que rotan y no entienden de negocio</div>
+              <div class="col-after"><span class="check">✓</span> Squad de élite multidisciplinario con entregas cada 15 días</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CÓMO TRABAJAMOS ==================== -->
+    <section class="section-spacing" id="modelos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Modelos de Trabajo</span>
+          <h2 class="section-title">Esquemas Flexibles de Vinculación</h2>
+          <p class="section-subtitle">
+            Asignamos el equipo especializado según las metas y el presupuesto de tu empresa:
+          </p>
+        </div>
+
+        <div class="models-grid">
+          <div class="model-card featured">
+            <span class="model-badge">Modalidad Preferida</span>
+            <h3 class="model-title">Squad as a Service</h3>
+            <p class="model-desc">
+              Una célula completa de ingenieros, científicos de datos y arquitectos asignados a tu empresa, trabajando en sprints con entregables tangibles cada 15 días.
+            </p>
+            <div class="model-tags">
+              <span>Lead Architect</span>
+              <span>Data Engineers</span>
+              <span>AI Specialist</span>
+              <span>BI Lead</span>
+              <span>Scrum Master</span>
+            </div>
+            <a href="#cotizador" class="btn btn-primary" style="width: 100%;">Estimar Inversión de Squad →</a>
+          </div>
+
+          <div class="model-card">
+            <span class="model-badge neutral">Objetivo Definido</span>
+            <h3 class="model-title">Proyecto por Hitos (Fixed-Scope)</h3>
+            <p class="model-desc">
+              Ideal para requerimientos concretos (ej. unificar 3 sistemas en 90 días). Diagnosticamos el estado actual, fijamos costo y plazo cerrado, y garantizamos el resultado.
+            </p>
+            <div class="model-tags">
+              <span>Alcance Cerrado</span>
+              <span>Costo Fijo</span>
+              <span>Fecha Pactada</span>
+              <span>Garantía de Entrega</span>
+            </div>
+            <a href="#contacto" class="btn btn-outline" style="width: 100%;">Solicitar Alcance Cerrado →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== COTIZADOR EN VIVO ==================== -->
+    <section class="section-spacing" id="cotizador">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Transparencia Total</span>
+          <h2 class="section-title">Calculadora de Inversión y Plazos</h2>
+          <p class="section-subtitle">
+            Selecciona los componentes requeridos para obtener un rango financiero y cronograma al instante:
+          </p>
+        </div>
+
+        <div class="calc-box">
+          <!-- Opciones de entrada -->
+          <div class="calc-inputs">
+            <h4 class="calc-group-title">1. Selecciona las Soluciones Requeridas:</h4>
+            <div class="calc-checkbox-grid">
+              <label class="calc-chip">
+                <input type="checkbox" name="calc-service" value="data-engineering" checked>
+                <span><strong>01. Centralización & Lakehouse</strong> (Unificar ERP, CRM y Excels)</span>
+              </label>
+              <label class="calc-chip">
+                <input type="checkbox" name="calc-service" value="bi-analytics" checked>
+                <span><strong>02. Tableros Ejecutivos en Vivo</strong> (Power BI / Looker)</span>
+              </label>
+              <label class="calc-chip">
+                <input type="checkbox" name="calc-service" value="ai-data-science">
+                <span><strong>03. Inteligencia Artificial Predictiva</strong> (Demanda & Clientes)</span>
+              </label>
+              <label class="calc-chip">
+                <input type="checkbox" name="calc-service" value="software-cloud">
+                <span><strong>04. Software & Nube Resiliente</strong> (Portales y APIs seguras)</span>
+              </label>
+              <label class="calc-chip">
+                <input type="checkbox" name="calc-service" value="process-engineering">
+                <span><strong>05. Automatización de Procesos</strong> (BPMN 2.0 y flujos ágiles)</span>
+              </label>
+            </div>
+
+            <h4 class="calc-group-title" style="margin-top: 1.5rem;">
+              2. Volumen Estimado de Datos: <span id="volume-display" class="text-cobalt">10 TB</span>
+            </h4>
+            <input type="range" id="volume-range" min="1" max="150" value="10" step="1" class="calc-range-slider">
+            <div class="calc-range-labels">
+              <span>Empresa Mediana (1 TB)</span>
+              <span>Corporativo (50 TB)</span>
+              <span>Enterprise Masivo (150+ TB)</span>
+            </div>
+
+            <h4 class="calc-group-title" style="margin-top: 1.5rem;">3. Urgencia Operativa:</h4>
+            <div class="calc-urgency-row">
+              <label class="urgency-pill">
+                <input type="radio" name="calc-urgency" value="estandar" checked>
+                <span>Planificado</span>
+              </label>
+              <label class="urgency-pill">
+                <input type="radio" name="calc-urgency" value="alta">
+                <span>Prioritario (&lt; 30 días)</span>
+              </label>
+              <label class="urgency-pill">
+                <input type="radio" name="calc-urgency" value="inmediata">
+                <span>Inmediato Fast-Track</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Panel de salida / cotización -->
+          <div class="calc-summary-panel">
+            <span class="calc-summary-header">ESTIMACIÓN EN TIEMPO REAL</span>
+
+            <div class="calc-price-card">
+              <span class="price-label">Rango Estimado de Inversión (COP)</span>
+              <span class="price-number" id="quote-price-val">$11.400.000 - $25.200.000 COP</span>
+            </div>
+
+            <div class="calc-meta-grid">
+              <div class="calc-meta-item">
+                <span class="meta-label">Cronograma Estimado</span>
+                <span class="meta-val" id="quote-time-val">10 a 20 semanas</span>
+              </div>
+              <div class="calc-meta-item">
+                <span class="meta-label">Frecuencia de Entregas</span>
+                <span class="meta-val text-emerald">Cada 15 Días</span>
+              </div>
+            </div>
+
+            <div class="calc-squad-box">
+              <span class="squad-title">Configuración de Squad Sugerido:</span>
+              <p class="squad-desc" id="quote-squad-val">
+                Squad Especializado Ágil (Lead Architect, Data Engineers, BI Specialist, Scrum Master)
+              </p>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="transfer-to-form-btn" style="width: 100%;">
+              <span>Exportar Configuración al Formulario</span>
+              <span>↓</span>
+            </button>
+            <span class="calc-footnote">* Rango referencial sin costos ocultos. Se afina en sesión diagnóstica.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FORMULARIO DE CONTACTO (SLA < 2H) ==================== -->
+    <section class="section-spacing" id="contacto">
+      <div class="container">
+        <div class="contact-split-grid">
+          <!-- Columna Izquierda: Información de Confianza -->
+          <div class="contact-info-col">
+            <span class="section-badge">Atención Comercial Inmediata</span>
+            <h2 class="contact-heading">Agendemos una sesión diagnóstica de 30 minutos</h2>
+            <p class="contact-intro">
+              Sin costo ni compromiso comercial. Evaluaremos la arquitectura de tus datos y te entregaremos una ruta clara de implementación.
+            </p>
+
+            <div class="sla-guarantee-card">
+              <div class="sla-icon">🛡️</div>
+              <div class="sla-details">
+                <strong>SLA Contractual de Contacto</strong>
+                <p>Nos comprometemos a responder tu solicitud en <strong>menos de 2 horas hábiles</strong> bajo nuestro Protocolo Oficial BPMN-01.</p>
+              </div>
+            </div>
+
+            <div class="contact-direct-items">
+              <div class="direct-item">
+                <span class="direct-icon">✉️</span>
+                <div>
+                  <span class="direct-label">Correo Oficial</span>
+                  <span class="direct-val">contacto@statsfirm.com</span>
+                </div>
+              </div>
+              <div class="direct-item">
+                <span class="direct-icon">💬</span>
+                <div>
+                  <span class="direct-label">WhatsApp Corporativo</span>
+                  <span class="direct-val">+1 (555) 782-8734</span>
+                </div>
+              </div>
+              <div class="direct-item">
+                <span class="direct-icon">🔒</span>
+                <div>
+                  <span class="direct-label">Confidencialidad</span>
+                  <span class="direct-val">Firma de Acuerdo NDA antes de compartir datos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Formulario Limpio -->
+          <div class="contact-form-col">
+            <div class="form-wrapper-card">
+              <h3 class="form-card-title">Solicitud de Diagnóstico Oficial</h3>
+              <p class="form-card-desc">Ingresa los datos para generar tu radicado comercial oficial:</p>
+
+              <div class="form-alert-error" id="form-error-box" role="alert"></div>
+
+              <form id="lead-commercial-form">
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="companyName">Nombre de la Empresa *</label>
+                    <input type="text" id="companyName" name="companyName" class="form-input" placeholder="Ej. Corporación Andina" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="contactName">Tu Nombre y Cargo *</label>
+                    <input type="text" id="contactName" name="contactName" class="form-input" placeholder="Ej. Juan Pérez, Gerente de Operaciones" required>
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="email">Correo Corporativo *</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="jperez@empresa.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Teléfono / WhatsApp</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="+57 300 123 4567">
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="industry">Sector de la Empresa</label>
+                    <select id="industry" name="industry" class="form-select">
+                      <option value="Agroempresarial">Sector Agroempresarial / Agroindustria</option>
+                      <option value="Manufactura">Manufactura y Producción</option>
+                      <option value="Logística">Logística y Distribución</option>
+                      <option value="Financiero">Financiero y Fintech</option>
+                      <option value="Salud">Salud y Farmacéutica</option>
+                      <option value="Comercio">Retail y Comercio</option>
+                      <option value="Otro">Otro Sector</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="urgency">Prioridad de Inicio</label>
+                    <select id="urgency" name="urgency" class="form-select">
+                      <option value="estandar">Planificado (1 a 3 meses)</option>
+                      <option value="alta" selected>Alta Prioridad (&lt; 30 días)</option>
+                      <option value="inmediata">Inmediata (Fast-Track urgente)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Soluciones de Interés (Selecciona las necesarias):</label>
+                  <div class="form-services-chips">
+                    <label class="srv-checkbox-label">
+                      <input type="checkbox" name="services" value="data-engineering" checked>
+                      <span>01. Centralización & Lakehouse</span>
+                    </label>
+                    <label class="srv-checkbox-label">
+                      <input type="checkbox" name="services" value="bi-analytics" checked>
+                      <span>02. Tableros Ejecutivos</span>
+                    </label>
+                    <label class="srv-checkbox-label">
+                      <input type="checkbox" name="services" value="ai-data-science">
+                      <span>03. Inteligencia Artificial</span>
+                    </label>
+                    <label class="srv-checkbox-label">
+                      <input type="checkbox" name="services" value="software-cloud">
+                      <span>04. Software & Cloud</span>
+                    </label>
+                    <label class="srv-checkbox-label">
+                      <input type="checkbox" name="services" value="process-engineering">
+                      <span>05. Procesos & BPMN</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="challengeDescription">¿Cuál es el principal reto o cuello de botella a resolver? *</label>
+                  <textarea id="challengeDescription" name="challengeDescription" class="form-textarea" rows="3" placeholder="Describe brevemente la situación actual (ej. datos dispersos en Excel, reportes atrasados, procesos manuales...)" required></textarea>
+                </div>
+
+                <!-- Campos ocultos de sincronización con Cotizador -->
+                <input type="hidden" id="dataVolumeTB" name="dataVolumeTB" value="10">
+                <input type="hidden" id="budgetCOP" name="budgetCOP" value="11400000">
+                <input type="hidden" id="budgetUSD" name="budgetUSD" value="11400000">
+
+                <button type="submit" id="submit-lead-btn" class="btn btn-primary" style="width: 100%; padding: 0.95rem;">
+                  <span id="submit-btn-text">Generar Radicado Oficial y Agendar Sesión →</span>
+                  <span id="submit-btn-spinner" class="spinner" style="display: none;"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL DE ÉXITO (RADICADO OFICIAL) ==================== -->
+  <div class="modal-overlay" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="modal-success-title">
+    <div class="modal-box">
+      <div class="modal-icon-wrap">✓</div>
+      <h3 id="modal-success-title" class="modal-title">¡Solicitud Radicada con Éxito!</h3>
+      <p class="modal-desc">
+        Tu requerimiento ha sido registrado formalmente bajo nuestro <strong>Protocolo Oficial BPMN-01</strong> y asignado para evaluación confidencial preliminar.
+      </p>
+
+      <div class="ticket-banner">
+        <span class="ticket-header-label">Número Oficial de Radicado / Ticket</span>
+        <div class="ticket-code-row">
+          <span class="num" id="modal-ticket-id">LEAD-2026-8858</span>
+          <button type="button" class="btn-copy-code" onclick="copyTicketCode()" id="copy-ticket-btn" title="Copiar radicado">Copiar</button>
+        </div>
+      </div>
+
+      <div class="modal-meta-box">
+        <div><span class="meta-label">Empresa:</span> <strong id="modal-company-name">-</strong></div>
+        <div><span class="meta-label">Prioridad:</span> <strong id="modal-priority">-</strong></div>
+        <div><span class="meta-label">SLA de Contacto:</span> <strong id="modal-sla" class="text-emerald">-</strong></div>
+      </div>
+
+      <div class="modal-actions-col">
+        <button type="button" class="btn btn-primary" id="modal-email-btn" onclick="dispatchModalEmail()" style="width: 100%;">
+          <span>Despachar Copia a contacto@statsfirm.com ✉️</span>
+        </button>
+        <button type="button" class="btn btn-outline" id="modal-wa-btn" onclick="dispatchModalWhatsApp()" style="width: 100%;">
+          <span>Coordinar Sesión por WhatsApp Oficial 💬</span>
+        </button>
+      </div>
+
+      <button type="button" class="btn-modal-close" id="modal-close-btn">
+        Regresar al Sitio Web
+      </button>
+    </div>
+  </div>
+
+  <!-- Botón Flotante Volver Arriba -->
+  <button type="button" id="back-to-top" class="back-to-top" aria-label="Volver arriba" title="Volver al inicio" onclick="scrollToTop()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- Contenedor Toast Flotante -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <a href="#hero" class="brand-link" style="margin-bottom: 0.75rem; display: inline-flex;">
+            <img src="/assets/logo_primary.jpg" alt="Statsfirm Co." class="brand-logo" onerror="this.src='/assets/logo_icon.jpg'">
+            <div class="brand-title-wrap">
+              <span class="brand-name">STATSFIRM<span class="text-cobalt"> CO.</span></span>
+              <span class="brand-sub">Precisión en Datos e IA</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Firma de ingeniería especializada en convertir el caos de datos en rentabilidad, tableros de control en tiempo real y procesos automatizados.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Soluciones</h5>
+          <ul>
+            <li><a href="#srv-data-engineering">Data Lakehouse</a></li>
+            <li><a href="#srv-bi-analytics">Tableros Ejecutivos</a></li>
+            <li><a href="#srv-ai-data-science">IA Predictiva</a></li>
+            <li><a href="#srv-software-cloud">Software & Cloud</a></li>
+            <li><a href="#srv-process-engineering">Automatización BPMN</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Firma</h5>
+          <ul>
+            <li><a href="#identidad">Propósito & Misión</a></li>
+            <li><a href="#comparativa">Impacto & Comparativa</a></li>
+            <li><a href="#modelos">Squad as a Service</a></li>
+            <li><a href="#cotizador">Calculadora de Proyecto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contacto Inmediato</h5>
+          <ul>
+            <li><a href="#contacto">contacto@statsfirm.com</a></li>
+            <li><a href="#contacto">+1 (555) 782-8734</a></li>
+            <li><a href="#contacto">SLA &lt; 2h Garantizado</a></li>
+            <li><a href="#contacto">Acuerdo NDA Confidencial</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Statsfirm Co. Todos los derechos reservados. Estándares ISO/IEC 25010 y DAMA-BOK.</div>
+        <div>Diseñado bajo principios de Usabilidad y Experiencia de Usuario (IHC).</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

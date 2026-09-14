@@ -1,0 +1,89 @@
+name: Statsfirm Web & BFF Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'Statsfirm/**'
+      - '!Statsfirm/docs_landing_page/Statsfirm/**' # Excluye binarios Word de CI
+      - '.github/workflows/statsfirm-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'Statsfirm/**'
+      - '!Statsfirm/docs_landing_page/Statsfirm/**'
+      - '.github/workflows/statsfirm-ci.yml'
+
+jobs:
+  lint-and-validate:
+    name: Linting & Integrity Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'Statsfirm/app/package-lock.json'
+
+      - name: Install Dependencies
+        run: |
+          cd Statsfirm/app
+          npm ci
+
+      - name: Validate Services Catalog & Routes Integrity
+        run: |
+          cd Statsfirm/app
+          node -e "
+            const catalog = require('./data/servicesCatalog');
+            if (!catalog.serviceLines || catalog.serviceLines.length !== 5) {
+              console.error('Error: Deben existir exactamente 5 líneas de servicio oficiales.');
+              process.exit(1);
+            }
+            console.log('✓ Catálogo validado con éxito:', catalog.serviceLines.length, 'servicios.');
+          "
+
+      - name: Test BPMN Forms Resolution
+        run: |
+          cd Statsfirm/app
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const candidateDirs = [
+              path.resolve('./routes', '../../docs_landing_page/bpmn/forms'),
+              path.resolve('./routes', '../docs_landing_page/bpmn/forms')
+            ];
+            const dir = candidateDirs.find(d => fs.existsSync(d));
+            if (!dir) {
+              console.error('Error: Directorio bpmn/forms no localizado.');
+              process.exit(1);
+            }
+            const forms = fs.readdirSync(dir).filter(f => f.endsWith('.form'));
+            if (forms.length !== 10) {
+              console.error('Error: Se esperaban 10 formularios Camunda, encontrados:', forms.length);
+              process.exit(1);
+            }
+            console.log('✓ 10 formularios Camunda verificados en:', dir);
+          "
+
+  python-agents-test:
+    name: Agents & Governance Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Monorepo
+        uses: actions/checkout@v4
+
+      - name: Setup Python (3.11)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Statsfirm Agents Test Runner
+        run: |
+          cd Statsfirm/docs_landing_page/agents
+          python test_runner.py

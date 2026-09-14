@@ -1,0 +1,144 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.5.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.25.0"
+  },
+  "schemaVersion": 16,
+  "id": "Form_09_GestionIncidentesSev",
+  "type": "default",
+  "components": [
+    {
+      "text": "# SFC-BPMN-08: Gestión de Incidentes Críticos, SLA y Post-Mortem\nOperado por el equipo SRE y Squad On-Call con soporte 24/7.",
+      "type": "text",
+      "id": "text_header_9"
+    },
+    {
+      "label": "Número de Ticket / ID de Incidente",
+      "type": "textfield",
+      "id": "f_incidente_id",
+      "key": "incidente_id",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Componente de Arquitectura Impactado",
+      "type": "select",
+      "id": "f_componente_impactado",
+      "key": "componente_impactado",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Ingesta / Kafka / Conectores Capa 1",
+          "value": "ingesta_c1"
+        },
+        {
+          "label": "Lakehouse Spark / dbt Capa 2",
+          "value": "lakehouse_c2"
+        },
+        {
+          "label": "Modelado Semántico / Power BI Capa 3",
+          "value": "semantica_c3"
+        },
+        {
+          "label": "Microservicios Core / API Gateway",
+          "value": "api_microservicios"
+        },
+        {
+          "label": "Portal Web / App Móvil del Cliente",
+          "value": "app_cliente"
+        },
+        {
+          "label": "Infraestructura Cloud K8s / Red",
+          "value": "cloud_k8s"
+        }
+      ]
+    },
+    {
+      "label": "Nivel de Severidad",
+      "type": "select",
+      "id": "f_severidad_nivel",
+      "key": "severidad_nivel",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Sev 1: Crítico (Indisponibilidad total / Pérdida datos - SLA 15 min)",
+          "value": "sev_1"
+        },
+        {
+          "label": "Sev 2: Mayor (Degradación de rendimiento severa - SLA 1 hora)",
+          "value": "sev_2"
+        },
+        {
+          "label": "Sev 3: Menor (Problema no bloqueante - SLA 4 horas)",
+          "value": "sev_3"
+        }
+      ]
+    },
+    {
+      "label": "SLA de Respuesta Inicial Cumplido (< 15 min para Sev 1)",
+      "type": "checkbox",
+      "id": "f_sla_cumplido",
+      "key": "sla_cumplido",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Acciones de Mitigación Inmediatas Ejecutadas",
+      "type": "textarea",
+      "id": "f_mitigacion_inmediata",
+      "key": "mitigacion_inmediata",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Análisis de Causa Raíz (RCA - 5 Porqués)",
+      "type": "textarea",
+      "id": "f_causa_raiz_rca",
+      "key": "causa_raiz_rca",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Plan de Prevención Definitiva y Tareas Preventivas",
+      "type": "textarea",
+      "id": "f_plan_preventivo",
+      "key": "plan_preventivo",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Estado del Incidente",
+      "type": "select",
+      "id": "f_estado_incidente",
+      "key": "estado_incidente",
+      "validate": {
+        "required": true
+      },
+      "values": [
+        {
+          "label": "Cerrado con Post-Mortem Aprobado",
+          "value": "cerrado"
+        },
+        {
+          "label": "En Monitoreo Activo durante 24 horas",
+          "value": "en_monitoreo"
+        },
+        {
+          "label": "Escalado a Junta Directiva (Incumplimiento SLA Sev 1)",
+          "value": "escalado_board"
+        }
+      ]
+    }
+  ]
+}

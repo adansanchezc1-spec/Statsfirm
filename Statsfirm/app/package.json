@@ -1,0 +1,25 @@
+{
+  "name": "statsfirm-client-portal",
+  "version": "1.0.0",
+  "description": "Statsfirm Co. Client Operating Ecosystem & Web Console (BFF Architecture)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "statsfirm",
+    "bpmn",
+    "camunda",
+    "data-engineering",
+    "client-portal",
+    "devops",
+    "finops"
+  ],
+  "author": "Statsfirm Co. Digital Experience Group",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
