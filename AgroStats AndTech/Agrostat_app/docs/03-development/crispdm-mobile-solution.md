@@ -67,5 +67,5 @@ Ubicados en `notebooks/crisp_dm/`:
   2. *Selector Estratégico* de productos (Aguacate Hass, Café Verde, Plátano Hartón) y centrales mayoristas (Corabastos, CMA Medellín, Cavasa).
   3. *Tarjetas KPI en Vivo*: Precio promedio, variación 7d, volatilidad y estado del clima.
   4. *Gráfico Interactivo de Pronóstico (Canvas)*: Curva esperada a 14 días con banda de confianza sombreada al 95%.
-  5. *Semáforo Bioestadístico SPC*: Evaluación en tiempo real de las 4 Reglas de Nelson.
+  5. *Monitoreo de Estabilidad SPC*: Detección en tiempo real de anomalías y límites de control.
   6. *Simulador Táctil de Cosecha*: Sliders para Grados Brix, Calibre, pH de suelo y Lluvia con cálculo instantáneo de Rendimiento ($kg/ha$), probabilidad de exportación y ganancias netas por hectárea ($ COP).
