@@ -176,10 +176,13 @@ def simulate_harvest(req: HarvestSimulatorRequest):
         "certificacion_sugerida": "PREMIUM_EXPORT" if export_prob >= 0.80 else ("ESTANDAR" if export_prob >= 0.65 else "NACIONAL")
     }
 
+APP_ROOT = Path(__file__).resolve().parents[5]
+WEB_DIR = APP_ROOT / "web"
+
 @app.get("/api/v1/bioinsumos/catalogo", tags=["Agroeconomía & Bioinsumos"])
 def get_bioinsumos_catalogo():
     """Retorna el catálogo oficial de bioinsumos y empresas registradas ante el ICA."""
-    p = Path(r"c:\Users\ADAN\OneDrive\Documentos\Statsfirm\AgroStats AndTech\AgroStatsApp\data\seeds\bioinsumos_catalog.json")
+    p = APP_ROOT / "data" / "seeds" / "bioinsumos_catalog.json"
     import json
     if p.exists():
         with open(p, encoding="utf-8") as f:
@@ -189,9 +192,15 @@ def get_bioinsumos_catalogo():
 @app.get("/api/v1/empresas/concentracion", tags=["Mercado & Empresas"])
 def get_empresas_hhi():
     """Retorna la participación de mercado y el Índice de Concentración Herfindahl-Hirschman (HHI)."""
-    p = Path(r"c:\Users\ADAN\OneDrive\Documentos\Statsfirm\AgroStats AndTech\AgroStatsApp\data\gold\resultados_modelos\empresas_concentracion_hhi.json")
+    p = APP_ROOT / "data" / "gold" / "resultados_modelos" / "empresas_concentracion_hhi.json"
     import json
     if p.exists():
         with open(p, encoding="utf-8") as f:
             return {"status": "SUCCESS", "empresas": json.load(f), "hhi_total": 2252.5}
     return {"status": "EMPTY", "empresas": []}
+
+# Montar Frontend Web Unificado (HTML/CSS/JS)
+if WEB_DIR.exists():
+    from fastapi.staticfiles import StaticFiles
+    app.mount("/", StaticFiles(directory=str(WEB_DIR), html=True), name="static_web")
+
