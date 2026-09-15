@@ -1,0 +1,37 @@
+[
+  {
+    "empresa":"BioAgro Colombia S.A.S.",
+    "sector":"Bioinsumos & Fertilizantes",
+    "cuota_mercado_pct":28.4,
+    "volumen_anual_ton":14200,
+    "indice_hhi_individual":806.56
+  },
+  {
+    "empresa":"MicroBioTech Andina",
+    "sector":"Bioinsumos & Biocontrol",
+    "cuota_mercado_pct":22.1,
+    "volumen_anual_ton":11050,
+    "indice_hhi_individual":488.41
+  },
+  {
+    "empresa":"AgroBiológicos del Huila",
+    "sector":"Biocontroladores",
+    "cuota_mercado_pct":25.8,
+    "volumen_anual_ton":12900,
+    "indice_hhi_individual":665.64
+  },
+  {
+    "empresa":"EcoAgro Soluciones",
+    "sector":"Bioinsumos",
+    "cuota_mercado_pct":14.2,
+    "volumen_anual_ton":7100,
+    "indice_hhi_individual":201.64
+  },
+  {
+    "empresa":"Otros Proveedores Regionales",
+    "sector":"Varios",
+    "cuota_mercado_pct":9.5,
+    "volumen_anual_ton":4750,
+    "indice_hhi_individual":90.25
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "bioinsumo_id":1,
+    "nombre_comercial":"BioNitrogen-Fix Plus",
+    "tipo":"Biofertilizante Fijador N",
+    "ingrediente_activo":"Azospirillum brasilense",
+    "empresa":"BioAgro Colombia S.A.S.",
+    "registro_ica":"ICA-FERT-2021-0045",
+    "ahorro_quimico_promedio_pct":24.5,
+    "cuota_mercado_pct":28.4
+  },
+  {
+    "bioinsumo_id":2,
+    "nombre_comercial":"FosfoSolubil Pro",
+    "tipo":"Biofertilizante Solubilizador P",
+    "ingrediente_activo":"Pseudomonas putida + Bacillus subtilis",
+    "empresa":"MicroBioTech Andina",
+    "registro_ica":"ICA-FERT-2020-0089",
+    "ahorro_quimico_promedio_pct":21.0,
+    "cuota_mercado_pct":22.1
+  },
+  {
+    "bioinsumo_id":3,
+    "nombre_comercial":"TrichoShield Max",
+    "tipo":"Biocontrolador Fúngico",
+    "ingrediente_activo":"Trichoderma harzianum cepa TH-01",
+    "empresa":"AgroBiológicos del Huila",
+    "registro_ica":"ICA-BIOC-2022-0112",
+    "ahorro_quimico_promedio_pct":29.0,
+    "cuota_mercado_pct":25.8
+  },
+  {
+    "bioinsumo_id":4,
+    "nombre_comercial":"BacillusThur Control",
+    "tipo":"Biocontrolador Larvicida",
+    "ingrediente_activo":"Bacillus thuringiensis kurstaki",
+    "empresa":"EcoAgro Soluciones",
+    "registro_ica":"ICA-BIOC-2019-0033",
+    "ahorro_quimico_promedio_pct":19.5,
+    "cuota_mercado_pct":14.2
+  },
+  {
+    "bioinsumo_id":5,
+    "nombre_comercial":"CompostEnrich Mineral",
+    "tipo":"Enmienda Orgánica Compostada",
+    "ingrediente_activo":"Materia orgánica compostada + Leonardita",
+    "empresa":"BioNutrientes de Occidente",
+    "registro_ica":"ICA-ENMI-2023-0007",
+    "ahorro_quimico_promedio_pct":18.0,
+    "cuota_mercado_pct":9.5
+  }
+]

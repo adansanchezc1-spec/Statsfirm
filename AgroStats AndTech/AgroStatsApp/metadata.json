@@ -1,0 +1,56 @@
+{
+  "project": "AgroData Intelligence Platform",
+  "version": "1.0.0",
+  "pdco_phase": "DEVELOPMENT",
+  "active_skill": "03-development",
+  "sdlc_stage": "implementation",
+  "last_updated": "2026-09-15",
+  "governance_standards": [
+    "SWEBOK (Software Engineering Body of Knowledge)",
+    "DAMA-DMBOK 2 (Data Management Body of Knowledge)",
+    "ISO/IEC 25010 (Software Product Quality)",
+    "ISO 7870 (Control Charts & Nelson Rules)",
+    "Guillermo Guerra E. (IICA) - Manual de Administracion de Empresas Agropecuarias",
+    "Clean Architecture & DDD",
+    "PEP 8 & Clean Code"
+  ],
+  "lakehouse_layers": {
+    "landing": "Raw ingest stream from DANE SIPSA, Agronet EVA, ICA Bioinsumos",
+    "bronze": "Structured parquet with data quality checks",
+    "silver": "Harmonized, normalized and imputed series",
+    "gold": "Aggregated bioeconomic metrics, Shewhart SPC, HHI concentration, and ML forecasts"
+  },
+  "commodities_supported": [
+    {"cpc": "01221", "name": "Aguacate Hass"},
+    {"cpc": "01610", "name": "Cafe Verde Arabica"},
+    {"cpc": "01222", "name": "Platano Harton"},
+    {"cpc": "01232", "name": "Tomate Chonto"},
+    {"cpc": "01510", "name": "Papa Pastusa"},
+    {"cpc": "01121", "name": "Maiz Amarillo Duro"},
+    {"cpc": "01321", "name": "Citricos / Naranja Valencia"},
+    {"cpc": "01620", "name": "Cacao en Grano Fino de Aroma"}
+  ],
+  "artifacts": [
+    "01_AGENT_STRATEGY_GOVERNANCE_REQUIREMENTS.md",
+    "02_AGENT_ENTERPRISE_ARCHITECTURE_SECURITY.md",
+    "03_AGENT_DATA_ENGINEERING_LAKEHOUSE.md",
+    "04_AGENT_DATA_QUALITY_AND_IMPUTATION.md",
+    "05_AGENT_STATISTICS_AND_ECONOMETRICS.md",
+    "06_AGENT_MACHINE_LEARNING_AND_MLOPS.md",
+    "07_AGENT_DATABASE_AND_DATA_WAREHOUSE.md",
+    "08_AGENT_BACKEND_SERVICES_API.md",
+    "09_AGENT_UX_UI_INTERACTION_DESIGN.md",
+    "10_AGENT_FRONTEND_AND_DASHBOARDS.md",
+    "11_AGENT_DEVOPS_INFRASTRUCTURE_MONITORING.md",
+    "12_AGENT_QUALITY_ASSURANCE_TESTING.md",
+    "13_AGENT_TECHNICAL_DOCUMENTATION.md",
+    "src/agrostats/",
+    "web/index.html",
+    "web/css/design_system.css",
+    "web/js/app.js",
+    "sql/schema_oltp.sql",
+    "sql/schema_dwh_star.sql",
+    "sql/seeds_catalogs.sql",
+    "tests/run_tests.py"
+  ]
+}
