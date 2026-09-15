@@ -28,20 +28,34 @@ class ParquetLakehouseRepository(HarvestRepositoryPort):
         self._silver_dir = self._base_dir / "silver"
         self._gold_dir = self._base_dir / "gold"
 
+        self._bronze_ingestion_dir = self._bronze_dir / "ingestion"
+        self._bronze_limpieza_dir = self._bronze_dir / "limpieza"
+        self._silver_integracion_dir = self._silver_dir / "integracion"
+        self._silver_modelado_dir = self._silver_dir / "modelado"
+        self._gold_resultados_dir = self._gold_dir / "resultados_modelos"
+
         self._silver_file_parquet = self._silver_dir / "harvest_batches.parquet"
         self._silver_file_json = self._silver_dir / "harvest_batches.json"
 
-        for d in [self._bronze_dir, self._silver_dir, self._gold_dir]:
+        for d in [
+            self._bronze_dir, self._silver_dir, self._gold_dir,
+            self._bronze_ingestion_dir, self._bronze_limpieza_dir,
+            self._silver_integracion_dir, self._silver_modelado_dir,
+            self._gold_resultados_dir
+        ]:
             d.mkdir(parents=True, exist_ok=True)
 
     def save_bronze_records(self, raw_records: List[Dict[str, Any]], source_tag: str) -> str:
-        """Saves immutable raw payload into Bronze layer."""
+        """Saves immutable raw payload into Bronze layer (ingestion subfolder and root)."""
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")
         filename = f"raw_{source_tag}_{timestamp}.json"
         target_path = self._bronze_dir / filename
+        target_ingestion_path = self._bronze_ingestion_dir / filename
 
         try:
             with open(target_path, "w", encoding="utf-8") as f:
+                json.dump(raw_records, f, indent=2, ensure_ascii=False)
+            with open(target_ingestion_path, "w", encoding="utf-8") as f:
                 json.dump(raw_records, f, indent=2, ensure_ascii=False)
             return str(target_path)
         except Exception as exc:
@@ -62,14 +76,17 @@ class ParquetLakehouseRepository(HarvestRepositoryPort):
         merged_list = list(batch_map.values())
         records = [b.to_dict() for b in merged_list]
 
-        # Guardar en formato JSON auditado
+        # Guardar en formato JSON auditado en silver raíz y silver/integracion
         with open(self._silver_file_json, "w", encoding="utf-8") as f:
+            json.dump(records, f, indent=2, ensure_ascii=False)
+        with open(self._silver_integracion_dir / "harvest_batches.json", "w", encoding="utf-8") as f:
             json.dump(records, f, indent=2, ensure_ascii=False)
 
         # Guardar en formato Parquet
         try:
             df = pd.DataFrame(records)
             df.to_parquet(self._silver_file_parquet, index=False)
+            df.to_parquet(self._silver_integracion_dir / "harvest_batches.parquet", index=False)
         except Exception:
             # Fallback seguro si pyarrow/fastparquet tiene problemas de compatibilidad
             pass
