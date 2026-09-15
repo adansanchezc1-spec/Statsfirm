@@ -1,6 +1,6 @@
 {
   "project": "Agrostat_app",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "pdco_phase": "DEVELOPMENT",
   "active_skill": "03-development",
   "sdlc_stage": "implementation",
@@ -8,6 +8,7 @@
   "architecture": "Hexagonal (Ports & Adapters) + Medallion Lakehouse Segregated (Bronze Ingest/Clean, Silver Integr/Model, Gold Model Results/DW) + Mobile-First Executive App",
   "standards": [
     "CRISP-DM Cross-Industry Standard Process for Data Mining",
+    "Manual de Administracion de Empresas Agropecuarias - Guillermo Guerra E. (IICA)",
     "IEEE 830 / ISO 29148 Software Requirements Specification",
     "SWEBOK Chapter 1 (Requirements), Chapter 2 (Design) & Chapter 3 (Construction)",
     "DAMA-BOK Data Management Body of Knowledge",
@@ -22,6 +23,8 @@
     "requirements.txt",
     "README.md",
     "metadata.json",
+    "data/gold/resultados_modelos/indicadores_rentabilidad_guerra.parquet",
+    "data/gold/resultados_modelos/indicadores_rentabilidad_guerra.json",
     "docs/01-requirements/requirements.md",
     "docs/01-requirements/use-cases.md",
     "docs/01-requirements/entity-map.md",
