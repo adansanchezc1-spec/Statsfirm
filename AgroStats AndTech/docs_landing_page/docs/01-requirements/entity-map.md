@@ -1,100 +1,166 @@
-# Mapa de Entidades del Dominio Agroestadístico
-**Proyecto**: Agro Stat & Tech Co. (AgroStats)  
-**Versión**: 2.0.0  
-**Fecha**: 2026-09-12  
-**Fase PDCO**: PLAN  
-**SDLC Stage**: Requirements  
+# Mapa de Entidades y Modelo Relacional Dimensional (ER)
+**Plataforma**: Agrostat Data Intelligence Platform  
+**Fase PDCO**: **PLAN** | **Active Skill**: `01-requirements`  
+**Estándar**: DAMA-BOK / Esquema Dimensional Kimball  
 
 ---
 
-## 1. Entidades Principales del Sistema
-
-### 1.1. `ProductorAgricola`
-- **Descripción**: Organización, agroexportadora o productor titular de los datos y de la explotación agropecuaria.
-- **Atributos clave**: `id`, `razon_social`, `pais`, `tipo_cultivo_principal`, `politica_soberania_aceptada`, `fecha_registro`.
-- **Relaciones**: Tiene muchas `Fincas`, tiene muchos `DataContracts`.
-
-### 1.2. `Finca` / `Lote`
-- **Descripción**: Unidad espacial agronómica delimitada por coordenadas geográficas donde se ejecutan las labores y cosechas.
-- **Atributos clave**: `id`, `finca_id`, `nombre_lote`, `hectareas`, `variedad_cultivo`, `geometria_poligono_geojson`.
-- **Relaciones**: Pertenece a `ProductorAgricola`, tiene muchos `DatasetsAgropecuarios`, tiene muchas `CartasControlSPC`.
-
-### 1.3. `DatasetAgropecuario`
-- **Descripción**: Lote de datos provisto por el cliente (archivo Excel/CSV o payload de API de ERP) que contiene mediciones operativas.
-- **Atributos clave**: `id`, `lote_id`, `fecha_ingesta`, `fuente_origen` (ERP, PLANILLA_EXCEL, LAB_SUELO, REGISTRO_COSECHA), `estado_validacion` (INGESTADO, EN_CUARENTENA, VERIFICADO), `registros_totales`, `registros_anomalos`.
-- **Relaciones**: Pertenece a `Lote`, contiene muchos `RegistrosOperativos`.
-
-### 1.4. `CartaControlSPC`
-- **Descripción**: Estructura de cálculo estadístico que modela la estabilidad del proceso sobre una variable agronómica o de poscosecha.
-- **Atributos clave**: `id`, `lote_id`, `variable_analizada`, `tipo_carta` (XBAR_R, XBAR_S, I_MR), `media_central`, `limite_superior_ucl`, `limite_inferior_lcl`, `indice_cp`, `indice_cpk`, `estado_proceso` (BAJO_CONTROL, FUERA_DE_CONTROL).
-- **Relaciones**: Pertenece a `Lote`, genera muchas `AlertasSPC`.
-
-### 1.5. `PlanMejoraProceso` (BPMN)
-- **Descripción**: Propuesta estructurada de ingeniería de procesos derivada de los hallazgos de variabilidad y mermas.
-- **Atributos clave**: `id`, `lote_id`, `proceso_bpmn_as_is`, `proceso_bpmn_to_be`, `ahorro_estimado_usd`, `reduccion_merma_proyectada_pct`, `estado_implementacion`.
-- **Relaciones**: Asociado a `CartaControlSPC`.
-
----
-
-## 2. Diagrama Entidad-Relación (Mermaid ER)
+## 1. Diagrama Entidad-Relación Dimensional (Mermaid ER)
 
 ```mermaid
 erDiagram
-    PRODUCTOR_AGRICOLA ||--o{ FINCA : "posee"
-    FINCA ||--o{ LOTE : "contiene"
-    LOTE ||--o{ DATASET_AGROPECUARIO : "recibe"
-    DATASET_AGROPECUARIO ||--o{ REGISTRO_OPERATIVO : "contiene"
-    DATASET_AGROPECUARIO ||--o{ REGISTRO_ANOMALO_DLQ : "descarta"
-    LOTE ||--o{ CARTA_CONTROL_SPC : "evalua"
-    CARTA_CONTROL_SPC ||--o{ ALERTA_SPC : "dispara"
-    CARTA_CONTROL_SPC ||--o{ PLAN_MEJORA_BPMN : "origina"
+    DIM_TIEMPO ||--o{ FACT_PRECIOS_SIPSA : "periodo_id"
+    DIM_TIEMPO ||--o{ FACT_ABASTECIMIENTO_SIPSA : "periodo_id"
+    DIM_TIEMPO ||--o{ FACT_PRODUCCION_AGRONET : "periodo_id"
+    DIM_TIEMPO ||--o{ FACT_CLIMA_DIARIO : "periodo_id"
 
-    PRODUCTOR_AGRICOLA {
-        int id PK
+    DIM_PRODUCTO ||--o{ FACT_PRECIOS_SIPSA : "producto_id"
+    DIM_PRODUCTO ||--o{ FACT_ABASTECIMIENTO_SIPSA : "producto_id"
+    DIM_PRODUCTO ||--o{ FACT_PRODUCCION_AGRONET : "producto_id"
+
+    DIM_MERCADO_ABASTO ||--o{ FACT_PRECIOS_SIPSA : "mercado_id"
+    DIM_MERCADO_ABASTO ||--o{ FACT_ABASTECIMIENTO_SIPSA : "mercado_destino_id"
+
+    DIM_GEOGRAFIA ||--o{ DIM_MERCADO_ABASTO : "municipio_id"
+    DIM_GEOGRAFIA ||--o{ FACT_ABASTECIMIENTO_SIPSA : "municipio_origen_id"
+    DIM_GEOGRAFIA ||--o{ FACT_PRODUCCION_AGRONET : "municipio_id"
+    DIM_GEOGRAFIA ||--o{ DIM_ESTACION_CLIMA : "municipio_id"
+
+    DIM_ESTACION_CLIMA ||--o{ FACT_CLIMA_DIARIO : "estacion_id"
+
+    DIM_ACTOR_CADENA ||--o{ FACT_TRANSACCIONES_BMC : "actor_id"
+    DIM_PRODUCTO ||--o{ FACT_TRANSACCIONES_BMC : "producto_id"
+    DIM_TIEMPO ||--o{ FACT_TRANSACCIONES_BMC : "periodo_id"
+
+    DIM_TIEMPO {
+        int fecha_key PK "Formato YYYYMMDD"
+        date fecha_completa
+        int anio
+        int mes
+        string nombre_mes
+        int semana_anio
+        int trimestre
+        int dia_semana
+        boolean es_fin_semana
+    }
+
+    DIM_GEOGRAFIA {
+        string divipola_codigo PK "Código DANE 5 dígitos"
+        string departamento_nombre
+        string departamento_codigo "2 dígitos"
+        string municipio_nombre
+        string region_natural "Andina, Caribe, Pacífica, etc."
+        float latitud
+        float longitud
+    }
+
+    DIM_PRODUCTO {
+        string producto_cpc_codigo PK "Código CPC 2.1 A.C."
+        string nombre_comun
+        string grupo_agricola "Frutas, Hortalizas, Tubérculos, etc."
+        string subgrupo_agricola
+        string unidad_comercial "Kilogramo, Tonelada, Bulto"
+        string variedad_estandar
+    }
+
+    DIM_MERCADO_ABASTO {
+        string mercado_id PK "CORABASTOS, CAVASA, CENABASTOS, etc."
+        string nombre_central
+        string divipola_codigo FK
+        string tipo_mercado "Mayorista Principal, Satélite"
+    }
+
+    DIM_ESTACION_CLIMA {
+        string estacion_codigo PK "Código IDEAM"
+        string nombre_estacion
+        string divipola_codigo FK
+        string tipo_estacion "Pluviométrica, Climatológica Principal"
+        float altitud_msnm
+    }
+
+    DIM_ACTOR_CADENA {
+        string actor_id PK "NIT o Código Gremial"
         string razon_social
-        string pais
-        string tipo_operacion
+        string rol_cadena "Productor, Comercializador, Gremio, Exportador"
+        string gremio_asociado "Fedearroz, FENALCE, Fedegan, etc."
     }
 
-    LOTE {
-        int id PK
-        int finca_id FK
-        string nombre_lote
-        float hectareas
-        string cultivo_variedad
+    FACT_PRECIOS_SIPSA {
+        bigint precio_id PK
+        int fecha_key FK
+        string producto_cpc_codigo FK
+        string mercado_id FK
+        float precio_minimo_kg
+        float precio_medio_kg
+        float precio_maximo_kg
+        float desviacion_estandar_precio
+        string fuente_boletin
+        timestamp ingest_timestamp
     }
 
-    DATASET_AGROPECUARIO {
-        int id PK
-        int lote_id FK
-        timestamp fecha_ingesta
-        string fuente_origen
-        string status_calidad
+    FACT_ABASTECIMIENTO_SIPSA {
+        bigint abastecimiento_id PK
+        int fecha_key FK
+        string producto_cpc_codigo FK
+        string mercado_destino_id FK
+        string municipio_origen_divipola FK
+        float volumen_toneladas
+        float participacion_pct
+        timestamp ingest_timestamp
     }
 
-    REGISTRO_OPERATIVO {
-        int id PK
-        int dataset_id FK
-        date fecha_labor
-        float valor_variable
-        string unidad_medida
+    FACT_PRODUCCION_AGRONET {
+        bigint produccion_id PK
+        int anio
+        int ciclo_semestre "1 o 2"
+        string producto_cpc_codigo FK
+        string divipola_municipio FK
+        float area_sembrada_ha
+        float area_cosechada_ha
+        float produccion_toneladas
+        float rendimiento_t_ha
     }
 
-    CARTA_CONTROL_SPC {
-        int id PK
-        int lote_id FK
-        string variable
-        float ucl
-        float linea_central
-        float lcl
-        float cpk
-        string status
+    FACT_CLIMA_DIARIO {
+        bigint clima_id PK
+        int fecha_key FK
+        string estacion_codigo FK
+        float precipitacion_mm
+        float temperatura_max_celsius
+        float temperatura_min_celsius
+        float temperatura_media_celsius
+        float humedad_relativa_pct
+        float radiacion_solar_mj_m2
     }
 
-    PLAN_MEJORA_BPMN {
-        int id PK
-        int carta_spc_id FK
-        string accion_recomendada
-        float ahorro_proyectado
+    FACT_TRANSACCIONES_BMC {
+        bigint transaccion_id PK
+        int fecha_key FK
+        string producto_cpc_codigo FK
+        string actor_id FK
+        float volumen_kg
+        float precio_pactado_kg
+        string tipo_operacion "Registro Factura, Rueda Abierta"
     }
 ```
+
+---
+
+## 2. Descripción de Dimensiones Canónicas
+
+1. **`DIM_TIEMPO`**: Dimensión conformada que garantiza la coherencia temporal entre precios diarios del SIPSA, datos meteorológicos del IDEAM y estadísticas anuales de Agronet.
+2. **`DIM_GEOGRAFIA`**: Normalizada bajo el estándar **DIVIPOLA DANE**, permitiendo la agregación desde nivel municipal hasta regional y departamental.
+3. **`DIM_PRODUCTO`**: Jerarquía de productos basada en la **CPC Ver. 2.1 A.C.** (Clasificación Central de Productos Adaptada para Colombia), permitiendo comparar productos a nivel de especie, grupo agronómico y variedad.
+4. **`DIM_MERCADO_ABASTO`**: Representa las centrales mayoristas del país (Corabastos en Bogotá, Cavasa en Cali, Central Mayorista de Antioquia, Granabastos en Barranquilla, Cenabastos en Cúcuta, etc.).
+5. **`DIM_ESTACION_CLIMA`**: Red de estaciones meteorológicas del IDEAM con georreferenciación y altitud para modelado microclimático.
+6. **`DIM_ACTOR_CADENA`**: Registro de agremiaciones, empresas agropecuarias y comercializadores para mapear la estructura competitiva del sector.
+
+---
+
+## 3. Tablas de Hechos (Facts)
+
+1. **`FACT_PRECIOS_SIPSA`**: Registro diario de precios mayoristas por kilogramo, con estadísticas de dispersión (mínimo, medio, máximo).
+2. **`FACT_ABASTECIMIENTO_SIPSA`**: Volúmenes de entrada de alimentos por mercado y municipio de origen. Permite trazar los corredores logísticos y la demanda de las grandes ciudades.
+3. **`FACT_PRODUCCION_AGRONET`**: Balances consolidados de área sembrada, cosechada y rendimiento agrícola por municipio (Evaluaciones Agropecuarias Municipales - EVA).
+4. **`FACT_CLIMA_DIARIO`**: Historial meteorológico de precipitación, temperatura y radiación para alimentar los modelos de regresión y series de tiempo.
+5. **`FACT_TRANSACCIONES_BMC`**: Registro mercantil de contratos y facturas agropecuarias en la Bolsa Mercantil de Colombia.

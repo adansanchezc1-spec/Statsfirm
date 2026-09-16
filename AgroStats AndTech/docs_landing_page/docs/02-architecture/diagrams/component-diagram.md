@@ -1,55 +1,114 @@
-# Diagrama de Componentes de la Arquitectura en Tres Capas Analíticas (Mermaid)
-**Proyecto**: Agro Stat & Tech Co. (AgroStats)  
-**Versión**: 2.0.0  
-**Fecha**: 2026-09-12  
+# Diagrama de Componentes UML (Mermaid)
+**Plataforma**: Agrostat Data Intelligence Platform  
+**Fase PDCO**: PLAN → DEVELOPMENT  
+**Active Skill**: `02-architecture`  
+
+---
 
 ```mermaid
 graph TB
-    subgraph Fuentes de Datos del Cliente (Sin Sensores de Hardware)
-        ERP[ERPs Agropecuarios: SAP / AgroWin / Odoo]
-        FILES[Planillas de Labores y Cosecha de Campo: Excel / CSV]
-        LABS[Ensayos Físico-Químicos de Laboratorio Certificado]
-        CLIMA_EXT[Bases de Datos Meteorológicas Comerciales / Públicas]
+    %% ==========================================
+    %% PRESENTACIÓN Y ADAPTADORES DE ENTRADA
+    %% ==========================================
+    subgraph DrivingAdapters["1. Capa de Adaptadores de Entrada (Driving)"]
+        CLI["CLI Tool (Typer / Argparse)<br/><code>agrostat ingest / predict / spc</code>"]
+        API["FastAPI REST Server<br/><code>/api/v1/forecast /spc /market</code>"]
+        CRON["Task Scheduler<br/><code>Cron Daemon / Airflow Runner</code>"]
     end
 
-    subgraph Capa 1: Ingesta Multicanal y Validación
-        API_GATEWAY[HTTPS / SFTP Ingestion Gateway]
-        PARSER[Multi-Format Dataset Parsers]
-        DATA_CONTRACTS[Data Contracts Validator]
-        DLQ[(Dead Letter Queue / Cuarentena)]
+    %% ==========================================
+    %% CAPA DE APLICACIÓN
+    %% ==========================================
+    subgraph Application["2. Capa de Aplicación (Casos de Uso)"]
+        UC_INGEST["RunDailyIngestionUseCase"]
+        UC_CURATE["RunCurationPipelineUseCase"]
+        UC_FORECAST["PredictMarketDemandUseCase"]
+        UC_SPC["RunSPCAnalysisUseCase"]
+        UC_E2E["EndToEndDataPipelineUseCase"]
     end
 
-    subgraph Capa 2: Curaduría y Lakehouse Agrícola
-        BRONZE[(Bronze Lake: Raw Ingested Datasets)]
-        DBT[dbt / Spark Transformations & Kriging]
-        SILVER[(Silver Lake: Curated & Georeferenced Data)]
+    %% ==========================================
+    %% CAPA DE DOMINIO PURO
+    %% ==========================================
+    subgraph CoreDomain["3. Capa de Dominio Puro (Core Domain)"]
+        DOM_MODELS["Entidades y VOs<br/><code>Cotizacion, Clima, Divipola, CPC</code>"]
+        DOM_VAL["DataQualityValidator<br/><code>Reglas DAMA-BOK</code>"]
+        DOM_BIO["BioStatisticalEngine<br/><code>Shewhart 3-Sigma & Reglas Nelson</code>"]
+        DOM_ML["TimeSeriesForecaster<br/><code>SARIMAX, Gradient Boosting</code>"]
     end
 
-    subgraph Capa 3: Decisiones, SPC, Yield AI y BI
-        SPC_ENGINE[Statistical Process Control Engine: Shewhart / Cp / Cpk]
-        YIELD_AI[Yield AI: Modelos Predictivos y Curvas de Maduración]
-        BPMN_OPT[BPMN Process Optimization Analyzer]
-        DASHBOARD[Consola Web y Tableros Ejecutivos de Rentabilidad]
+    %% ==========================================
+    %% PUERTOS (INTERFACES ABSTRACTAS)
+    %% ==========================================
+    subgraph Ports["4. Capa de Puertos (Interfaces Abstractas ABC)"]
+        P_IN["Driving Ports<br/><code>IngestionPort, ForecastPort, SPCPort</code>"]
+        P_REPO["Driven: LakehouseRepositoryPort"]
+        P_EXT["Driven: ExternalSourceExtractorPort"]
+        P_DLQ["Driven: DeadLetterQueuePort"]
+        P_REG["Driven: ModelRegistryPort"]
+        P_NOTIF["Driven: NotificationPort"]
     end
 
-    ERP --> API_GATEWAY
-    FILES --> API_GATEWAY
-    LABS --> API_GATEWAY
-    CLIMA_EXT --> API_GATEWAY
+    %% ==========================================
+    %% ADAPTADORES DE SALIDA E INFRAESTRUCTURA
+    %% ==========================================
+    subgraph DrivenAdapters["5. Capa de Adaptadores de Salida (Driven)"]
+        ADAPT_DUCK["DuckDBLakehouseRepository<br/><code>SQL DW Engine</code>"]
+        ADAPT_SOCRATA["SocrataSipsaExtractor<br/><code>SIPSA_P & SIPSA_A (DANE)</code>"]
+        ADAPT_IDEAM["IdeamODataExtractor<br/><code>DHIME Meteorología</code>"]
+        ADAPT_NASA["NasaPowerRestExtractor<br/><code>Reanálisis Satelital</code>"]
+        ADAPT_DLQ["JsonDeadLetterQueueAdapter<br/><code>Auditoría Cuarentena</code>"]
+        ADAPT_REG["JoblibModelRegistryAdapter<br/><code>Model Artifacts & JSON Metas</code>"]
+        ADAPT_NOTIF["ConsoleTelemetryAdapter<br/><code>Structured Logging</code>"]
+    end
 
-    API_GATEWAY --> PARSER
-    PARSER --> DATA_CONTRACTS
-    DATA_CONTRACTS -->|Inválido / Error Biológico| DLQ
-    DATA_CONTRACTS -->|Válido| BRONZE
+    %% ==========================================
+    %% ALMACENAMIENTO FÍSICO (LAKEHOUSE)
+    %% ==========================================
+    subgraph StorageLakehouse["6. Almacenamiento Físico (Medallion Lakehouse)"]
+        FS_BRONZE[("data/bronze/<br/>Raw JSONL / Parquet inmutable")]
+        FS_SILVER[("data/silver/<br/>Cleaned & Validated Parquet")]
+        FS_GOLD[("data/gold/agro_dw.duckdb<br/>Star Schema OLAP DW")]
+        FS_DLQ[("data/dlq/<br/>Quarantined Records JSONL")]
+        FS_MODELS[("data/models/<br/>Serialized ML Pipelines")]
+    end
 
-    BRONZE --> DBT
-    DBT --> SILVER
+    %% Conexiones
+    CLI --> P_IN
+    API --> P_IN
+    CRON --> P_IN
 
-    SILVER --> SPC_ENGINE
-    SILVER --> YIELD_AI
-    SILVER --> BPMN_OPT
+    P_IN --> UC_INGEST
+    P_IN --> UC_FORECAST
+    P_IN --> UC_SPC
+    P_IN --> UC_E2E
 
-    SPC_ENGINE --> DASHBOARD
-    YIELD_AI --> DASHBOARD
-    BPMN_OPT --> DASHBOARD
+    UC_INGEST --> CoreDomain
+    UC_FORECAST --> CoreDomain
+    UC_SPC --> CoreDomain
+    UC_E2E --> UC_INGEST
+    UC_E2E --> UC_FORECAST
+    UC_E2E --> UC_SPC
+
+    UC_INGEST --> P_REPO
+    UC_INGEST --> P_EXT
+    UC_INGEST --> P_DLQ
+    UC_INGEST --> P_NOTIF
+
+    UC_FORECAST --> P_REPO
+    UC_FORECAST --> P_REG
+
+    P_REPO <|.. ADAPT_DUCK
+    P_EXT <|.. ADAPT_SOCRATA
+    P_EXT <|.. ADAPT_IDEAM
+    P_EXT <|.. ADAPT_NASA
+    P_DLQ <|.. ADAPT_DLQ
+    P_REG <|.. ADAPT_REG
+    P_NOTIF <|.. ADAPT_NOTIF
+
+    ADAPT_DUCK --> FS_BRONZE
+    ADAPT_DUCK --> FS_SILVER
+    ADAPT_DUCK --> FS_GOLD
+    ADAPT_DLQ --> FS_DLQ
+    ADAPT_REG --> FS_MODELS
 ```

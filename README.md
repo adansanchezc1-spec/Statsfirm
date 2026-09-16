@@ -20,8 +20,8 @@ Repositorio centralizado (**Monorepo Modular Federado**) del holding tecnológic
 │ • 05. Automatización BPMN 2.0        │                                      │
 ├──────────────────────────────────────┼──────────────────────────────────────┤
 │ Directorio: Statsfirm/               │ Directorio: AgroStats AndTech/       │
-│ • app/ (Backend Express BFF & Web)   │ • Agrostat_app/ (App Móvil)          │
-│ • docs_landing_page/                 │ • docs_landing_page/                 │
+│ • app/ (Backend Express BFF & Web)   │ • AgroStatsApp/ (Enterprise Suite)   │
+│ • docs_landing_page/                 │ • docs_landing_page/ (Landing Page)  │
 │   - Statsfirm/ (11 docs .docx)       │   - AgroStats/ (14 docs .docx)       │
 │   - docs/05-services/ (5 servicios)  │   - docs/05-services/ (4 servicios)  │
 │   - bpmn/ (Camunda 7/8 & 10 forms)   │   - bpmn/ (Procesos analíticos)      │
@@ -47,11 +47,21 @@ node server.js
 ```
 Acceder en el navegador: [http://localhost:3000](http://localhost:3000)
 
-### Visualización de Agro Stat & Tech Co.
-Abrir directamente en el navegador:
+### Visualización del Portal Corporativo (Agro Stat & Tech Co.)
+Abrir directamente la Landing Page en el navegador:
 ```bash
 AgroStats AndTech/docs_landing_page/index.html
 ```
+
+### Ejecución de AgroStats Enterprise Platform (FastAPI & 8 Dashboards)
+Iniciar el servidor de analítica y dashboards interactivos:
+```bash
+cd "AgroStats AndTech/AgroStatsApp"
+python -m uvicorn src.agrostats.adapters.driving.api.server:app --reload --port 8000
+```
+Acceder en el navegador: [http://localhost:8000](http://localhost:8000)
+- Swagger UI / OpenAPI: [http://localhost:8000/docs](http://localhost:8000/docs)
+
 
 ---
 

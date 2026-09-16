@@ -50,7 +50,15 @@
     "web/js/app.js",
     "sql/schema_oltp.sql",
     "sql/schema_dwh_star.sql",
+    "sql/schema_agro_dw.sql",
     "sql/seeds_catalogs.sql",
+    "sql/seeds_mercados_y_productos.sql",
+    "web/mobile/index.html",
+    "notebooks/crisp_dm/",
+    "docs/01-requirements/",
+    "docs/02-architecture/",
+    "docs/03-development/",
+    "docs/04-data_metadata/",
     "tests/run_tests.py"
   ]
 }
