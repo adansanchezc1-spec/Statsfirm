@@ -1,10 +1,10 @@
 {
   "project": "AgroData Intelligence Platform",
   "version": "1.0.0",
-  "pdco_phase": "DEVELOPMENT",
-  "active_skill": "03-development",
-  "sdlc_stage": "implementation",
-  "last_updated": "2026-09-15",
+  "pdco_phase": "OPERATIONS",
+  "active_skill": "05-maintenance",
+  "sdlc_stage": "maintenance",
+  "last_updated": "2026-09-16",
   "governance_standards": [
     "SWEBOK (Software Engineering Body of Knowledge)",
     "DAMA-DMBOK 2 (Data Management Body of Knowledge)",

@@ -112,3 +112,11 @@ class CalculationException(DomainException):
     """Falla en cálculos numéricos, convergencia de modelos o divisiones por cero."""
     def __init__(self, detail: str):
         super().__init__(title="Error Numérico de Cálculo", detail=detail, status_code=500)
+
+
+# =====================================================================
+# Alias de Compatibilidad hacia Atrás (Adapters & Legacy Imports)
+# =====================================================================
+RepositoryException = StorageException
+ModelNotTrainedException = ModelNotFittedException
+
