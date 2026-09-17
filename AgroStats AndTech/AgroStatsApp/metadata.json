@@ -1,9 +1,9 @@
 {
   "project": "AgroData Intelligence Platform (AgroStatsApp)",
-  "version": "1.1.0",
-  "pdco_phase": "CONTROL",
-  "active_skill": "04-testing",
-  "sdlc_stage": "testing",
+  "version": "1.2.0",
+  "pdco_phase": "OPERATIONS",
+  "active_skill": "03-development",
+  "sdlc_stage": "implementation",
   "last_updated": "2026-09-17",
   "artifacts": [
     "src/imputer/ingestion/constants.py",
@@ -20,7 +20,17 @@
     "src/notebook_code/data_loader.py",
     "src/notebook_code/data_profiler.py",
     "src/notebook_code/imputer_helper.py",
+    "src/notebook_code/eda_analyzer.py",
+    "src/notebook_code/mdm_manager.py",
+    "src/notebook_code/feature_engineer.py",
+    "src/notebook_code/ml_trainer.py",
+    "src/notebook_code/model_evaluator.py",
     "CRISPDM/notebooks/imputer.ipynb",
+    "CRISPDM/notebooks/eda.ipynb",
+    "CRISPDM/notebooks/MDM.ipynb",
+    "CRISPDM/notebooks/clean_feature.ipynb",
+    "CRISPDM/notebooks/ml.ipynb",
+    "CRISPDM/notebooks/model.ipynb",
     "CRISPDM/data/RAW/raw_manifest.json"
   ]
 }

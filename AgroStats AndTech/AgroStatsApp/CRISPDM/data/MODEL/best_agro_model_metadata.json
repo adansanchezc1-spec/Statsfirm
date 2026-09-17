@@ -1,0 +1,32 @@
+{
+  "model_name": "best_agro_model",
+  "estimator_class": "Ridge",
+  "features_count": 17,
+  "features": [
+    "codigoestacion",
+    "codigosensor",
+    "latitud",
+    "longitud",
+    "valorobservado_lag_1",
+    "valorobservado_lag_2",
+    "valorobservado_lag_7",
+    "valorobservado_rolling_mean_7",
+    "valorobservado_rolling_std_7",
+    "valorobservado_rolling_mean_14",
+    "valorobservado_rolling_std_14",
+    "sin_mes",
+    "cos_mes",
+    "sin_dia_ano",
+    "cos_dia_ano",
+    "sin_dia_semana",
+    "cos_dia_semana"
+  ],
+  "metrics": {
+    "test_rmse": 1.23
+  },
+  "pipeline_steps": [
+    "imputer",
+    "scaler",
+    "model"
+  ]
+}

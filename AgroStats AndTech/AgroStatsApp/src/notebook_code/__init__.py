@@ -1,23 +1,32 @@
 """
-Paquete de Utilidades y Exploración para Notebooks CRISP-DM
-==========================================================
-Permite cargar de forma transparente los datasets desde data/RAW,
-realizar un perfilamiento informático multidimensional (nulos, duplicados,
-granularidad y tipos de datos) y ejecutar el motor de imputación inteligente.
+Paquete Integral de Utilidades y Algoritmos para el Ciclo CRISP-DM
+==================================================================
+Proporciona la arquitectura modular de software para todas las fases de
+investigación de AgroStatsApp: Carga Cruda, Perfilamiento, Imputación,
+EDA, Gestión de Datos Maestros (MDM), Feature Engineering, ML y Evaluación.
 
 Exporta:
-- `RawDataLoader`: Lector inteligente de archivos crudos CSV/JSON/XLSX.
-- `DatasetProfiler`: Motor de análisis informático y diagnóstico de calidad.
-- `NotebookImputerBridge`: Puente para ejecutar el torneo de imputación en notebooks.
-- Funciones de acceso rápido: `load_raw_dataset`, `load_all_raw_datasets`, `explore_dataset`.
+- Ingesta y Perfilamiento: `RawDataLoader`, `DatasetProfiler`, `find_raw_data_dir`
+- Imputación Inteligente: `NotebookImputerBridge`
+- Análisis Exploratorio (EDA): `EdaAnalyzer`
+- Datos Maestros y Entidades: `MasterDataManager`
+- Limpieza y Features: `FeatureEngineer`
+- Entrenamiento y Torneo ML: `ModelTrainer`
+- Evaluación e Inferencia: `ModelEvaluator`, `InferenceService`
+- Helpers funcionales: `load_raw_dataset`, `load_all_raw_datasets`, `explore_dataset`
 """
 
-import pandas as pd
 from typing import Any, Dict
+import pandas as pd
 
 from .data_loader import RawDataLoader, find_raw_data_dir
 from .data_profiler import DatasetProfiler
+from .eda_analyzer import EdaAnalyzer
+from .feature_engineer import FeatureEngineer
 from .imputer_helper import NotebookImputerBridge
+from .mdm_manager import MasterDataManager
+from .ml_trainer import ModelTrainer
+from .model_evaluator import InferenceService, ModelEvaluator
 
 
 def load_raw_dataset(dataset_id: str, clean_column_names: bool = True) -> pd.DataFrame:
@@ -41,6 +50,12 @@ __all__ = [
     "RawDataLoader",
     "DatasetProfiler",
     "NotebookImputerBridge",
+    "EdaAnalyzer",
+    "MasterDataManager",
+    "FeatureEngineer",
+    "ModelTrainer",
+    "ModelEvaluator",
+    "InferenceService",
     "find_raw_data_dir",
     "load_raw_dataset",
     "load_all_raw_datasets",
