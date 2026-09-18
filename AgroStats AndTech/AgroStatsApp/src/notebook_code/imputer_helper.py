@@ -66,7 +66,14 @@ class NotebookImputerBridge:
                 "Seleccionado_Ganador": "✓ Ganador" if algo_name == result.winning_algorithm_name else "",
             })
 
-        summary_df = pd.DataFrame(records).sort_values("Score_Torneo (RMSE x Varianza)")
+        if records:
+            summary_df = pd.DataFrame(records).sort_values("Score_Torneo (RMSE x Varianza)")
+        else:
+            summary_df = pd.DataFrame([{
+                "Algoritmo": result.winning_algorithm_name,
+                "Score_Torneo (RMSE x Varianza)": 0.0,
+                "Seleccionado_Ganador": "N/A (Datos completos)",
+            }])
         return result.imputed_dataframe, summary_df, result
 
     @staticmethod

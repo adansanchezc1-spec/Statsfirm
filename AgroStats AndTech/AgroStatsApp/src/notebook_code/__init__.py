@@ -19,7 +19,14 @@ Exporta:
 from typing import Any, Dict
 import pandas as pd
 
-from .data_loader import RawDataLoader, find_raw_data_dir
+from .data_loader import (
+    RawDataLoader,
+    find_raw_data_dir,
+    CleanDataLoader,
+    find_cleaned_data_dir,
+    load_cleaned_dataset,
+    load_all_cleaned_datasets,
+)
 from .data_profiler import DatasetProfiler
 from .eda_analyzer import EdaAnalyzer
 from .feature_engineer import FeatureEngineer
@@ -48,6 +55,7 @@ def explore_dataset(df: pd.DataFrame, dataset_name: str = "Dataset") -> Dict[str
 
 __all__ = [
     "RawDataLoader",
+    "CleanDataLoader",
     "DatasetProfiler",
     "NotebookImputerBridge",
     "EdaAnalyzer",
@@ -57,7 +65,10 @@ __all__ = [
     "ModelEvaluator",
     "InferenceService",
     "find_raw_data_dir",
+    "find_cleaned_data_dir",
     "load_raw_dataset",
     "load_all_raw_datasets",
+    "load_cleaned_dataset",
+    "load_all_cleaned_datasets",
     "explore_dataset",
 ]

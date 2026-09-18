@@ -31,6 +31,7 @@
     "CRISPDM/notebooks/clean_feature.ipynb",
     "CRISPDM/notebooks/ml.ipynb",
     "CRISPDM/notebooks/model.ipynb",
-    "CRISPDM/data/RAW/raw_manifest.json"
+    "CRISPDM/data/RAW/raw_manifest.json",
+    "CRISPDM/data/CLEANED/cleaned_manifest.json"
   ]
 }

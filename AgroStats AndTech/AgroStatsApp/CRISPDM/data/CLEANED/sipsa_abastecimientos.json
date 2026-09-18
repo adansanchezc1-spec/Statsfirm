@@ -1,0 +1,326 @@
+[
+  {
+    "unnamed:_0":"Ciudad",
+    "unnamed:_1":"Central",
+    "unnamed:_2":"Primera quincena de julio 2026 (t)",
+    "unnamed:_3":"Primera quincena de agosto 2026 (t)",
+    "unnamed:_4":"Variaci\u00f3n (%)",
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Armenia",
+    "unnamed:_1":" Mercar",
+    "unnamed:_2":4825.7575,
+    "unnamed:_3":4655.74,
+    "unnamed:_4":-0.0352312564,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Barranquilla",
+    "unnamed:_1":" Barranquillita",
+    "unnamed:_2":16602.899,
+    "unnamed:_3":15107.385,
+    "unnamed:_4":-0.0900754742,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Barranquilla",
+    "unnamed:_1":" Granabastos",
+    "unnamed:_2":5623,
+    "unnamed:_3":5481.01,
+    "unnamed:_4":-0.025251645,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Bogot\u00e1, D.C.",
+    "unnamed:_1":" Corabastos",
+    "unnamed:_2":97996.5325,
+    "unnamed:_3":88021.0963,
+    "unnamed:_4":-0.101793767,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Bogot\u00e1, D.C.",
+    "unnamed:_1":" Paloquemao",
+    "unnamed:_2":1914.0485,
+    "unnamed:_3":1980.5215,
+    "unnamed:_4":0.034729005,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Bogot\u00e1, D.C.",
+    "unnamed:_1":" Plaza Las Flores",
+    "unnamed:_2":2965.495,
+    "unnamed:_3":2094.494,
+    "unnamed:_4":-0.2937118424,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Bogot\u00e1, D.C.",
+    "unnamed:_1":" Plaza Samper Mendoza",
+    "unnamed:_2":1766.945,
+    "unnamed:_3":1460.096,
+    "unnamed:_4":-0.1736607534,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Bucaramanga",
+    "unnamed:_1":" Centroabastos",
+    "unnamed:_2":20116.092,
+    "unnamed:_3":19385.125,
+    "unnamed:_4":-0.0363374258,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Cali",
+    "unnamed:_1":" Cavasa",
+    "unnamed:_2":12997.981,
+    "unnamed:_3":13111.787,
+    "unnamed:_4":0.0087556675,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Cali",
+    "unnamed:_1":" Santa Elena",
+    "unnamed:_2":12370.3335,
+    "unnamed:_3":10736.349,
+    "unnamed:_4":-0.1320889611,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Cartagena",
+    "unnamed:_1":" Bazurto",
+    "unnamed:_2":12618.85,
+    "unnamed:_3":11891.247,
+    "unnamed:_4":-0.0576600086,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"C\u00facuta",
+    "unnamed:_1":" Cenabastos",
+    "unnamed:_2":9412.1656,
+    "unnamed:_3":9826.39,
+    "unnamed:_4":0.0440094679,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"C\u00facuta",
+    "unnamed:_1":" La Nueva Sexta",
+    "unnamed:_2":1792.28,
+    "unnamed:_3":1776.935,
+    "unnamed:_4":-0.0085617203,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Florencia",
+    "unnamed:_1":"Florencia (Caquet\u00e1)",
+    "unnamed:_2":672.172,
+    "unnamed:_3":660.495,
+    "unnamed:_4":-0.0173720417,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Ibagu\u00e9",
+    "unnamed:_1":" Plaza La 21",
+    "unnamed:_2":1999.1945,
+    "unnamed:_3":1933.4695,
+    "unnamed:_4":-0.0328757407,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Ipiales",
+    "unnamed:_1":" Centro de acopio",
+    "unnamed:_2":2567.782,
+    "unnamed:_3":2685.482,
+    "unnamed:_4":0.0458372245,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Manizales",
+    "unnamed:_1":" Centro Galer\u00edas",
+    "unnamed:_2":5616.828,
+    "unnamed:_3":5198.154,
+    "unnamed:_4":-0.0745392239,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Medell\u00edn",
+    "unnamed:_1":" Central Mayorista de Antioquia",
+    "unnamed:_2":48264.4148,
+    "unnamed:_3":49338.6978,
+    "unnamed:_4":0.0222582829,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Medell\u00edn",
+    "unnamed:_1":" Plaza Minorista \"Jos\u00e9 Mar\u00eda Villa\"",
+    "unnamed:_2":8804.503,
+    "unnamed:_3":8622.8394,
+    "unnamed:_4":-0.0206330329,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Monter\u00eda",
+    "unnamed:_1":" Mercado del Sur",
+    "unnamed:_2":2489.7155,
+    "unnamed:_3":2043.12,
+    "unnamed:_4":-0.1793761175,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Neiva",
+    "unnamed:_1":" Surabastos",
+    "unnamed:_2":5083.0295,
+    "unnamed:_3":4550.4085,
+    "unnamed:_4":-0.1047841646,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Pasto",
+    "unnamed:_1":" El Potrerillo",
+    "unnamed:_2":2887.1813,
+    "unnamed:_3":3596.001,
+    "unnamed:_4":0.245505781,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Pereira",
+    "unnamed:_1":"La 41-Impala",
+    "unnamed:_2":1078.439,
+    "unnamed:_3":419.63,
+    "unnamed:_4":-0.6108912975,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Pereira",
+    "unnamed:_1":" Mercasa",
+    "unnamed:_2":6959.574,
+    "unnamed:_3":2870.27,
+    "unnamed:_4":-0.5875796421,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Popay\u00e1n",
+    "unnamed:_1":" Plaza de mercado del barrio Bol\u00edvar",
+    "unnamed:_2":3222.278,
+    "unnamed:_3":2730.978,
+    "unnamed:_4":-0.1524697745,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Santa Marta",
+    "unnamed:_1":"Santa Marta (Magdalena)",
+    "unnamed:_2":1944.701,
+    "unnamed:_3":1737.222,
+    "unnamed:_4":-0.1066894088,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Sincelejo",
+    "unnamed:_1":" Nuevo Mercado",
+    "unnamed:_2":6441.4279,
+    "unnamed:_3":6377.4985,
+    "unnamed:_4":-0.0099247249,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Tibasosa",
+    "unnamed:_1":"Coomproriente",
+    "unnamed:_2":4803.758,
+    "unnamed:_3":3996.05,
+    "unnamed:_4":-0.1681408597,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Tunja",
+    "unnamed:_1":" Complejo de Servicios del Sur",
+    "unnamed:_2":8437.332,
+    "unnamed:_3":7380.341,
+    "unnamed:_4":-0.1252755018,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Valledupar",
+    "unnamed:_1":" Mercabastos",
+    "unnamed:_2":2431.343,
+    "unnamed:_3":1913.087,
+    "unnamed:_4":-0.213156268,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Valledupar",
+    "unnamed:_1":" Mercado Nuevo",
+    "unnamed:_2":1360.511,
+    "unnamed:_3":1464.924,
+    "unnamed:_4":0.0767454287,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Villavicencio",
+    "unnamed:_1":" CAV",
+    "unnamed:_2":3932.38,
+    "unnamed:_3":4416.965,
+    "unnamed:_4":0.1232294437,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"TOTAL",
+    "unnamed:_1":null,
+    "unnamed:_2":319998.9441000001,
+    "unnamed:_3":297463.8085,
+    "unnamed:_4":-0.0704225311,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"t: Toneladas",
+    "unnamed:_1":null,
+    "unnamed:_2":null,
+    "unnamed:_3":null,
+    "unnamed:_4":null,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  },
+  {
+    "unnamed:_0":"Actualizado el 7 de septiembre de 2026",
+    "unnamed:_1":null,
+    "unnamed:_2":null,
+    "unnamed:_3":null,
+    "unnamed:_4":null,
+    "unnamed:_5":null,
+    "regresar_al_\u00edndice":null
+  }
+]
