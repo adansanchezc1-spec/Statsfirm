@@ -1,0 +1,20 @@
+{
+  "project": "Statsfirm Co. - Facebook Business Page Strategy & Setup Plan",
+  "brand": "Statsfirm Co. (Parent Engineering & Data Firm)",
+  "version": "1.0.0",
+  "pdco_phase": "PLAN -> DEVELOPMENT",
+  "active_skill": "01-requirements",
+  "sdlc_stage": "digital_presence_and_channel_engineering",
+  "last_updated": "2026-09-18",
+  "author": "Brand Strategy, Digital Marketing & Growth Engineering Practice",
+  "approver": "Board of Directors & Chief Technology Officer",
+  "classification": "Corporate Strategy / Social Media & Inbound Engineering",
+  "artifacts": [
+    "README.md",
+    "01_configuracion_identidad_pagina.md",
+    "02_secciones_servicios_y_catalogo.md",
+    "03_estrategia_contenido_formatos_fb.md",
+    "04_automatizacion_messenger_lead_bot.md",
+    "05_checklist_lanzamiento_y_meta_ads.md"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "project": "Agro Stat & Tech Co. - Social Media & Digital Strategy",
+  "brand": "Agro Stat & Tech Co. (Statsfirm Co. Spin-off)",
+  "version": "1.0.0",
+  "pdco_phase": "PLAN -> DEVELOPMENT",
+  "active_skill": "01-requirements",
+  "sdlc_stage": "marketing_strategy_and_content_engineering",
+  "last_updated": "2026-09-18",
+  "author": "Brand Strategy, Creative Direction & Social Media Practice",
+  "approver": "Board of Directors & Chief Technology Officer",
+  "classification": "Corporate Strategy / Brand & Growth Marketing",
+  "artifacts": [
+    "README.md",
+    "01_estrategia_posicionamiento.md",
+    "02_canales_audiencias_formatos.md",
+    "03_pilares_y_calendario_editorial.md",
+    "04_copywriting_hooks_y_diseno.md",
+    "05_banco_contenido_y_scripts.md",
+    "06_kpis_embudo_conversion.md"
+  ]
+}
