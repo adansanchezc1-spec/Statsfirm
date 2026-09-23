@@ -86,7 +86,7 @@ app/
    - Formulario web compatible con `form_01_lead_comercial.form` de Camunda.
    - Campos: Empresa, Contacto, Correo Corporativo, Teléfono, Sector, Servicios de Interés, Volumen TB, Presupuesto USD, Urgencia y Descripción del Reto.
    - Generación automática de Ticket Comercial (`LEAD-2026-XXXX`), cálculo de Score y ventana garantizada de SLA.
-10. **Canales Directos & Garantías**: Acceso a correo corporativo (`contacto@statsfirm.com`), WhatsApp Business, oficinas y compromiso de SLA de 2 horas.
+10. **Canales Directos & Garantías**: Acceso a correo corporativo (`statsfirmco@gmail.com`), WhatsApp Business (`+57 324 618 3578`), oficinas y compromiso de SLA de 2 horas.
 11. **Footer Corporativo**: Información institucional, accesos rápidos a líneas de servicio y cláusula de cumplimiento regulatorio ISO/IEC 25010 y DAMA-BOK.
 
 ---

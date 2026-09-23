@@ -92,5 +92,6 @@ La aplicación estará disponible en `http://localhost:3000`.
 
 - **Organización**: Statsfirm Co.
 - **Email Oficial**: `statsfirmco@gmail.com`
+- **WhatsApp / Teléfono Corporativo**: `+57 324 618 3578`
 - **GitHub**: [`@statsfirmco-bussiness-account`](https://github.com/statsfirmco-bussiness-account)
 - **Licencia**: Propiedad exclusiva de Statsfirm Co. Todos los derechos reservados.

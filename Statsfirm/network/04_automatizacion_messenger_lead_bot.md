@@ -88,7 +88,7 @@ A través de Agro Stat & Tech Co. transformamos la productividad y rentabilidad 
 ```text
 ¡Perfecto! Puedes contactar directamente con nuestra mesa técnica de atención por WhatsApp en un solo clic:
 
-📲 https://wa.me/57XXXXXXXXXX?text=Hola%20Statsfirm,%20vengo%20desde%20Facebook%20y%20deseo%20asesoría%20técnica
+📲 https://wa.me/573246183578?text=Hola%20Statsfirm,%20vengo%20desde%20Facebook%20y%20deseo%20asesoría%20técnica
 
 Atendemos de Lunes a Viernes de 8:00 AM a 6:00 PM (UTC-5).
 ```

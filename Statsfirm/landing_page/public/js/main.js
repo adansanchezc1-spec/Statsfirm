@@ -136,7 +136,7 @@ window.dispatchModalEmail = function() {
     `${company}`
   );
 
-  window.location.href = `mailto:contacto@statsfirm.com?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:statsfirmco@gmail.com?subject=${subject}&body=${body}`;
 };
 
 // Dispatch WhatsApp chat with commercial department
@@ -150,7 +150,7 @@ window.dispatchModalWhatsApp = function() {
     `Hola Statsfirm Co. Acabo de radicar la solicitud comercial *${ticket}* en su portal web para *${company}* con prioridad *${priority}*. Deseo coordinar la sesión técnica de 30 minutos.`
   );
 
-  window.open(`https://wa.me/15557828734?text=${message}`, '_blank');
+  window.open(`https://wa.me/573246183578?text=${message}`, '_blank');
 };
 
 /* ==================== LIFECYCLE INITIALIZER ==================== */

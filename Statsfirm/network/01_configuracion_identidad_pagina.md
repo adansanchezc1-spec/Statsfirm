@@ -81,7 +81,8 @@ A través de nuestra división especializada, Agro Stat & Tech Co. (AgroStats), 
 
 📍 Operación Remota Global con base en Colombia (Zona Horaria UTC-5).
 🌐 Sitio Web Oficial: https://statsfirm.co
-✉️ Contacto Corporativo: contacto@statsfirm.co
+✉️ Contacto Corporativo: statsfirmco@gmail.com
+📱 WhatsApp / Teléfono Corporativo: +57 324 618 3578
 ```
 
 ---
@@ -91,9 +92,9 @@ A través de nuestra división especializada, Agro Stat & Tech Co. (AgroStats), 
 | Parámetro | Configuración Oficial |
 |---|---|
 | **Botón de Acción Principal (CTA)** | **Enviar mensaje de WhatsApp** (o *"Contactarnos"* apuntando a la Landing Page) |
-| **Número de WhatsApp Business** | Número verificado de la empresa con saludo automático configurado |
+| **Número de WhatsApp Business** | `+57 324 618 3578` (Línea oficial verificada con saludo automático) |
 | **Sitio Web** | `https://statsfirm.co` (con parámetros UTM para atribución: `?utm_source=facebook&utm_medium=profile&utm_campaign=fanpage`) |
-| **Correo Electrónico** | `contacto@statsfirm.co` / `info@statsfirm.co` |
+| **Correo Electrónico** | `statsfirmco@gmail.com` |
 | **Ubicación / Dirección** | Modalidad: *Empresa de Servicios Digitales / Sin ubicación física abierta al público* (Área de servicio: Colombia, México, Chile, Perú, España, EE.UU.) |
 | **Horario de Atención** | Lunes a Viernes: `08:00 AM - 06:00 PM` (UTC-5) |
 | **Rango de Precios** | `$$$ (Servicios Corporativos / Consultoría de Ingeniería)` |
