@@ -83,3 +83,9 @@ test_enc*.txt
 # --- Directorio de Scratch y Artefactos Temporales ---
 scratch/
 tmp/
+
+# --- Datos Pesados y Almacenamiento Local (Data Lake / RAW) ---
+**/data/RAW/**
+*.sav
+*.dta
+*.sas7bdat

@@ -36,6 +36,7 @@ TOP_RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 # Identificadores de Recursos Socrata (datos.gov.co)
 SOCRATA_RESOURCES = {
+    "ideam_telemetria_realtime": "57sv-p2fu", # Mediciones/sensores telemétricos en tiempo real (Temperatura, Lluvia, etc.)
     "ideam_pluvio": "s54a-sgyg",        # Precipitaciones horarias y diarias por estación
     "ideam_temp_amb": "sbwg-7ju4",      # Temperatura ambiente del aire (2m)
     "ideam_temp_max": "ccvq-rp9s",      # Temperatura máxima del aire
