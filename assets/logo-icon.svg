@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Agro Stat & Tech Co. Isotipo">
+  <defs>
+    <linearGradient id="neonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Base Ground Line -->
+  <line x1="8" y1="88" x2="92" y2="88" stroke="#064E3B" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Gaussian Normal Distribution Curve (Shewhart +/- 3 Sigma) -->
+  <path d="M 12 88 C 28 88, 36 78, 43 56 C 47 42, 50 36, 50 36 C 50 36, 53 42, 57 56 C 64 78, 72 88, 88 88" 
+        stroke="#064E3B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Botanical Sprout: Left Leaf -->
+  <path d="M 50 56 C 36 50, 24 64, 30 76 C 42 76, 48 64, 50 56 Z" 
+        fill="url(#neonGlow)" stroke="#064E3B" stroke-width="2.5" stroke-linejoin="round"/>
+  
+  <!-- Botanical Sprout: Right Leaf -->
+  <path d="M 50 56 C 64 50, 76 64, 70 76 C 58 76, 52 64, 50 56 Z" 
+        fill="url(#neonGlow)" stroke="#064E3B" stroke-width="2.5" stroke-linejoin="round"/>
+  
+  <!-- Central Sprout Stem ascending to Data Node -->
+  <path d="M 50 88 L 50 28" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Active Central Data Node (Glow Effect) -->
+  <circle cx="50" cy="24" r="8" fill="#10B981" filter="url(#softGlow)"/>
+  <circle cx="50" cy="24" r="4.5" fill="#FFFFFF"/>
+</svg>
