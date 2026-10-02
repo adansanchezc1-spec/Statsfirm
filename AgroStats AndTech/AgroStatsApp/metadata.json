@@ -1,11 +1,14 @@
 {
   "project": "AgroData Intelligence Platform (AgroStatsApp)",
-  "version": "2.0.0",
-  "pdco_phase": "CONTROL",
-  "active_skill": "04-testing",
-  "sdlc_stage": "testing",
-  "last_updated": "2026-10-01",
+  "version": "2.1.0",
+  "pdco_phase": "DEVELOPMENT",
+  "active_skill": "03-development",
+  "sdlc_stage": "requirements_and_ingestion_design",
+  "last_updated": "2026-10-02",
   "artifacts": [
+    "src/ingestion/ica_powerbi_extractor.py",
+    "docs/6-fichas_tecnicas_metodologicas_fuentes.md",
+    "notebooks/10_ica_inventario_pecuario/",
     "src/ingestion/sipsa_multiyear_loader.py",
     "src/cleaning/table_unwrapper.py",
     "src/cleaning/anomaly_treatment.py",
@@ -73,8 +76,8 @@
     "CRISPDM/data/CLEANED/cleaned_manifest.json"
   ],
   "data_engineering_stats": {
-    "execution_time_seconds": 33.73,
-    "total_datasets_processed": 9,
+    "execution_time_seconds": 29.69,
+    "total_datasets_processed": 10,
     "total_gold_marts_created": 3,
     "lakehouse_db": "data/processed/agrostats_lakehouse.db",
     "quality_reports_dir": "docs/quality_reports/",

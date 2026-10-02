@@ -1,8 +1,8 @@
 {
   "catalog_title": "AgroData Intelligence Platform Data Catalog",
   "standard": "DAMA-DMBOK 2",
-  "last_updated": "2026-10-01T20:02:21.285883",
-  "tables_count": 12,
+  "last_updated": "2026-10-02T08:26:51.270710",
+  "tables_count": 13,
   "tables": {
     "sipsa_abastecimientos": {
       "table_name": "sipsa_abastecimientos",
@@ -1140,7 +1140,7 @@
           "nullable": false,
           "description": "Atributo codigo_divipola en dominio Hidrometeorolog\u00eda Agr\u00edcola.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "MUN_98430"
+          "example_value": "MUN_27421"
         }
       ],
       "record_count": 100,
@@ -1165,7 +1165,7 @@
           "nullable": false,
           "description": "Atributo codigoestacion en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "21206810"
+          "example_value": "21206890"
         },
         {
           "name": "codigosensor",
@@ -1174,7 +1174,7 @@
           "nullable": false,
           "description": "Atributo codigosensor en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "243"
+          "example_value": "240"
         },
         {
           "name": "fechaobservacion",
@@ -1183,7 +1183,7 @@
           "nullable": false,
           "description": "Atributo fechaobservacion en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "2026-10-01T12:06:00.000"
+          "example_value": "2026-10-01T23:13:00.000"
         },
         {
           "name": "valorobservado",
@@ -1192,7 +1192,7 @@
           "nullable": false,
           "description": "Atributo valorobservado en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "21.98"
+          "example_value": "0.0"
         },
         {
           "name": "nombreestacion",
@@ -1201,7 +1201,7 @@
           "nullable": false,
           "description": "Atributo nombreestacion en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "SAN BENITO  - AUT  [21206810]"
+          "example_value": "CERRO CAZADORES [21206890]"
         },
         {
           "name": "departamento",
@@ -1237,7 +1237,7 @@
           "nullable": false,
           "description": "Atributo latitud en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "4.56365303"
+          "example_value": "4.66577"
         },
         {
           "name": "longitud",
@@ -1246,7 +1246,7 @@
           "nullable": false,
           "description": "Atributo longitud en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "-74.13845"
+          "example_value": "-74.02861"
         },
         {
           "name": "descripcionsensor",
@@ -1255,7 +1255,7 @@
           "nullable": true,
           "description": "Atributo descripcionsensor en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "Temperatura del suelo a 50 cm"
+          "example_value": "Precipitaci\u00f3n acumulada 10 minutos"
         },
         {
           "name": "unidadmedida",
@@ -1264,7 +1264,7 @@
           "nullable": true,
           "description": "Atributo unidadmedida en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "INTERNAL",
-          "example_value": "\u00b0C"
+          "example_value": "mm"
         },
         {
           "name": "entidad",
@@ -1273,7 +1273,7 @@
           "nullable": false,
           "description": "Atributo entidad en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "INTERNAL",
-          "example_value": "ESTACIONES PARTICULARES"
+          "example_value": "FONDO DE PREVENCI\u00d3N Y ATENCI\u00d3N DE DES..."
         },
         {
           "name": "codigo_divipola",
@@ -1282,11 +1282,11 @@
           "nullable": false,
           "description": "Atributo codigo_divipola en dominio Telemetr\u00eda en Tiempo Real.",
           "sensitivity_tier": "PUBLIC",
-          "example_value": "MUN_71987"
+          "example_value": "MUN_17486"
         }
       ],
       "record_count": 1000,
-      "size_bytes": 301598
+      "size_bytes": 303629
     },
     "dane_csaa": {
       "table_name": "dane_csaa",
@@ -1557,6 +1557,86 @@
       ],
       "record_count": 1,
       "size_bytes": 767
+    },
+    "ica_inventario_pecuario": {
+      "table_name": "ica_inventario_pecuario",
+      "layer": "SILVER",
+      "domain": "Oferta y Salud Pecuaria",
+      "business_description": "Censo Pecuario Nacional e inventarios por municipio (DIVIPOLA) extra\u00eddos desde ICA PowerBI / Censo Pecuario.",
+      "granularity": "Municipio (DIVIPOLA 5 d\u00edgitos) x Especie x Categor\u00eda x A\u00f1o",
+      "primary_key": [
+        "codigo_divipola",
+        "especie",
+        "anio"
+      ],
+      "update_frequency": "Peri\u00f3dica / Eventos",
+      "columns": [
+        {
+          "name": "codigo_divipola",
+          "physical_type": "str",
+          "logical_type": "DateTime",
+          "nullable": false,
+          "description": "Atributo codigo_divipola en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "MUN_26634"
+        },
+        {
+          "name": "departamento",
+          "physical_type": "str",
+          "logical_type": "DateTime",
+          "nullable": false,
+          "description": "Atributo departamento en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "ANTIOQUIA"
+        },
+        {
+          "name": "municipio",
+          "physical_type": "str",
+          "logical_type": "DateTime",
+          "nullable": false,
+          "description": "Atributo municipio en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "MEDELL\u00cdN"
+        },
+        {
+          "name": "especie",
+          "physical_type": "str",
+          "logical_type": "DateTime",
+          "nullable": false,
+          "description": "Atributo especie en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "Bovino"
+        },
+        {
+          "name": "categoria",
+          "physical_type": "str",
+          "logical_type": "DateTime",
+          "nullable": false,
+          "description": "Atributo categoria en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "Ganader\u00eda Doble Prop\u00f3sito"
+        },
+        {
+          "name": "anio",
+          "physical_type": "int64",
+          "logical_type": "Numeric",
+          "nullable": false,
+          "description": "Atributo anio en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "2025"
+        },
+        {
+          "name": "inventario",
+          "physical_type": "int64",
+          "logical_type": "Numeric",
+          "nullable": false,
+          "description": "Atributo inventario en dominio Oferta y Salud Pecuaria.",
+          "sensitivity_tier": "PUBLIC",
+          "example_value": "12450"
+        }
+      ],
+      "record_count": 11,
+      "size_bytes": 1272
     },
     "dim_municipio_divipola": {
       "table_name": "dim_municipio_divipola",

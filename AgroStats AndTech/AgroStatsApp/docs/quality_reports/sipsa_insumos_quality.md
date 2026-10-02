@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `sipsa_insumos`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:06.129800  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:34.631609  
 **Estado General**: ⚠️ WARNING | **Score Global**: `99.9%`  
 **Volumen**: 92 filas × 58 columnas
 

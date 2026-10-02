@@ -32,7 +32,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Diaria (Días hábiles de mercado)",
         "crisp_business_goal": "Monitorear la dinámica de abastecimiento mayorista de alimentos en Colombia para detectar riesgos de desabastecimiento, cuellos de botella logísticos y asimetrías de oferta territorial.",
         "theoretical_context": "La seguridad alimentaria y la estabilidad de precios dependen críticamente de los flujos de carga origen-destino. Este dataset permite caracterizar la matriz de origen municipal y recepción urbana bajo la teoría de redes de distribución agroalimentaria.",
-        "kpis": ["Volumen total abastecido (Toneladas)", "Concentración de orígenes (HHI)", "Índice de brecha oferta-mercado"]
+        "kpis": ["Volumen total abastecido (Toneladas)", "Concentración de orígenes (HHI)", "Índice de brecha oferta-mercado"],
+        "raw_state": "Registros diarios de tiquetes de báscula de carga. Nombres de municipio de origen no estandarizados (texto libre), cantidades en kg o bultos heterogéneos, orígenes ambiguos rotulados como DESCONOCIDO.",
+        "indicator_requirements": "Estandarización de municipios al código DIVIPOLA de 5 dígitos (DDMMM), conversión de unidades a Toneladas Métricas (t = kg / 1000), matriz origen-destino y cálculo del Gap Rate = (Demanda - Oferta) / Demanda."
     },
     "02_sipsa_precios": {
         "title": "SIPSA Precios Mayoristas (DANE)",
@@ -47,7 +49,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Diaria (Lunes a Viernes)",
         "crisp_business_goal": "Identificar patrones de volatilidad, shocks de precios y tendencias estacionales en plazas de mercado mayoristas para la toma de decisiones comerciales y mitigación de riesgo.",
         "theoretical_context": "La formación de precios en mercados mayoristas sigue procesos estocásticos con alta sensibilidad a shocks climáticos y de oferta. Se contrastan modelos gaussianos estándar con estimadores robustos inmunes a valores atípicos.",
-        "kpis": ["Precio medio y mediana robusta", "Coeficiente de Variación (CV)", "Pendiente de tendencia Theil-Sen"]
+        "kpis": ["Precio medio y mediana robusta", "Coeficiente de Variación (CV)", "Pendiente de tendencia Theil-Sen"],
+        "raw_state": "Cotizaciones diarias por plaza mayorista y producto. Tablas desestructuradas con vacíos por días festivos, empaques variados (canastilla, bulto 50kg, atado), y shocks de precios atípicos por paros o heladas.",
+        "indicator_requirements": "Normalización de precios a COP/kg, imputación de fines de semana por spline/Theil-Sen, depuración de atípicos (1.5xIQR), Coeficiente de Variación (CV = sigma/mu) y descomposición estacional STL."
     },
     "03_sipsa_insumos": {
         "title": "SIPSA Precios de Insumos y Fertilizantes Agrícolas (DANE)",
@@ -62,7 +66,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Mensual",
         "crisp_business_goal": "Analizar la evolución de la estructura de costos de los insumos agropecuarios esenciales para evaluar la rentabilidad del agricultor y la presión inflacionaria en finca.",
         "theoretical_context": "El encarecimiento de fertilizantes y bioinsumos comprime el margen bruto del productor. Estudiar la paridad insumo-producto permite anticipar caídas en la productividad por subfertilización.",
-        "kpis": ["Índice de precios de fertilizantes", "Relación de intercambio insumo/cosecha", "Elasticidad de costo directo"]
+        "kpis": ["Índice de precios de fertilizantes", "Relación de intercambio insumo/cosecha", "Elasticidad de costo directo"],
+        "raw_state": "Precios e índices mensuales de venta de fertilizantes, plaguicidas y medicamentos en almacenes agropecuarios. Insumos clasificados por nombres comerciales heterogéneos.",
+        "indicator_requirements": "Agregación por grupo de insumo, deflactación opcional con IPC, cálculo del índice ponderado y relación de intercambio insumo-cosecha (Ratio = Precio_Insumo / Precio_Producto)."
     },
     "04_dane_ipc_ipp": {
         "title": "Índices Macroeconómicos IPC e IPP Agropecuario (DANE)",
@@ -77,7 +83,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Mensual (2003 - 2026)",
         "crisp_business_goal": "Evaluar la transmisión vertical de precios desde el productor agropecuario (IPP) hasta la canasta básica familiar urbana (IPC Alimentos).",
         "theoretical_context": "La teoría de transmisión de precios analiza la asimetría en el traspaso de costos a lo largo de la cadena. Un descalce prolongado entre IPP e IPC evidencia concentración o ineficiencias en la intermediación comercial.",
-        "kpis": ["Inflación anualizada de alimentos", "Spread IPP vs. IPC", "Elasticidad de transmisión vertical"]
+        "kpis": ["Inflación anualizada de alimentos", "Spread IPP vs. IPC", "Elasticidad de transmisión vertical"],
+        "raw_state": "Series longitudinales mensuales del Índice de Precios al Consumidor (IPC Alimentos) y del Productor (IPP Agropecuario). Cambios históricos de año base (2008, 2015, 2018).",
+        "indicator_requirements": "Re-encadenamiento de series históricas a base común 2018=100, cálculo de inflación interanual pi = (IPC_t - IPC_{t-12})/IPC_{t-12}, spread de intermediación (IPP vs IPC) y transmisión vertical."
     },
     "05_ideam_climatologia": {
         "title": "IDEAM Climatología e Índices Hidroclimáticos Históricos",
@@ -92,7 +100,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Diaria / Mensual consolidada",
         "crisp_business_goal": "Determinar la oferta hídrica histórica y los regímenes de lluvia para correlacionar los ciclos de siembra y cosecha con la variabilidad climática territorial.",
         "theoretical_context": "El balance hídrico (P - ETc) determina la aptitud de los suelos agrícolas. Las precipitaciones presentan regímenes bi-modales o mono-modales que condicionan la fenología de los cultivos.",
-        "kpis": ["Precipitación acumulada mensual (mm)", "Índice de anomalía de lluvia (SPI)", "Balance hídrico neto"]
+        "kpis": ["Precipitación acumulada mensual (mm)", "Índice de anomalía de lluvia (SPI)", "Balance hídrico neto"],
+        "raw_state": "Series históricas de precipitación y temperatura por estación meteorológica. Presencia de vacíos temporales por desconexión de sensores, ordenadas por código de estación sin código DIVIPOLA directo.",
+        "indicator_requirements": "Mapeo geoespacial de estaciones al municipio DIVIPOLA anfitrión, precipitación acumulada mensual, índice de anomalía pluviométrica (SPI) y balance hídrico (BH = Precipitación - Evapotranspiración)."
     },
     "06_ideam_telemetria_57sv": {
         "title": "IDEAM Observaciones Telemétricas en Tiempo Real (API 57sv-p2fu)",
@@ -107,7 +117,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Sub-horaria / Tiempo Real",
         "crisp_business_goal": "Monitorear en tiempo real eventos climáticos extremos como heladas nocturnas o estrés térmico para emitir alertas tempranas preventivas a los agricultores.",
         "theoretical_context": "Las estaciones automáticas emiten flujos continuos de datos telemétricos. La detección de temperaturas críticas (T <= 0°C) requiere algoritmos de baja latencia para prevenir pérdidas de cosechas en altiplanos.",
-        "kpis": ["Frecuencia de temperaturas críticas (T <= 0°C)", "Acumulación térmica GDD", "Latencia de transmisión de datos"]
+        "kpis": ["Frecuencia de temperaturas críticas (T <= 0°C)", "Acumulación térmica GDD", "Latencia de transmisión de datos"],
+        "raw_state": "Flujo continuo telemétrico sub-horario (API 57sv-p2fu) con lecturas ruidosas, ceros y valores anómalos (-999°C) por fallas de transmisión celda/satélite.",
+        "indicator_requirements": "Filtrado de valores fuera de rango físico, agregación horaria a mínima y máxima diaria, cálculo de Grados Día de Desarrollo GDD = max((Tmax+Tmin)/2 - Tbase, 0) y alertas de heladas (T <= 0°C)."
     },
     "07_dane_satelite_csaa": {
         "title": "Cuenta Satélite de la Agroindustria (DANE CSAA)",
@@ -122,7 +134,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Anual",
         "crisp_business_goal": "Dimensionar el aporte macroeconómico de las cadenas agroindustriales al Producto Interno Bruto (PIB) e identificar sectores líderes en generación de valor agregado.",
         "theoretical_context": "Las Cuentas Satélite complementan el Sistema de Cuentas Nacionales (SCN), desagregando los encadenamientos productivos del agro y cuantificando la relación entre producción bruta y valor agregado neto.",
-        "kpis": ["Valor Agregado Bruto (VAB)", "Tasa de Crecimiento Anual Compuesto (CAGR)", "Ratio de agregación VAB/VBP"]
+        "kpis": ["Valor Agregado Bruto (VAB)", "Tasa de Crecimiento Anual Compuesto (CAGR)", "Ratio de agregación VAB/VBP"],
+        "raw_state": "Anexos estadísticos en libros Excel con cuadros macroeconómicos de Cuentas Nacionales (VAB, VBP, Consumo Intermedio) desglosados por cadena agroindustrial a nivel nacional/departamental.",
+        "indicator_requirements": "Unwrapping de cuadros Excel a tablas tidy, desagregación proporcional del VAB a municipios DIVIPOLA ponderado por área cosechada EVA, CAGR interanual y ratio de agregación (VAB / VBP)."
     },
     "08_boletin_pdf_webservice": {
         "title": "Documentación Técnica y Boletines Webservices SIPSA (DANE)",
@@ -137,7 +151,9 @@ DATASETS_INFO = {
         "granularity_temporal": "Versión Documental",
         "crisp_business_goal": "Transformar la documentación no estructurada de manuales técnicos institucionales en esquemas legibles por máquina para la integración continua de servicios de datos.",
         "theoretical_context": "El procesamiento de documentos técnicos PDF requiere técnicas de tokenización, segmentación en fragmentos semánticos (chunks) y extracción de metadatos de servicios web (WSDL/SOAP).",
-        "kpis": ["Densidad de caracteres extraídos", "Completitud de esquemas documentados", "Tasa de éxito de parsing PDF"]
+        "kpis": ["Densidad de caracteres extraídos", "Completitud de esquemas documentados", "Tasa de éxito de parsing PDF"],
+        "raw_state": "Documentos PDF no estructurados con especificaciones de servicios web SOAP/WSDL y boletines técnicos institucionales del DANE.",
+        "indicator_requirements": "Extracción sintáctica mediante PyPDF/pdfplumber, tokenización y chunking semántico, indexación de parámetros WSDL para autogeneración de conectores."
     },
     "09_landing_leads_store": {
         "title": "Registro Transaccional y Solicitudes de Clientes (Landing Store)",
@@ -151,8 +167,27 @@ DATASETS_INFO = {
         "granularity_spatial": "Contacto / Finca Georreferenciada",
         "granularity_temporal": "Registro transaccional en tiempo de evento",
         "crisp_business_goal": "Gestionar las solicitudes comerciales y el flujo de clientes agroempresariales, garantizando anonimización total de datos sensibles conforme a la legislación vigente.",
-        "theoretical_context": "La gobernanza de datos bajo DAMA-DMBOK 2 exige que toda interacción con usuarios cumpla estrictamente con normativas de protección de datos personales (Ley 1581 de Habeas Data en Colombia).",
-        "kpis": ["Tasa de anonimización PII (100%)", "Volumen de transacciones activas", "Índice de conversión de leads"]
+        "theoretical_context": "La gobernanza de datos bajo DAMA-DMBOK 2 exige que toda interacción con usuarios cumpla strictly con normativas de protección de datos personales (Ley 1581 de Habeas Data en Colombia).",
+        "kpis": ["Tasa de anonimización PII (100%)", "Volumen de transacciones activas", "Índice de conversión de leads"],
+        "raw_state": "Registros JSON/JavaScript transaccionales (leadsStore.js) con datos personales de contacto (email, teléfono, nombre) y solicitudes de servicios agroempresariales sin estructuración SQL.",
+        "indicator_requirements": "Anonimización y seudonimización con hash SHA-256 cumpliendo Ley 1581 de Habeas Data, estructuración a tabla relacional y cálculo de tasas de conversión comercial."
+    },
+    "10_ica_inventario_pecuario": {
+        "title": "ICA Censo Pecuario e Inventarios Municipales (ICA PowerBI)",
+        "entity": "Población Pecuaria Municipal (Bovino, Porcino, Avícola, Ovino-Caprino, Equino, Bufalino)",
+        "custodian": "Instituto Colombiano Agropecuario (ICA) - Dirección Tecnológica / Subdirección de Sanidad Animal",
+        "questions": ["C1: Concentración Pecuaria (HHI)", "C2: Razón de Concentración Municipal (CR5)", "I1: Oferta Pecuaria vs. Abastecimiento de Carne"],
+        "table": "ica_inventario_pecuario",
+        "parquet": "data/processed/ica_inventario_pecuario.parquet",
+        "primary_col": "inventario",
+        "group_col": "especie",
+        "granularity_spatial": "Municipio (Código DIVIPOLA 5 dígitos DDMMM)",
+        "granularity_temporal": "Anual (Ciclos de Vacunación RUV / Censo Pecuario)",
+        "crisp_business_goal": "Caracterizar el inventario pecuario nacional por especie y municipio DIVIPOLA para estimar densidad animal, capacidad productiva y concentraciones territoriales.",
+        "theoretical_context": "El inventario pecuario es la variable fundamental de stock de capital animal. Su desglose espacial a nivel municipal permite aplicar índices de concentración geográfica (HHI, CR5) y modelos de densidad ganadera/porcina.",
+        "kpis": ["Inventario total de cabezas", "Índice HHI de concentración pecuaria", "Densidad pecuaria municipal por especie"],
+        "raw_state": "Dashboard incrustado en PowerBI (app.powerbi.com/view) sin descarga directa estática CSV; datos fragmentados por especie (bovino, porcino, avícola, etc.) y municipios con texto libre.",
+        "indicator_requirements": "Extracción multi-estrategia vía ICAPowerBIExtractor (PowerBI Query API / XLSX Censo), sanitización del código municipal DIVIPOLA de 5 dígitos (DDMMM), masa pecuaria por especie, índice HHI y densidad por hectárea."
     }
 }
 
@@ -164,8 +199,8 @@ CELL_PIP = """# ================================================================
 """
 
 CELL_SETUP = """# ==============================================================================
-# [CONFIGURACIÓN DEL KERNEL Y RESOLUCIÓN DE RUTAS DEL PROYECTO (PEP 8)]
-# Importación estándar y resolución dinámica del path para src/
+# [CONFIGURACIÓN DEL KERNEL Y RESOLUCIÓN ROBUSTA DE RUTAS DEL PROYECTO (PEP 8)]
+# Compatible con Local Jupyter, VSCode, Colab, Databricks Git Folders & Repos
 # ==============================================================================
 import os
 import sys
@@ -174,16 +209,34 @@ from pathlib import Path
 
 warnings.filterwarnings("ignore")
 
-# Resolver raíz del proyecto para importar módulos de src/
+# Búsqueda dinámica ascendente de la raíz del proyecto (donde reside src/ y metadata.json)
 CURRENT_DIR = Path(".").resolve()
-APP_ROOT = CURRENT_DIR.parent.parent
+APP_ROOT = None
+
+for candidate in [CURRENT_DIR, CURRENT_DIR.parent, CURRENT_DIR.parent.parent, CURRENT_DIR.parent.parent.parent]:
+    if (candidate / "src" / "database").exists() or (candidate / "metadata.json").exists():
+        APP_ROOT = candidate
+        break
+
+if APP_ROOT is None:
+    candidate = CURRENT_DIR
+    while candidate.parent != candidate:
+        if (candidate / "src" / "database").exists():
+            APP_ROOT = candidate
+            break
+        candidate = candidate.parent
+
+if APP_ROOT is None:
+    APP_ROOT = CURRENT_DIR
+
 if str(APP_ROOT) not in sys.path:
     sys.path.insert(0, str(APP_ROOT))
 
 import pandas as pd
 import numpy as np
 
-print(f"✅ Entorno inicializado exitosamente. Raíz del proyecto: {APP_ROOT}")
+print(f"✅ Entorno e importaciones inicializadas exitosamente.")
+print(f"📍 Raíz del proyecto detectada: {APP_ROOT}")
 """
 
 
@@ -215,6 +268,16 @@ def build_phase_01_notebook(ds_key: str, meta: Dict[str, Any]) -> List[Dict[str,
 
 ### 4. Indicadores Clave de Desempeño (KPIs):
 {chr(10).join([f"* `{k}`" for k in meta['kpis']])}
+
+---
+
+### 📋 FICHA TÉCNICA DEL DATASET (DAMA-DMBOK 2)
+
+#### 📦 A. QUÉ HABÍA EN EL DATASET ORIGINAL (Diagnóstico Raw)
+> **Estado de Origen**: {meta['raw_state']}
+
+#### 🔧 B. QUÉ SE NECESITA PARA CONSTRUIR LOS INDICADORES (Transformaciones y Fórmulas)
+> **Requisitos y Formulación**: {meta['indicator_requirements']}
 
 ---
 """

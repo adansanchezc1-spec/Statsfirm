@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `dane_ipc`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:08.436516  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:35.982285  
 **Estado General**: ✅ PASSED | **Score Global**: `99.8%`  
 **Volumen**: 284 filas × 7 columnas
 

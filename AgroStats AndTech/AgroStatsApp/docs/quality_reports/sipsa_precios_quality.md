@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `sipsa_precios`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:03.607221  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:33.164677  
 **Estado General**: ⚠️ WARNING | **Score Global**: `97.9%`  
 **Volumen**: 36 filas × 29 columnas
 

@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `landing_leads`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:20.759737  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:49.799500  
 **Estado General**: ✅ PASSED | **Score Global**: `99.1%`  
 **Volumen**: 1 filas × 17 columnas
 

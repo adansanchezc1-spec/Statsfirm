@@ -1,6 +1,6 @@
 # Diagrama de Linaje y Trazabilidad de Datos (DAG)
 
-**Generado**: 2026-10-01T20:02:21.282669 | **Run ID**: `RUN_20261001_200147`
+**Generado**: 2026-10-02T08:26:51.268902 | **Run ID**: `RUN_20261002_082621`
 
 ```mermaid
 flowchart LR
@@ -34,6 +34,9 @@ flowchart LR
     bronze_landing_leads["landing_leads<br/>(1 filas)"]:::bronze
     silver_landing_leads["landing_leads<br/>(1 filas)"]:::silver
     bronze_landing_leads --> silver_landing_leads
+    bronze_ica_inventario_pecuario["ica_inventario_pecuario<br/>(11 filas)"]:::bronze
+    silver_ica_inventario_pecuario["ica_inventario_pecuario<br/>(11 filas)"]:::silver
+    bronze_ica_inventario_pecuario --> silver_ica_inventario_pecuario
     gold_dim_municipio_divipola["dim_municipio_divipola<br/>(8 filas)"]:::gold
     silver_sipsa_abastecimientos --> gold_dim_municipio_divipola
     silver_sipsa_precios --> gold_dim_municipio_divipola
@@ -44,6 +47,7 @@ flowchart LR
     silver_dane_csaa --> gold_dim_municipio_divipola
     silver_doc_webservice_chunks --> gold_dim_municipio_divipola
     silver_landing_leads --> gold_dim_municipio_divipola
+    silver_ica_inventario_pecuario --> gold_dim_municipio_divipola
     gold_dim_producto_agro["dim_producto_agro<br/>(8 filas)"]:::gold
     silver_sipsa_abastecimientos --> gold_dim_producto_agro
     silver_sipsa_precios --> gold_dim_producto_agro
@@ -54,6 +58,7 @@ flowchart LR
     silver_dane_csaa --> gold_dim_producto_agro
     silver_doc_webservice_chunks --> gold_dim_producto_agro
     silver_landing_leads --> gold_dim_producto_agro
+    silver_ica_inventario_pecuario --> gold_dim_producto_agro
     gold_mart_business_questions["mart_business_questions<br/>(9 filas)"]:::gold
     silver_sipsa_abastecimientos --> gold_mart_business_questions
     silver_sipsa_precios --> gold_mart_business_questions
@@ -64,4 +69,5 @@ flowchart LR
     silver_dane_csaa --> gold_mart_business_questions
     silver_doc_webservice_chunks --> gold_mart_business_questions
     silver_landing_leads --> gold_mart_business_questions
+    silver_ica_inventario_pecuario --> gold_mart_business_questions
 ```

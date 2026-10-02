@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `sipsa_abastecimientos`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:01:49.229732  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:22.724050  
 **Estado General**: ❌ FAILED | **Score Global**: `77.4%`  
 **Volumen**: 59,500 filas × 11 columnas
 

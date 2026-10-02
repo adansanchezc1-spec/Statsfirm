@@ -1,17 +1,17 @@
 {
   "dataset_name": "ideam_telemetria_realtime",
-  "timestamp": "2026-10-01T20:02:13.074621",
+  "timestamp": "2026-10-02T08:26:44.742026",
   "total_records": 1000,
   "total_columns": 14,
-  "overall_score": 0.8892,
+  "overall_score": 0.7872,
   "status": "FAILED",
   "dimension_scores": {
-    "Completeness": 0.9997,
-    "Uniqueness": 0.968,
-    "Validity": 0.496,
+    "Completeness": 0.9991,
+    "Uniqueness": 0.531,
+    "Validity": 0.5,
     "Consistency": 1.0,
     "Timeliness": 1.0,
-    "Accuracy": 0.965
+    "Accuracy": 0.8126
   },
   "checks": [
     {
@@ -150,11 +150,11 @@
       "column": "descripcionsensor",
       "status": "PASSED",
       "severity": "MEDIUM",
-      "metric_value": 0.002,
+      "metric_value": 0.006,
       "threshold": 0.4,
-      "message": "Tasa de nulos en 'descripcionsensor': 0.20%",
+      "message": "Tasa de nulos en 'descripcionsensor': 0.60%",
       "details": {
-        "null_count": 2
+        "null_count": 6
       }
     },
     {
@@ -163,11 +163,11 @@
       "column": "unidadmedida",
       "status": "PASSED",
       "severity": "MEDIUM",
-      "metric_value": 0.002,
+      "metric_value": 0.006,
       "threshold": 0.4,
-      "message": "Tasa de nulos en 'unidadmedida': 0.20%",
+      "message": "Tasa de nulos en 'unidadmedida': 0.60%",
       "details": {
-        "null_count": 2
+        "null_count": 6
       }
     },
     {
@@ -215,20 +215,20 @@
       "column": "codigoestacion+fechaobservacion",
       "status": "FAILED",
       "severity": "CRITICAL",
-      "metric_value": 0.032,
+      "metric_value": 0.469,
       "threshold": 0.0,
-      "message": "Duplicados en Clave Primaria ['codigoestacion', 'fechaobservacion']: 32 (3.20%)",
+      "message": "Duplicados en Clave Primaria ['codigoestacion', 'fechaobservacion']: 469 (46.90%)",
       "details": {}
     },
     {
       "check_name": "range_check_valorobservado",
       "dimension": "Validity",
       "column": "valorobservado",
-      "status": "WARNING",
+      "status": "PASSED",
       "severity": "HIGH",
-      "metric_value": 0.008,
+      "metric_value": 0.0,
       "threshold": 0.01,
-      "message": "Valores fuera de rango [-10.0, 1000.0] en 'valorobservado': 8 (0.80%)",
+      "message": "Valores fuera de rango [-10.0, 1000.0] en 'valorobservado': 0 (0.00%)",
       "details": {}
     },
     {
@@ -279,11 +279,11 @@
       "check_name": "extreme_outliers_iqr_codigosensor",
       "dimension": "Accuracy",
       "column": "codigosensor",
-      "status": "PASSED",
+      "status": "WARNING",
       "severity": "LOW",
-      "metric_value": 0.0,
+      "metric_value": 0.246,
       "threshold": 0.05,
-      "message": "Outliers extremos (>3*IQR) en 'codigosensor': 0 (0.00%)",
+      "message": "Outliers extremos (>3*IQR) en 'codigosensor': 246 (24.60%)",
       "details": {}
     },
     {
@@ -292,9 +292,9 @@
       "column": "valorobservado",
       "status": "WARNING",
       "severity": "LOW",
-      "metric_value": 0.099,
+      "metric_value": 0.054,
       "threshold": 0.05,
-      "message": "Outliers extremos (>3*IQR) en 'valorobservado': 99 (9.90%)",
+      "message": "Outliers extremos (>3*IQR) en 'valorobservado': 54 (5.40%)",
       "details": {}
     },
     {
@@ -303,25 +303,25 @@
       "column": "latitud",
       "status": "WARNING",
       "severity": "LOW",
-      "metric_value": 0.062,
+      "metric_value": 0.305,
       "threshold": 0.05,
-      "message": "Outliers extremos (>3*IQR) en 'latitud': 62 (6.20%)",
+      "message": "Outliers extremos (>3*IQR) en 'latitud': 305 (30.50%)",
       "details": {}
     },
     {
       "check_name": "extreme_outliers_iqr_longitud",
       "dimension": "Accuracy",
       "column": "longitud",
-      "status": "PASSED",
+      "status": "WARNING",
       "severity": "LOW",
-      "metric_value": 0.014,
+      "metric_value": 0.332,
       "threshold": 0.05,
-      "message": "Outliers extremos (>3*IQR) en 'longitud': 14 (1.40%)",
+      "message": "Outliers extremos (>3*IQR) en 'longitud': 332 (33.20%)",
       "details": {}
     }
   ],
   "summary_metrics": {
-    "null_cells_total": 4,
+    "null_cells_total": 12,
     "total_cells": 14000,
     "memory_usage_mb": 0.29
   }

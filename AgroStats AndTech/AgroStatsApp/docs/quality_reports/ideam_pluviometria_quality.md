@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `ideam_pluviometria`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:10.114482  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:37.200197  
 **Estado General**: ⚠️ WARNING | **Score Global**: `89.5%`  
 **Volumen**: 100 filas × 13 columnas
 

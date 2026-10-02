@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `doc_webservice_chunks`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:18.429455  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:48.808018  
 **Estado General**: ✅ PASSED | **Score Global**: `99.6%`  
 **Volumen**: 39 filas × 5 columnas
 

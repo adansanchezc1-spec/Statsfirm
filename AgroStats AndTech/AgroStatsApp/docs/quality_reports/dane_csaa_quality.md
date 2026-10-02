@@ -1,5 +1,5 @@
 # Reporte de Calidad de Datos: `dane_csaa`
-**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-01T20:02:16.507258  
+**Estándar**: ISO/IEC 25010 & DAMA-DMBOK 2 | **Fecha**: 2026-10-02T08:26:47.170722  
 **Estado General**: ✅ PASSED | **Score Global**: `99.1%`  
 **Volumen**: 22 filas × 3 columnas
 

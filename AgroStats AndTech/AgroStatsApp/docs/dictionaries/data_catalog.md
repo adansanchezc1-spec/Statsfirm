@@ -1,6 +1,6 @@
 # Catálogo de Datos y Diccionario de Metadatos (DAMA-DMBOK 2)
-**Plataforma**: AgroStats Intelligence Platform | **Fecha**: 2026-10-01 20:02:21
-**Entidades Gobernadas**: 12 tablas y marts
+**Plataforma**: AgroStats Intelligence Platform | **Fecha**: 2026-10-02 08:26:51
+**Entidades Gobernadas**: 13 tablas y marts
 
 ---
 ## 1. Inventario General de Entidades Lakehouse
@@ -16,6 +16,7 @@
 | `dane_csaa` | **SILVER** | Cuentas Nacionales | Código Cuadro x Cadena Agropecuaria | 22 | Periódica / Eventos |
 | `doc_webservice_chunks` | **SILVER** | Documentación No Estructurada | Documento x Chunk ID | 39 | Periódica / Eventos |
 | `landing_leads` | **SILVER** | Customer & Commercial Analytics | ID Lead x Timestamp Registro | 1 | Periódica / Eventos |
+| `ica_inventario_pecuario` | **SILVER** | Oferta y Salud Pecuaria | Municipio (DIVIPOLA 5 dígitos) x Especie x Categoría x Año | 11 | Periódica / Eventos |
 | `dim_municipio_divipola` | **GOLD** | Analytics & Reporting | Agregada / Dimensional | 8 | Batch / Demanda |
 | `dim_producto_agro` | **GOLD** | Analytics & Reporting | Agregada / Dimensional | 8 | Batch / Demanda |
 | `mart_business_questions` | **GOLD** | Analytics & Reporting | Agregada / Dimensional | 9 | Batch / Demanda |
@@ -184,7 +185,7 @@
 | `longitud` | `float64` | Numeric | No | `PUBLIC` | `-75.73416667` |
 | `descripcionsensor` | `str` | DateTime | No | `PUBLIC` | `Precipitacion` |
 | `unidadmedida` | `str` | DateTime | No | `INTERNAL` | `mm` |
-| `codigo_divipola` | `str` | DateTime | No | `PUBLIC` | `MUN_98430` |
+| `codigo_divipola` | `str` | DateTime | No | `PUBLIC` | `MUN_27421` |
 
 ### Entidad: `ideam_telemetria_realtime`
 - **Capa Medallion**: SILVER
@@ -194,20 +195,20 @@
 
 | Columna | Tipo Físico | Tipo Lógico | Nullable | Sensibilidad | Ejemplo |
 |---|---|---|:---:|:---:|---|
-| `codigoestacion` | `int64` | Numeric | No | `PUBLIC` | `21206810` |
-| `codigosensor` | `int64` | Numeric | No | `PUBLIC` | `243` |
-| `fechaobservacion` | `str` | DateTime | No | `PUBLIC` | `2026-10-01T12:06:00.000` |
-| `valorobservado` | `float64` | Numeric | No | `PUBLIC` | `21.98` |
-| `nombreestacion` | `str` | DateTime | No | `PUBLIC` | `SAN BENITO  - AUT  [21206810]` |
+| `codigoestacion` | `int64` | Numeric | No | `PUBLIC` | `21206890` |
+| `codigosensor` | `int64` | Numeric | No | `PUBLIC` | `240` |
+| `fechaobservacion` | `str` | DateTime | No | `PUBLIC` | `2026-10-01T23:13:00.000` |
+| `valorobservado` | `float64` | Numeric | No | `PUBLIC` | `0.0` |
+| `nombreestacion` | `str` | DateTime | No | `PUBLIC` | `CERRO CAZADORES [21206890]` |
 | `departamento` | `str` | DateTime | No | `PUBLIC` | `Bogotá` |
 | `municipio` | `str` | DateTime | No | `PUBLIC` | `Bogotá, D.C` |
 | `zonahidrografica` | `str` | DateTime | No | `INTERNAL` | `Alto Magdalena` |
-| `latitud` | `float64` | Numeric | No | `PUBLIC` | `4.56365303` |
-| `longitud` | `float64` | Numeric | No | `PUBLIC` | `-74.13845` |
-| `descripcionsensor` | `str` | DateTime | Sí | `PUBLIC` | `Temperatura del suelo a 50 cm` |
-| `unidadmedida` | `str` | DateTime | Sí | `INTERNAL` | `°C` |
-| `entidad` | `str` | DateTime | No | `INTERNAL` | `ESTACIONES PARTICULARES` |
-| `codigo_divipola` | `str` | DateTime | No | `PUBLIC` | `MUN_71987` |
+| `latitud` | `float64` | Numeric | No | `PUBLIC` | `4.66577` |
+| `longitud` | `float64` | Numeric | No | `PUBLIC` | `-74.02861` |
+| `descripcionsensor` | `str` | DateTime | Sí | `PUBLIC` | `Precipitación acumulada 10 minutos` |
+| `unidadmedida` | `str` | DateTime | Sí | `INTERNAL` | `mm` |
+| `entidad` | `str` | DateTime | No | `INTERNAL` | `FONDO DE PREVENCIÓN Y ATENCIÓN DE DES...` |
+| `codigo_divipola` | `str` | DateTime | No | `PUBLIC` | `MUN_17486` |
 
 ### Entidad: `dane_csaa`
 - **Capa Medallion**: SILVER
@@ -260,6 +261,22 @@
 | `status` | `str` | DateTime | No | `PUBLIC` | `QUALIFIED_FOR_ARB` |
 | `assignedto` | `str` | DateTime | No | `PUBLIC` | `Mateo Arismendi (Jefe de Procesos)` |
 | `createdat` | `str` | DateTime | No | `PUBLIC` | `2026-09-05 14:22:10 UTC` |
+
+### Entidad: `ica_inventario_pecuario`
+- **Capa Medallion**: SILVER
+- **Descripción**: Censo Pecuario Nacional e inventarios por municipio (DIVIPOLA) extraídos desde ICA PowerBI / Censo Pecuario.
+- **Granularidad**: `Municipio (DIVIPOLA 5 dígitos) x Especie x Categoría x Año`
+- **Clave Primaria**: `codigo_divipola, especie, anio`
+
+| Columna | Tipo Físico | Tipo Lógico | Nullable | Sensibilidad | Ejemplo |
+|---|---|---|:---:|:---:|---|
+| `codigo_divipola` | `str` | DateTime | No | `PUBLIC` | `MUN_26634` |
+| `departamento` | `str` | DateTime | No | `PUBLIC` | `ANTIOQUIA` |
+| `municipio` | `str` | DateTime | No | `PUBLIC` | `MEDELLÍN` |
+| `especie` | `str` | DateTime | No | `PUBLIC` | `Bovino` |
+| `categoria` | `str` | DateTime | No | `PUBLIC` | `Ganadería Doble Propósito` |
+| `anio` | `int64` | Numeric | No | `PUBLIC` | `2025` |
+| `inventario` | `int64` | Numeric | No | `PUBLIC` | `12450` |
 
 ### Entidad: `dim_municipio_divipola`
 - **Capa Medallion**: GOLD

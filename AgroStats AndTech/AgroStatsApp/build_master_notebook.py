@@ -51,9 +51,26 @@ from pathlib import Path
 
 warnings.filterwarnings("ignore")
 
-# Resolver raíz del proyecto
+# Resolver dinámicamente la raíz del proyecto (compatible con Databricks Repos / Local Jupyter / VSCode)
 CURRENT_DIR = Path(".").resolve()
-APP_ROOT = CURRENT_DIR.parent
+APP_ROOT = None
+
+for candidate in [CURRENT_DIR, CURRENT_DIR.parent, CURRENT_DIR.parent.parent, CURRENT_DIR.parent.parent.parent]:
+    if (candidate / "src" / "database").exists() or (candidate / "metadata.json").exists():
+        APP_ROOT = candidate
+        break
+
+if APP_ROOT is None:
+    candidate = CURRENT_DIR
+    while candidate.parent != candidate:
+        if (candidate / "src" / "database").exists():
+            APP_ROOT = candidate
+            break
+        candidate = candidate.parent
+
+if APP_ROOT is None:
+    APP_ROOT = CURRENT_DIR
+
 if str(APP_ROOT) not in sys.path:
     sys.path.insert(0, str(APP_ROOT))
 

@@ -1,12 +1,12 @@
 {
-  "run_id": "RUN_20261001_200147",
-  "completed_at": "2026-10-01T20:02:21.275811",
-  "total_execution_time_seconds": 33.69,
-  "total_silver_records": 61074,
-  "total_nodes": 21,
+  "run_id": "RUN_20261002_082621",
+  "completed_at": "2026-10-02T08:26:51.265735",
+  "total_execution_time_seconds": 29.67,
+  "total_silver_records": 61085,
+  "total_nodes": 23,
   "layers_summary": {
-    "bronze_count": 9,
-    "silver_count": 9,
+    "bronze_count": 10,
+    "silver_count": 10,
     "gold_count": 3
   },
   "nodes": {
@@ -18,8 +18,8 @@
       "input_records": 59500,
       "output_records": 59500,
       "checksum_sha256": "4ecd20b67a2175511556adcf04ccb28cab4af6e32b02b6308b8ce13102bf6e00",
-      "execution_time_sec": 0.136,
-      "timestamp": "2026-10-01T20:01:48.371506",
+      "execution_time_sec": 0.098,
+      "timestamp": "2026-10-02T08:26:22.369263",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -36,8 +36,8 @@
       "input_records": 59500,
       "output_records": 59500,
       "checksum_sha256": "4ecd20b67a2175511556adcf04ccb28cab4af6e32b02b6308b8ce13102bf6e00",
-      "execution_time_sec": 2.801,
-      "timestamp": "2026-10-01T20:01:51.173079",
+      "execution_time_sec": 1.851,
+      "timestamp": "2026-10-02T08:26:24.220739",
       "quality_score": 0.7736,
       "quality_status": "FAILED",
       "transformations_applied": [
@@ -55,8 +55,8 @@
       "input_records": 36,
       "output_records": 36,
       "checksum_sha256": "4ca3e2c36ea7adb03c0f1db15a05493eed4c9fcec1cce6a4581f4e0dc4d74192",
-      "execution_time_sec": 0.028,
-      "timestamp": "2026-10-01T20:02:03.544324",
+      "execution_time_sec": 0.014,
+      "timestamp": "2026-10-02T08:26:33.132409",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -73,8 +73,8 @@
       "input_records": 36,
       "output_records": 36,
       "checksum_sha256": "4ca3e2c36ea7adb03c0f1db15a05493eed4c9fcec1cce6a4581f4e0dc4d74192",
-      "execution_time_sec": 0.267,
-      "timestamp": "2026-10-01T20:02:03.811769",
+      "execution_time_sec": 0.178,
+      "timestamp": "2026-10-02T08:26:33.310411",
       "quality_score": 0.9785,
       "quality_status": "WARNING",
       "transformations_applied": [
@@ -92,8 +92,8 @@
       "input_records": 92,
       "output_records": 92,
       "checksum_sha256": "e1fd92bff4b590b30daca65df7a41074d96a8eb3c34fb4b8d19037d3478cfda6",
-      "execution_time_sec": 0.045,
-      "timestamp": "2026-10-01T20:02:06.110186",
+      "execution_time_sec": 0.029,
+      "timestamp": "2026-10-02T08:26:34.621021",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -110,8 +110,8 @@
       "input_records": 92,
       "output_records": 92,
       "checksum_sha256": "e1fd92bff4b590b30daca65df7a41074d96a8eb3c34fb4b8d19037d3478cfda6",
-      "execution_time_sec": 0.444,
-      "timestamp": "2026-10-01T20:02:06.555894",
+      "execution_time_sec": 0.244,
+      "timestamp": "2026-10-02T08:26:34.865568",
       "quality_score": 0.9985,
       "quality_status": "WARNING",
       "transformations_applied": [
@@ -129,8 +129,8 @@
       "input_records": 284,
       "output_records": 284,
       "checksum_sha256": "e6ff76794a87a3f4999c07cbab566796159df66dde7c6c4e3dc56e18a38bfef1",
-      "execution_time_sec": 0.016,
-      "timestamp": "2026-10-01T20:02:08.425247",
+      "execution_time_sec": 0.013,
+      "timestamp": "2026-10-02T08:26:35.973480",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -147,8 +147,8 @@
       "input_records": 284,
       "output_records": 284,
       "checksum_sha256": "e6ff76794a87a3f4999c07cbab566796159df66dde7c6c4e3dc56e18a38bfef1",
-      "execution_time_sec": 0.119,
-      "timestamp": "2026-10-01T20:02:08.544931",
+      "execution_time_sec": 0.101,
+      "timestamp": "2026-10-02T08:26:36.074853",
       "quality_score": 0.9984,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -165,9 +165,9 @@
       "target_path_or_table": "data\\lakehouse\\bronze\\ideam_pluviometria\\data.parquet",
       "input_records": 100,
       "output_records": 100,
-      "checksum_sha256": "af9609cb47814ceffcbe7108f4d91f89234c86cfa70f4cb0902948886f6b2be0",
-      "execution_time_sec": 0.025,
-      "timestamp": "2026-10-01T20:02:10.073747",
+      "checksum_sha256": "f8cda2c133edf0af19600d44d81b41fcdb60b231c000abc47dc326745edfd874",
+      "execution_time_sec": 0.017,
+      "timestamp": "2026-10-02T08:26:37.164168",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -183,9 +183,9 @@
       "target_path_or_table": "table:ideam_pluviometria",
       "input_records": 100,
       "output_records": 100,
-      "checksum_sha256": "f8cda2c133edf0af19600d44d81b41fcdb60b231c000abc47dc326745edfd874",
-      "execution_time_sec": 0.179,
-      "timestamp": "2026-10-01T20:02:10.253085",
+      "checksum_sha256": "10c787c99f160cefabf5f0892c8ba32fbf9ed87f9b8014c18c08676ba5b1e98f",
+      "execution_time_sec": 0.137,
+      "timestamp": "2026-10-02T08:26:37.301071",
       "quality_score": 0.895,
       "quality_status": "WARNING",
       "transformations_applied": [
@@ -203,9 +203,9 @@
       "target_path_or_table": "data\\lakehouse\\bronze\\ideam_telemetria_realtime\\data.parquet",
       "input_records": 1000,
       "output_records": 1000,
-      "checksum_sha256": "14764e389c9c453a952c55673368ca9ae08d15232cf2fd70816def5526c041e3",
-      "execution_time_sec": 0.039,
-      "timestamp": "2026-10-01T20:02:12.927368",
+      "checksum_sha256": "ae578f87a8994795794cf00c4e4836caebb77ab4f553e0f2de905dcd6da9e273",
+      "execution_time_sec": 0.025,
+      "timestamp": "2026-10-02T08:26:44.675499",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -221,10 +221,10 @@
       "target_path_or_table": "table:ideam_telemetria_realtime",
       "input_records": 1000,
       "output_records": 1000,
-      "checksum_sha256": "306bdb33a849c8d716006f7a3b9561edcb0b7f245b3137d27395ea415faaad9b",
-      "execution_time_sec": 0.467,
-      "timestamp": "2026-10-01T20:02:13.394582",
-      "quality_score": 0.8892,
+      "checksum_sha256": "96a46220a7e91d052a6b913f0f0445db8e30089befe1396bd38466261a8e5380",
+      "execution_time_sec": 0.21,
+      "timestamp": "2026-10-02T08:26:44.886164",
+      "quality_score": 0.7872,
       "quality_status": "FAILED",
       "transformations_applied": [
         "sanitize_snake_case_and_nulls",
@@ -242,8 +242,8 @@
       "input_records": 22,
       "output_records": 22,
       "checksum_sha256": "c785bed567d7958026278dc69d5793a7446b1cbcbd260e81558325463a9eb937",
-      "execution_time_sec": 0.018,
-      "timestamp": "2026-10-01T20:02:16.475828",
+      "execution_time_sec": 0.01,
+      "timestamp": "2026-10-02T08:26:47.159983",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -260,8 +260,8 @@
       "input_records": 22,
       "output_records": 22,
       "checksum_sha256": "c785bed567d7958026278dc69d5793a7446b1cbcbd260e81558325463a9eb937",
-      "execution_time_sec": 0.164,
-      "timestamp": "2026-10-01T20:02:16.640773",
+      "execution_time_sec": 0.068,
+      "timestamp": "2026-10-02T08:26:47.228776",
       "quality_score": 0.991,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -279,8 +279,8 @@
       "input_records": 39,
       "output_records": 39,
       "checksum_sha256": "60226de7a198301b5adb318f18f6565c424f7495273251a625d9dc1c409f48b4",
-      "execution_time_sec": 0.018,
-      "timestamp": "2026-10-01T20:02:18.402634",
+      "execution_time_sec": 0.012,
+      "timestamp": "2026-10-02T08:26:48.797910",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -297,8 +297,8 @@
       "input_records": 39,
       "output_records": 39,
       "checksum_sha256": "60226de7a198301b5adb318f18f6565c424f7495273251a625d9dc1c409f48b4",
-      "execution_time_sec": 0.132,
-      "timestamp": "2026-10-01T20:02:18.534624",
+      "execution_time_sec": 0.068,
+      "timestamp": "2026-10-02T08:26:48.866280",
       "quality_score": 0.996,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -316,8 +316,8 @@
       "input_records": 1,
       "output_records": 1,
       "checksum_sha256": "6229bbd120c482346d167a8dca4ca085710250a4880ddd6d08bca44075e4487d",
-      "execution_time_sec": 0.025,
-      "timestamp": "2026-10-01T20:02:20.604938",
+      "execution_time_sec": 0.012,
+      "timestamp": "2026-10-02T08:26:49.767392",
       "quality_score": null,
       "quality_status": null,
       "transformations_applied": [
@@ -334,8 +334,8 @@
       "input_records": 1,
       "output_records": 1,
       "checksum_sha256": "08bca5df2c807dd8bbcde82f36ee9dd547277982921747fc3456ef9b4e8526c2",
-      "execution_time_sec": 0.274,
-      "timestamp": "2026-10-01T20:02:20.879670",
+      "execution_time_sec": 0.095,
+      "timestamp": "2026-10-02T08:26:49.862879",
       "quality_score": 0.991,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -346,16 +346,54 @@
         "bronze_landing_leads"
       ]
     },
+    "bronze_ica_inventario_pecuario": {
+      "node_id": "bronze_ica_inventario_pecuario",
+      "layer": "BRONZE",
+      "dataset_name": "ica_inventario_pecuario",
+      "target_path_or_table": "data\\lakehouse\\bronze\\ica_inventario_pecuario\\data.parquet",
+      "input_records": 11,
+      "output_records": 11,
+      "checksum_sha256": "6e76e71dfd30b1c91ec9bda521a4bbe23f39db39707780042d6224b50a572e02",
+      "execution_time_sec": 0.011,
+      "timestamp": "2026-10-02T08:26:49.967127",
+      "quality_score": null,
+      "quality_status": null,
+      "transformations_applied": [
+        "audit_metadata_injection",
+        "parquet_serialization"
+      ],
+      "upstream_nodes": []
+    },
+    "silver_ica_inventario_pecuario": {
+      "node_id": "silver_ica_inventario_pecuario",
+      "layer": "SILVER",
+      "dataset_name": "ica_inventario_pecuario",
+      "target_path_or_table": "table:ica_inventario_pecuario",
+      "input_records": 11,
+      "output_records": 11,
+      "checksum_sha256": "90bf6bba03881b385d256f280133aab654c1ecf06f89df996d8ca28a6ce469ba",
+      "execution_time_sec": 0.083,
+      "timestamp": "2026-10-02T08:26:50.050260",
+      "quality_score": 0.9,
+      "quality_status": "WARNING",
+      "transformations_applied": [
+        "sanitize_snake_case_and_nulls",
+        "spatial_divipola_harmonization"
+      ],
+      "upstream_nodes": [
+        "bronze_ica_inventario_pecuario"
+      ]
+    },
     "gold_dim_municipio_divipola": {
       "node_id": "gold_dim_municipio_divipola",
       "layer": "GOLD",
       "dataset_name": "dim_municipio_divipola",
       "target_path_or_table": "table:dim_municipio_divipola",
-      "input_records": 61074,
+      "input_records": 61085,
       "output_records": 8,
       "checksum_sha256": "228a16b9ac28a1a1eb1b3142a439d8746fb8793fe6e54e0c947c02608e8463c3",
-      "execution_time_sec": 0.117,
-      "timestamp": "2026-10-01T20:02:20.998349",
+      "execution_time_sec": 0.059,
+      "timestamp": "2026-10-02T08:26:51.157753",
       "quality_score": 1.0,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -371,7 +409,8 @@
         "silver_ideam_telemetria_realtime",
         "silver_dane_csaa",
         "silver_doc_webservice_chunks",
-        "silver_landing_leads"
+        "silver_landing_leads",
+        "silver_ica_inventario_pecuario"
       ]
     },
     "gold_dim_producto_agro": {
@@ -379,11 +418,11 @@
       "layer": "GOLD",
       "dataset_name": "dim_producto_agro",
       "target_path_or_table": "table:dim_producto_agro",
-      "input_records": 61074,
+      "input_records": 61085,
       "output_records": 8,
       "checksum_sha256": "4c16b3eeef101efcaf97176ed76badd534d0926ad4fda28c07035003ef406682",
-      "execution_time_sec": 0.252,
-      "timestamp": "2026-10-01T20:02:21.132970",
+      "execution_time_sec": 0.102,
+      "timestamp": "2026-10-02T08:26:51.199942",
       "quality_score": 1.0,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -399,7 +438,8 @@
         "silver_ideam_telemetria_realtime",
         "silver_dane_csaa",
         "silver_doc_webservice_chunks",
-        "silver_landing_leads"
+        "silver_landing_leads",
+        "silver_ica_inventario_pecuario"
       ]
     },
     "gold_mart_business_questions": {
@@ -407,11 +447,11 @@
       "layer": "GOLD",
       "dataset_name": "mart_business_questions",
       "target_path_or_table": "table:mart_business_questions",
-      "input_records": 61074,
+      "input_records": 61085,
       "output_records": 9,
-      "checksum_sha256": "d967ae189f0c0bb3132118e9fedd420b529ff80c7951a1a54f5b188b884e5f5b",
-      "execution_time_sec": 0.335,
-      "timestamp": "2026-10-01T20:02:21.216338",
+      "checksum_sha256": "bd496606fddce7d5bc127c53a251a3d50c3feeaa724f29756a2f34435da25308",
+      "execution_time_sec": 0.139,
+      "timestamp": "2026-10-02T08:26:51.237349",
       "quality_score": 1.0,
       "quality_status": "PASSED",
       "transformations_applied": [
@@ -427,7 +467,8 @@
         "silver_ideam_telemetria_realtime",
         "silver_dane_csaa",
         "silver_doc_webservice_chunks",
-        "silver_landing_leads"
+        "silver_landing_leads",
+        "silver_ica_inventario_pecuario"
       ]
     }
   }

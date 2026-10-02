@@ -1,7 +1,14 @@
 """
-Módulo de Modelado Estadístico, Machine Learning y Preguntas de Negocio
+Modeling and Analytical Engine Package - AgroStats Intelligence Platform
 """
-from .sarimax_model import AgroModeler
-from .business_questions_engine import BusinessQuestionsEngine, GranularityHarmonizer
 
-__all__ = ["AgroModeler", "BusinessQuestionsEngine", "GranularityHarmonizer"]
+from src.modeling.business_questions_engine import BusinessQuestionsEngine, GranularityHarmonizer
+from src.modeling.statistical_profiler import StatisticalProfiler
+from src.modeling.geospatial_engine import GeospatialEngine
+
+__all__ = [
+    "BusinessQuestionsEngine",
+    "GranularityHarmonizer",
+    "StatisticalProfiler",
+    "GeospatialEngine"
+]

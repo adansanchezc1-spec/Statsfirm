@@ -1,6 +1,7 @@
 """
-Módulo de Persistencia y Base de Datos
+Database Management Module - AgroStats Intelligence Platform
 """
-from .db_manager import DatabaseManager
+
+from src.database.db_manager import DatabaseManager
 
 __all__ = ["DatabaseManager"]

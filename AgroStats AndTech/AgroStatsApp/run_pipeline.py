@@ -103,7 +103,20 @@ def load_dataset_source(source_identifier: str, target_table: str) -> Tuple[pd.D
         if fallback_p.exists():
             return pd.read_parquet(fallback_p), f"fallback://{fallback_p.name}"
 
-    # Caso 7: Archivos de disco tabulares estándar
+    # Caso 7: ICA PowerBI / Censo Pecuario Nacional
+    if target_table == "ica_inventario_pecuario" or source_identifier == "ica_powerbi":
+        try:
+            from src.ingestion.ica_powerbi_extractor import get_ica_livestock_inventory
+            df_ica = get_ica_livestock_inventory()
+            if not df_ica.empty:
+                return df_ica, "powerbi://app.powerbi.com/view?r=ica_pecuario"
+        except Exception as e:
+            logger.warning(f"Extracción ICA PowerBI no disponible ({e}). Cargando fallback...")
+        fallback_p = APP_ROOT / "data" / "processed" / f"{target_table}.parquet"
+        if fallback_p.exists():
+            return pd.read_parquet(fallback_p), f"fallback://{fallback_p.name}"
+
+    # Caso 8: Archivos de disco tabulares estándar
     full_p = APP_ROOT / source_identifier
     if full_p.exists():
         return FileLoader.load_file(str(full_p)), f"file://{full_p.relative_to(APP_ROOT)}"
@@ -230,6 +243,17 @@ def run_pipeline():
             "primary_keys": ["id"],
             "pii_cols": ["email", "phone", "contactname"],
             "range_rules": {}
+        },
+        {
+            "folder": "10_ica_inventario_pecuario",
+            "source": "ica_powerbi",
+            "table": "ica_inventario_pecuario",
+            "domain": "Oferta y Salud Pecuaria",
+            "description": "Censo Pecuario Nacional e inventarios por municipio (DIVIPOLA) extraídos desde ICA PowerBI / Censo Pecuario.",
+            "granularity": "Municipio (DIVIPOLA 5 dígitos) x Especie x Categoría x Año",
+            "primary_keys": ["codigo_divipola", "especie", "anio"],
+            "pii_cols": [],
+            "range_rules": {"inventario": (0.0, 10000000.0)}
         }
     ]
 
